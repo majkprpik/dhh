@@ -1,17 +1,19 @@
 const express = require("express")
 const router = express.Router()
 const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
+const keys = require("../../config/keys")
 
 // Load agent model
 const Agent = require("../../models/Agent")
 
-// @route   GET api/posts/test
-// @desc    Tests post route
+// @route   GET api/agents/test
+// @desc    Tests agent route
 // @access  Public
 router.get("/test", (req, res) => res.json({msg: "Agents works!"}))
 
-// @route   GET api/posts/test
-// @desc    Tests post route
+// @route   POST api/agents/register
+// @desc    Registers a agent
 // @access  Public
 router.post("/register", (req, res) => {
     Agent.findOne({ email: req.body.email })
@@ -22,7 +24,7 @@ router.post("/register", (req, res) => {
                 const newAgent = new Agent({
                     username: req.body.username,
                     password: req.body.password,
-                    email: req.body.password,
+                    email: req.body.email,
                     name: req.body.name,
                     surname: req.body.surname
                 })
@@ -38,6 +40,38 @@ router.post("/register", (req, res) => {
                 })
             }
         })
+})
+
+// @route   POST api/agents/login
+// @desc    Logs a agent in
+// @access  Public
+router.post("/login", (req, res) => {
+    const email = req.body.email
+    const password = req.body.password
+
+    Agent.findOne({ email }).then(agent => {
+        if (!agent) {
+            return res.status(404).json({ email: 'Agent not found' })
+        }
+
+        // Check password
+        bcrypt.compare(password, agent.password).then(isMatch => {
+        if (isMatch) {
+            // Agent matched
+            const payload = { id: agent.id, username: agent.username } // Create JWT Payload
+
+            // Sign token
+            jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 }, (err, token) => {
+            res.json({
+                success: true,
+                token: "Bearer " + token
+            })
+            })
+        } else {
+            return res.status(400).json({ password: "Password incorrect" })
+        }
+        })
+    })
 })
 
 module.exports = router
