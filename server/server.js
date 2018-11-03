@@ -3,6 +3,9 @@ const mongoose = require("mongoose")
 const bodyParser = require("body-parser")
 
 const agents = require("./routes/api/agents")
+const roles = require("./routes/api/roles")
+const shifts = require("./routes/api/shifts")
+
 
 const app = express()
 
@@ -23,6 +26,8 @@ app.get("/hello", (req, res) => res.send("Hello"))
 
 // Use routes
 app.use("/agents", agents)
+app.use("/roles", roles)
+app.use("/shifts", shifts)
 
 const port = process.env.PORT || 5000
 
