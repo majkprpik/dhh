@@ -30,7 +30,16 @@ const AgentSchema = new Schema({
         type: Number,
         default: 0
     },
-    monthlyNumberOfHours: []
+    monthlyNumberOfHours: [
+        {
+            month: {
+                type: String
+            },
+            numberOfHours: {
+                type: Number
+            }
+        }
+    ]
 })
 
 module.exports = Agent = mongoose.model("agents", AgentSchema)
