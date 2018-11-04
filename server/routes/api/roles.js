@@ -1,6 +1,9 @@
 const express = require("express")
 const router = express.Router()
 
+// Load input validation
+const validateRoleInput = require("../../validation/role")
+
 // Load agent model
 const Role = require("../../models/Role")
 
@@ -8,6 +11,12 @@ const Role = require("../../models/Role")
 // @desc    Add a role
 // @access  Public
 router.post("/add", (req, res) => {
+    const { errors, isValid } = validateRoleInput(req.body)
+
+    if(!isValid) {
+        return res.status(400).json(errors)
+    }
+
     Role.findOne({ name: req.body.name })
         .then(role => {
             if(role) {

@@ -3,6 +3,10 @@ const router = express.Router()
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const keys = require("../../config/keys")
+const passport = require("passport")
+
+// Load input validation
+const validateAgentInput = require("../../validation/agent")
 
 // Load agent model
 const Agent = require("../../models/Agent")
@@ -16,6 +20,12 @@ router.get("/test", (req, res) => res.json({msg: "Agents works!"}))
 // @desc    Registers a agent
 // @access  Public
 router.post("/register", (req, res) => {
+    const { errors, isValid } = validateAgentInput(req.body)
+
+    if(!isValid) {
+        return res.status(400).json(errors)
+    }
+
     Agent.findOne({ email: req.body.email })
         .then(agent => {
             if(agent) {
@@ -72,6 +82,17 @@ router.post("/login", (req, res) => {
         }
         })
     })
+})
+
+// @route   POST api/agents/current
+// @desc    Returns current agent
+// @access  Private
+router.get("/current", passport.authenticate("jwt", { session: false }), (req, res) => {
+    res.json({
+        username: req.user.username,
+        name: req.user.name,
+        email: req.user.email
+      })
 })
 
 module.exports = router

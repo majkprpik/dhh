@@ -1,6 +1,9 @@
 const express = require("express")
 const router = express.Router()
 
+// Load input validation
+const validateShiftInput = require("../../validation/shift")
+
 // Load agent model
 const Shift = require("../../models/Shift")
 
@@ -8,6 +11,12 @@ const Shift = require("../../models/Shift")
 // @desc    Add a shift
 // @access  Public
 router.post("/add", (req, res) => {
+    const { errors, isValid } = validateShiftInput(req.body)
+
+    if(!isValid) {
+        return res.status(400).json(errors)
+    }
+
     Shift.findOne({ start: req.body.start, duration: req.body.duration })
         .then(shift => {
             if(shift) {
