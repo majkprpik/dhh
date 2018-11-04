@@ -34,13 +34,51 @@ router.post("/add", (req, res) => {
         })
 })
 
+// @route   POST api/roles/remove
+// @desc    Remove a role
+// @access  Public
+router.post("/remove", (req, res) => {
+    Role.findOneAndDelete({ _id: req.body.id})
+        .then(role => {
+          if(!role){
+            return res.status(404).json({ _id: "Role to delete not fund"});
+          } else{
+            return res.status(200).end();
+            console.log("Role removed");
+          }
+        })
+        .catch(err => console.log(err));
+})
+
+// @route   PUT api/roles/update
+// @desc    Update a role
+// @access  Public
+router.put("/update", (req, res) => {
+  const { errors, isValid } = validateRoleInput(req.body)
+  if(!isValid) {
+      return res.status(400).json(errors)
+  }
+
+  Role.findOneAndUpdate({_id: req.body.id}, req.body)
+      .then(role_update => {
+        if(!role_update){
+          return res.status(404).json({_id: "Role to update not found"});
+        } else {
+          console.log("updated");
+          return res.status(200).end();
+        }
+      })
+      .catch(err => console.log(err));
+
+})
+
 // @route   GET api/roles
 // @desc    Get all roles
 // @access  Public
 router.get("/", (req, res) => {
     Role.find()
         .then(roles => res.json(roles))
-        .catch(err => res.status(404).json({ norolesfound: "No roles where found" }))  
+        .catch(err => res.status(404).json({ norolesfound: "No roles where found" }))
 })
 
 module.exports = router
