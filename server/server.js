@@ -3,7 +3,7 @@ const mongoose = require("mongoose")
 const bodyParser = require("body-parser")
 const passport = require("passport")
 
-const agents = require("./routes/api/agents")
+const users = require("./routes/api/users")
 const roles = require("./routes/api/roles")
 const shifts = require("./routes/api/shifts")
 
@@ -30,7 +30,7 @@ app.use(passport.initialize())
 require("./config/passport")(passport)
 
 // Use routes
-app.use("/agents", agents)
+app.use("/users", users)
 app.use("/roles", roles)
 app.use("/shifts", shifts)
 

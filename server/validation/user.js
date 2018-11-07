@@ -1,7 +1,7 @@
 const Validator = require("validator")
 const isEmpty = require("./isEmpty")
 
-module.exports = function validateAgentData(data) {
+module.exports = function validateUserData(data) {
     let errors = {}
 
     if (Validator.isEmpty(data.username)) {

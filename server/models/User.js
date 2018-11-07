@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 // Create schema
-const AgentSchema = new Schema({
+const UserSchema = new Schema({
     username: {
         type: String,
         required: true
@@ -42,4 +42,4 @@ const AgentSchema = new Schema({
     ]
 })
 
-module.exports = Agent = mongoose.model("agents", AgentSchema)
+module.exports = User = mongoose.model("users", UserSchema)

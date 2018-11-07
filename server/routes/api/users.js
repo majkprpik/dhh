@@ -6,32 +6,32 @@ const keys = require("../../config/keys")
 const passport = require("passport")
 
 // Load input validation
-const validateAgentInput = require("../../validation/agent")
+const validateUserInput = require("../../validation/user")
 
-// Load agent model
-const Agent = require("../../models/Agent")
+// Load user model
+const User = require("../../models/User")
 
-// @route   GET api/agents/test
-// @desc    Tests agent route
+// @route   GET api/users/test
+// @desc    Tests user route
 // @access  Public
-router.get("/test", (req, res) => res.json({msg: "Agents works!"}))
+router.get("/test", (req, res) => res.json({msg: "Users works!"}))
 
-// @route   POST api/agents/register
-// @desc    Registers a agent
+// @route   POST api/users/register
+// @desc    Registers a user
 // @access  Public
 router.post("/register", (req, res) => {
-    const { errors, isValid } = validateAgentInput(req.body)
+    const { errors, isValid } = validateUserInput(req.body)
 
     if(!isValid) {
         return res.status(400).json(errors)
     }
 
-    Agent.findOne({ email: req.body.email })
-        .then(agent => {
-            if(agent) {
+    User.findOne({ email: req.body.email })
+        .then(user => {
+            if(user) {
                 return res.status(400).json({ email: "Email already exists" })
             } else {
-                const newAgent = new Agent({
+                const newUser = new User({
                     username: req.body.username,
                     password: req.body.password,
                     email: req.body.email,
@@ -40,10 +40,10 @@ router.post("/register", (req, res) => {
                 })
 
                 bcrypt.genSalt(10, (err, salt) => {
-                    bcrypt.hash(newAgent.password, salt, (err, hash) => {
+                    bcrypt.hash(newUser.password, salt, (err, hash) => {
                         // if(err){ throw err}
-                        newAgent.password = hash
-                        newAgent.save()
+                        newUser.password = hash
+                        newUser.save()
                             .then(user => res.json(user))
                             .catch(err => console.log(err))
                     })
@@ -52,23 +52,23 @@ router.post("/register", (req, res) => {
         })
 })
 
-// @route   POST api/agents/login
-// @desc    Logs a agent in
+// @route   POST api/users/login
+// @desc    Logs a user in
 // @access  Public
 router.post("/login", (req, res) => {
     const email = req.body.email
     const password = req.body.password
 
-    Agent.findOne({ email }).then(agent => {
-        if (!agent) {
-            return res.status(404).json({ email: 'Agent not found' })
+    User.findOne({ email }).then(user => {
+        if (!user) {
+            return res.status(404).json({ email: 'User not found' })
         }
 
         // Check password
-        bcrypt.compare(password, agent.password).then(isMatch => {
+        bcrypt.compare(password, user.password).then(isMatch => {
         if (isMatch) {
-            // Agent matched
-            const payload = { id: agent.id, username: agent.username } // Create JWT Payload
+            // User matched
+            const payload = { id: user.id, username: user.username } // Create JWT Payload
 
             // Sign token
             jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 }, (err, token) => {
@@ -84,8 +84,8 @@ router.post("/login", (req, res) => {
     })
 })
 
-// @route   POST api/agents/current
-// @desc    Returns current agent
+// @route   POST api/users/current
+// @desc    Returns current user
 // @access  Private
 router.get("/current", passport.authenticate("jwt", { session: false }), (req, res) => {
     res.json({
