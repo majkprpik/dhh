@@ -41,7 +41,7 @@ router.post("/remove", (req, res) => {
     Shift.findOneAndDelete({ _id: req.body.id})
         .then(shift => {
           if(!shift){
-            return res.status(404).json({ _id: "Shift to delete not fund"});
+            return res.status(404).json({ _id: "Shift to delete not found"});
           } else{
             console.log("Shift removed");
             return res.status(200).end();
