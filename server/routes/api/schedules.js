@@ -34,6 +34,21 @@ router.post("/add", (req, res) => {
         })
 })
 
+// @route   PUT api/schedules/update
+// @desc    Update a schedule
+// @access  Public
+router.put("/update", (req, res) => {
+    Schedule.findOneAndUpdate({_id: req.body._id}, req.body, { new: true })
+        .then(schedule => {
+          if(!schedule){
+            return res.status(404).json({_id: "Schedule to update not found", id: req.body._id});
+          } else {
+            res.json(schedule)
+          }
+        })
+        .catch(err => console.log(err));
+  })
+
 // @route   GET api/schedules/
 // @desc    Add a schedule
 // @access  Public

@@ -65,8 +65,8 @@ router.put("/update", (req, res) => {
 })
 
 
-// @route   GET api/roles
-// @desc    Get all roles
+// @route   GET api/permissions
+// @desc    Get all permissions
 // @access  Public
 router.get("/", (req, res) => {
     Permissions.find()
