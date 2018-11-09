@@ -21,14 +21,11 @@ const ScheduleSchema = new Schema({
                                 type: String,
                                 required: true
                             },
-                            agentName: {
-                                type: String,
-                                required: true
-                            },
-                            agentSurname: {
-                                type: String,
-                                required: true
-                            }
+                            user: [
+                                {
+                                    type: Schema.Types.ObjectId, ref: 'User'
+                                }
+                            ] 
                         }
                     ]
                 }
