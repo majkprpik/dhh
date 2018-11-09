@@ -7,6 +7,7 @@ const users = require("./routes/api/users")
 const roles = require("./routes/api/roles")
 const shifts = require("./routes/api/shifts")
 const schedules = require("./routes/api/schedules")
+const permissions = require("./routes/api/permissions")
 
 
 const app = express()
@@ -35,6 +36,7 @@ app.use("/users", users)
 app.use("/roles", roles)
 app.use("/shifts", shifts)
 app.use("/schedules", schedules)
+app.use("/permissions", permissions)
 
 const port = process.env.PORT || 5000
 
