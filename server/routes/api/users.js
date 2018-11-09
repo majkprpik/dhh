@@ -84,7 +84,16 @@ router.post("/login", (req, res) => {
     })
 })
 
-// @route   POST api/users/current
+// @route   GET api/users/:id
+// @desc    Get user by id
+// @access  Private
+router.get("/:id", (req, res) => {
+    User.findById(req.params.id)
+        .then(user => res.json(user))
+        .catch(err => res.status(404).json({ nouserfound: "No user was found" }))
+})
+
+// @route   GET api/users/current
 // @desc    Returns current user
 // @access  Private
 router.get("/current", passport.authenticate("jwt", { session: false }), (req, res) => {

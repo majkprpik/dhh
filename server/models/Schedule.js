@@ -3,6 +3,10 @@ const Schema = mongoose.Schema
 
 // Create schema
 const ScheduleSchema = new Schema({
+    year: {
+        type: String,
+        required: true
+    },
     months: [
         {
             month: {
@@ -18,14 +22,13 @@ const ScheduleSchema = new Schema({
                     shifts: [
                         {
                             shift: {
-                                type: String,
+                                type: Schema.Types.ObjectId, ref: 'Shift',
                                 required: true
                             },
-                            user: [
-                                {
-                                    type: Schema.Types.ObjectId, ref: 'User'
-                                }
-                            ] 
+                            user: {
+                                type: Schema.Types.ObjectId, ref: 'User',
+                                required: true
+                            }
                         }
                     ]
                 }
