@@ -86,7 +86,7 @@ router.post("/login", (req, res) => {
 
 // @route   GET api/users/:id
 // @desc    Get user by id
-// @access  Private
+// @access  Public
 router.get("/:id", (req, res) => {
     User.findById(req.params.id)
         .then(user => res.json(user))

@@ -2,19 +2,19 @@ const express = require("express")
 const router = express.Router()
 
 // Load agent model
-const Permissions = require("../../models/Permissions")
+const Permission = require("../../models/Permission")
 
 // @route   POST api/permissions/add
 // @desc    Add a permission
 // @access  Public
 router.post("/add", (req, res) => {
 
-    Permissions.findOne({ name: req.body.name })
+    Permission.findOne({ name: req.body.name })
         .then(permis => {
             if(permis) {
                 return res.status(400).json({ name: "Permission already exists" })
             } else {
-                const newPermis = new Permissions({
+                const newPermis = new Permission({
                     name: req.body.name,
                     view: req.body.view,
                     insert: req.body.insert,
@@ -35,10 +35,10 @@ router.post("/add", (req, res) => {
 // @desc    Remove a permission
 // @access  Public
 router.post("/remove", (req, res) => {
-    Permissions.findOneAndDelete({ _id: req.body.id})
+    Permission.findOneAndDelete({ _id: req.body.id})
         .then(permis => {
           if(!permis){
-            return res.status(404).json({ _id: "Permissions to delete not fund"});
+            return res.status(404).json({ _id: "Permission to delete not fund"});
           } else{
             return res.status(200).end();
             console.log("Permission removed");
@@ -52,7 +52,7 @@ router.post("/remove", (req, res) => {
 // @access  Public
 router.put("/update", (req, res) => {
 
-  Permissions.findOneAndUpdate({_id: req.body.id}, req.body)
+  Permission.findOneAndUpdate({_id: req.body.id}, req.body)
       .then(permis_update => {
         if(!permis_update){
           return res.status(404).json({_id: "Permission to update not found"});
@@ -69,7 +69,7 @@ router.put("/update", (req, res) => {
 // @desc    Get all permissions
 // @access  Public
 router.get("/", (req, res) => {
-    Permissions.find()
+    Permission.find()
         .then(permis => res.json(permis))
         .catch(err => res.status(404).json({ nopermisionsfound: "No permissions were found" }))
 })

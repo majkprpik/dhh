@@ -38,13 +38,13 @@ router.post("/add", (req, res) => {
 // @desc    Remove a role
 // @access  Public
 router.post("/remove", (req, res) => {
-    Role.findOneAndDelete({ _id: req.body.id})
+    Role.findOneAndDelete({ _id: req.body._id})
         .then(role => {
           if(!role){
             return res.status(404).json({ _id: "Role to delete not fund"});
           } else{
-            return res.status(200).end();
             console.log("Role removed");
+            return res.json( {success: true} );
           }
         })
         .catch(err => console.log(err));
@@ -65,11 +65,20 @@ router.put("/update", (req, res) => {
           return res.status(404).json({_id: "Role to update not found"});
         } else {
           console.log("updated");
-          return res.status(200).end();
+          return res.json( {success: true} );
         }
       })
       .catch(err => console.log(err));
 
+})
+
+// @route   GET api/roles/:id
+// @desc    Get role by id
+// @access  Public
+router.get("/:id", (req, res) => {
+    Role.findById(req.params.id)
+        .then(shifts => res.json(shifts))
+        .catch(err => res.status(404).json({ norolefound: "No role was found" }))
 })
 
 // @route   GET api/roles

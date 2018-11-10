@@ -41,7 +41,7 @@ router.put("/update", (req, res) => {
     Schedule.findOneAndUpdate({_id: req.body._id}, req.body, { new: true })
         .then(schedule => {
           if(!schedule){
-            return res.status(404).json({_id: "Schedule to update not found", id: req.body._id});
+            return res.status(404).json({_id: "Schedule to update not found"});
           } else {
             res.json(schedule)
           }

@@ -24,7 +24,8 @@ const UserSchema = new Schema({
         required: true
     },
     role: {
-        type: String
+        type: Schema.Types.ObjectId, ref: 'Role',
+        required: true
     },
     totalNumberOfHours: {
         type: Number,

@@ -7,7 +7,7 @@ const validateShiftInput = require("../../validation/shift")
 // Load agent model
 const Shift = require("../../models/Shift")
 
-// @route   POST api/shift/add
+// @route   POST api/shifts/add
 // @desc    Add a shift
 // @access  Public
 router.post("/add", (req, res) => {
@@ -34,23 +34,23 @@ router.post("/add", (req, res) => {
         })
 })
 
-// @route   POST api/shift/remove
+// @route   POST api/shifts/remove
 // @desc    Remove a shift
 // @access  Public
 router.post("/remove", (req, res) => {
-    Shift.findOneAndDelete({ _id: req.body.id})
+    Shift.findOneAndDelete({ _id: req.body._id})
         .then(shift => {
           if(!shift){
             return res.status(404).json({ _id: "Shift to delete not found"});
           } else{
             console.log("Shift removed");
-            return res.status(200).end();
+            return res.json( {success: true} );
           }
         })
         .catch(err => console.log(err));
 })
 
-// @route   PUT api/shift/update
+// @route   PUT api/shifts/update
 // @desc    Update a shift
 // @access  Public
 router.put("/update", (req, res) => {
@@ -65,7 +65,7 @@ router.put("/update", (req, res) => {
           return res.status(404).json({_id: "Shift to update not found"});
         } else {
           console.log("Shift updated");
-          return res.status(200).end();
+          return res.json( {success: true} )
         }
       })
       .catch(err => console.log(err));

@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 // Create schema
-const PermissionsSchema = new Schema({
+const PermissionSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -29,4 +29,4 @@ const PermissionsSchema = new Schema({
       }
 })
 
-module.exports = Permissions = mongoose.model("permission", PermissionsSchema)
+module.exports = Permission = mongoose.model("permissions", PermissionSchema)
