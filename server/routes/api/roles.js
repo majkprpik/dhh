@@ -72,11 +72,11 @@ router.put("/update", (req, res) => {
 
 })
 
-// @route   GET api/roles/:id
+// @route   GET api/roles/get
 // @desc    Get role by id
 // @access  Public
-router.get("/:id", (req, res) => {
-    Role.findById(req.params.id)
+router.get("/get", (req, res) => {
+    Role.findById(req.body._id)
         .then(shifts => res.json(shifts))
         .catch(err => res.status(404).json({ norolefound: "No role was found" }))
 })

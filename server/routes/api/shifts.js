@@ -72,11 +72,11 @@ router.put("/update", (req, res) => {
 
 })
 
-// @route   GET api/shifts/:id
+// @route   GET api/shifts/get
 // @desc    Get shift by id
 // @access  Public
-router.get("/:id", (req, res) => {
-    Shift.findById(req.params.id)
+router.get("/get", (req, res) => {
+    Shift.findById(req.body._id)
         .then(shifts => res.json(shifts))
         .catch(err => res.status(404).json({ noshiftfound: "No shift was found" }))
 })

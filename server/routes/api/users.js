@@ -84,11 +84,11 @@ router.post("/login", (req, res) => {
     })
 })
 
-// @route   GET api/users/:id
+// @route   GET api/users/get
 // @desc    Get user by id
 // @access  Public
-router.get("/:id", (req, res) => {
-    User.findById(req.params.id)
+router.get("/get", (req, res) => {
+    User.findById(req.body._id)
         .then(user => res.json(user))
         .catch(err => res.status(404).json({ nouserfound: "No user was found" }))
 })

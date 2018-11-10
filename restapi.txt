@@ -30,12 +30,12 @@ Response 200 (application/json)
     token: "Bearer " + token - jwt
 }
 
-@route   GET api/users/:id
+@route   GET api/users/get
 @desc    Get user by id
 @access  Public
 Request (application/json)
 {
-    id: user id
+    _id: user id
 }
 Response 200 (application/json)
 {
@@ -121,12 +121,12 @@ Response 400 (application/json)
     _id: "Shift to update not found"
 }
 
-@route   GET api/shifts/:id
+@route   GET api/shifts/get
 @desc    Get shift by id
 @access  Public
 Request (application/json)
 {
-    id: shift id
+    _id: shift id
 }
 Response 200 (application/json)
 {
@@ -210,9 +210,13 @@ Response 400 (application/json)
     _id: "Role to update not found"
 }
 
-@route   GET api/roles/:id
+@route   GET api/roles/get
 @desc    Get role by id
 @access  Public
+Request (application/json)
+{
+    _id: role id
+}
 Response 200 (application/json)
 {
     name: "L1 agent" - string, 3-30 chars
