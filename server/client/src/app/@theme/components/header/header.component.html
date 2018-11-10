@@ -1,0 +1,29 @@
+<div
+  class="header-container"
+  [class.left]="position === 'normal'"
+  [class.right]="position === 'inverse'"
+>
+  <div class="logo-containter">
+    <a (click)="toggleSidebar()" href="#" class="navigation"
+      ><i class="nb-menu"></i
+    ></a>
+    <div class="logo" (click)="goToHome()">DHH<span>admin</span></div>
+  </div>
+</div>
+
+<div class="header-container">
+  <nb-actions
+    size="medium"
+    [class.right]="position === 'normal'"
+    [class.left]="position === 'inverse'"
+  >
+    <nb-action *nbIsGranted="['view', 'user']">
+      <nb-user
+        *ngIf="user"
+        [nbContextMenu]="userMenu"
+        [name]="user?.username"
+        nbContextMenuTag="my-context-menu"
+      ></nb-user>
+    </nb-action>
+  </nb-actions>
+</div>
