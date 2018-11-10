@@ -1,7 +1,7 @@
 # User
 
-## POST api/roles/add  
-### Add a role  
+## POST api/users/add  
+### Add a user  
 ### Request (application/json)
 ```javascript    
     username: "perop" - string, 4-30 chars  
