@@ -1,6 +1,5 @@
-import { Component, OnDestroy } from "@angular/core";
-import { NbThemeService } from "@nebular/theme";
-import { takeWhile } from "rxjs/operators/takeWhile";
+import { Component, OnDestroy } from '@angular/core';
+import { NbThemeService } from '@nebular/theme';
 
 interface CardSettings {
   title: string;
@@ -9,9 +8,9 @@ interface CardSettings {
 }
 
 @Component({
-  selector: "ngx-dhhdashboard",
-  styleUrls: ["./dhhdashboard.component.scss"],
-  templateUrl: "./dhhdashboard.component.html"
+  selector: 'ngx-dhhdashboard',
+  styleUrls: ['./dhhdashboard.component.scss'],
+  templateUrl: './dhhdashboard.component.html',
 })
 export class DhhDashboardComponent implements OnDestroy {
   /*private alive = true;

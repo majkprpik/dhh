@@ -1,18 +1,18 @@
-import { NbMenuItem } from "@nebular/theme";
+import { NbMenuItem } from '@nebular/theme';
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
-    title: "DHH",
-    icon: "nb-e-commerce",
-    link: "/pages/dhh-dashboard",
-    home: true
+    title: 'DHH',
+    icon: 'nb-e-commerce',
+    link: '/pages/dhh-dashboard',
+    home: true,
   },
   {
-    title: "Agent",
-    icon: "nb-e-commerce",
-    link: "/pages/agent",
-    home: true
-  }
+    title: 'Agent',
+    icon: 'nb-e-commerce',
+    link: '/pages/agent',
+    home: true,
+  },
   /*,
   {
     title: "E-commerce",
