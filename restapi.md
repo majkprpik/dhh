@@ -52,6 +52,24 @@
     ]
 ```
 
+## GET api/users/
+### Get all users
+
+### Response 200 (application/json)
+```javascript    
+    username: "perop" - string, 4-30 chars
+    password: "pero1234" - string, 6-30 chars
+    email: "perop@gmail.com" - string, valid email
+    name: "Pero"
+    surname: "Peric"
+    role: "/" - role id
+    totalNumberOfHours: 250 - number
+    monthlyNumberOfHours: [
+        month: "Jan" - string
+        numberOfHours: 100 - number
+    ]
+```
+
 ## GET api/users/current
 ### Returns current user
 ### Request (application/json)
@@ -143,10 +161,6 @@
 
 ## GET api/shifts
 ### Get all shifts
-### Request (application/json)
-```javascript    
-    id: shift id
-```
 
 ### Response 200 (application/json)
 ```javascript    
@@ -251,19 +265,14 @@
 ### Add a schedule
 ### Request (application/json)
 ```javascript
-    year: "2001" - number
-    months: [
+    month: "01/2018" - string
+    days: [
         {
-            month: "1/18" - string
-            days: [
+            day: "R" - string
+            shifts: [
                 {
-                    day: "P" - string
-                    shifts: [
-                        {
-                            shift: "5bdda62c5af0de0b4c94a49c" - shift id
-                            user: "5be2c6aefbffa72a9c2f67fb" - user id
-                        }
-                    ]
+                    shift: "5bdda62c5af0de0b4c94a49c" - shift id
+                    user: "5be2c6aefbffa72a9c2f67fb" - user id
                 }
             ]
         }
@@ -275,7 +284,7 @@
 
 ### Response 400 (application/json)
 ```javascript
-    year: "Schedule already exists"
+    month: "Schedule already exists"
 ```
 
 ## POST api/schedules/update
@@ -284,19 +293,14 @@
 ```javascript
     _id: "..." - schedule id
 
-    year: "2001" - number
-    months: [
+    month: "01/2018" - string
+    days: [
         {
-            month: "1/18" - string
-            days: [
+            day: "R" - string
+            shifts: [
                 {
-                    day: "P" - string
-                    shifts: [
-                        {
-                            shift: "5bdda62c5af0de0b4c94a49c" - shift id
-                            user: "5be2c6aefbffa72a9c2f67fb" - user id
-                        }
-                    ]
+                    shift: "5bdda62c5af0de0b4c94a49c" - shift id
+                    user: "5be2c6aefbffa72a9c2f67fb" - user id
                 }
             ]
         }
@@ -315,19 +319,14 @@
 ### Returns all schedules
 ### Response 200 (application/json)
 ```javascript
-    year: "2001" - number
-    months: [
+    month: "01/2018" - string
+    days: [
         {
-            month: "1/18" - string
-            days: [
+            day: "R" - string
+            shifts: [
                 {
-                    day: "P" - string
-                    shifts: [
-                        {
-                            shift: "5bdda62c5af0de0b4c94a49c" - shift id
-                            user: "5be2c6aefbffa72a9c2f67fb" - user id
-                        }
-                    ]
+                    shift: "5bdda62c5af0de0b4c94a49c" - shift id
+                    user: "5be2c6aefbffa72a9c2f67fb" - user id
                 }
             ]
         }

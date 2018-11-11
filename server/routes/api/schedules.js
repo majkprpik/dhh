@@ -6,25 +6,18 @@ const router = express.Router()
 // Load agent model
 const Schedule = require("../../models/Schedule")
 
-// @route   POST api/schedules/test
-// @desc    Testing
-// @access  Public
-router.post("/test", (req, res) => {
-    return res.json(req.body.months[0].days[0].shifts[2].user)
-})
-
 // @route   POST api/schedules/add
 // @desc    Add a schedule
 // @access  Public
 router.post("/add", (req, res) => {
-    Schedule.findOne({ year: req.body.year })
+    Schedule.findOne({ month: req.body.month })
         .then(schedule => {
             if(schedule) {
-                return res.status(400).json({ year: "Schedule already exists" })
+                return res.status(400).json({ month: "Schedule already exists" })
             } else {
                 const newSchedule = new Schedule({
-                    year: req.body.year,
-                    months: req.body.months
+                    month: req.body.month,
+                    days: req.body.days
                 })
 
                 newSchedule.save()

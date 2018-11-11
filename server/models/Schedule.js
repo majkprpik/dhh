@@ -3,34 +3,26 @@ const Schema = mongoose.Schema
 
 // Create schema
 const ScheduleSchema = new Schema({
-    year: {
+    month: {
         type: String,
         required: true
     },
-    months: [
+    days: [
         {
-            month: {
+            day: {
                 type: String,
                 required: true
             },
-            days: [
+            shifts: [
                 {
-                    day: {
-                        type: String,
+                    _shift: {
+                        type: Schema.Types.ObjectId, ref: 'Shift',
                         required: true
                     },
-                    shifts: [
-                        {
-                            shift: {
-                                type: Schema.Types.ObjectId, ref: 'Shift',
-                                required: true
-                            },
-                            user: {
-                                type: Schema.Types.ObjectId, ref: 'User',
-                                required: true
-                            }
-                        }
-                    ]
+                    _user: {
+                        type: Schema.Types.ObjectId, ref: 'User',
+                        required: true
+                    }
                 }
             ]
         }

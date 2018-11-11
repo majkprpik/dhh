@@ -32,6 +32,7 @@ router.post("/add", (req, res) => {
                     .catch(err => console.log(err))
             }
         })
+        .catch(err => console.log(err));
 })
 
 // @route   POST api/shifts/remove
@@ -77,7 +78,7 @@ router.put("/update", (req, res) => {
 // @access  Public
 router.get("/get", (req, res) => {
     Shift.findById(req.body._id)
-        .then(shifts => res.json(shifts))
+        .then(shift => res.json(shift))
         .catch(err => res.status(404).json({ noshiftfound: "No shift was found" }))
 })
 
