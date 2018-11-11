@@ -8,8 +8,9 @@ const passport = require("passport");
 // Load input validation
 const validateUserInput = require("../../validation/user");
 
-// Load user model
+// Load models
 const User = require("../../models/User");
+const Schedule = require("../../models/Schedule")
 
 // @route   GET api/users/test
 // @desc    Tests user route
@@ -89,10 +90,35 @@ router.post("/login", (req, res) => {
   });
 });
 
-router.post("/logout", (req, res) => {
-  req.logout();
-  res.send({ message: "Successfully logged out" });
-});
+// @route   GET api/users/profile
+// @desc    Get profile by user id
+// @access  Public
+/*router.get("/profile", (req, res) => {
+  User.findById(req.body._id)
+    .then(user => {
+      var totalNumberOfHours = 0
+
+      Schedule.find()
+      .then(schedule => {
+        var y, m, d, s
+        
+        for(y = 0; y < schedule.length; y++){// Loop through years (2001, 2002, 2003) 
+          for(m = 0; m < schedule[y].months[m].length; m++){// Loop through months of a year(2001; 01, 02, 03)
+            for(d = 0; d < schedule[y].months[m].days.length; d++){// Loop through days of a month in a year(2001-01; 01, 02, 03)
+              for(s = 0; s < schedule[y].months[m].days[d].shifts.length; s++){
+                if(schedule[y].months[m].days[d].shifts[s])
+              }
+            }
+          }
+        }
+        res.json(totalNumberOfHours)
+      })
+      .catch(err => res.status(404).json({ noschedulesfound: "No schedules where found" }));
+
+      //res.json(user)
+    })
+    .catch(err => res.status(404).json({ nouserfound: "No user was found" }));
+});*/
 
 // @route   GET api/users/get
 // @desc    Get user by id
@@ -101,6 +127,15 @@ router.get("/get", (req, res) => {
   User.findById(req.body._id)
     .then(user => res.json(user))
     .catch(err => res.status(404).json({ nouserfound: "No user was found" }));
+});
+
+// @route   GET api/users/all
+// @desc    Get all users
+// @access  Public
+router.get("/all", (req, res) => {
+  User.find()
+    .then(user => res.json(user))
+    .catch(err => res.status(404).json({ nousersfound: "No users was found" }));
 });
 
 // @route   GET api/users/current
@@ -117,5 +152,13 @@ router.get(
     });
   }
 );
+
+// @route   Post api/users/logout
+// @desc    Logout
+// @access  Public
+router.post("/logout", (req, res) => {
+  req.logout();
+  res.json({ message: "Successfully logged out" });
+});
 
 module.exports = router;
