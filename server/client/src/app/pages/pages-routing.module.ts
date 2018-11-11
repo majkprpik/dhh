@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { PagesComponent } from './pages.component';
 import { DhhDashboardComponent } from './dhhdashboard/dhhdashboard.component';
+import { DhhDashboard1Component } from './dhhdashboard1/dhhdashboard.component';
+import { DhhDashboard2Component } from './dhhdashboard2/dhhdashboard.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import { AgentComponent } from './agent/agent.component';
 
@@ -22,6 +24,14 @@ const routes: Routes = [
       {
         path: 'dhh-dashboard',
         component: DhhDashboardComponent,
+      },
+      {
+        path: 'dhh-dashboard1',
+        component: DhhDashboard1Component,
+      },
+      {
+        path: 'dhh-dashboard2',
+        component: DhhDashboard2Component,
       },
       {
         path: 'agent',
@@ -56,6 +66,10 @@ const routes: Routes = [
         loadChildren: './tables/tables.module#TablesModule',
       },
       {
+        path: 'users',
+        loadChildren: './users/users.module#UsersModule',
+      },
+      {
         path: 'miscellaneous',
         loadChildren: './miscellaneous/miscellaneous.module#MiscellaneousModule',
       },
@@ -76,4 +90,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class PagesRoutingModule {}
+export class PagesRoutingModule { }

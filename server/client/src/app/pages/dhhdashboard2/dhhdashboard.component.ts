@@ -44,7 +44,7 @@ const colors: any = {
   styleUrls: ['./dhhdashboard.component.scss'],
   templateUrl: './dhhdashboard.component.html',
 })
-export class DhhDashboardComponent {
+export class DhhDashboard2Component {
   @ViewChild('modalContent')
   modalContent: TemplateRef<any>;
 

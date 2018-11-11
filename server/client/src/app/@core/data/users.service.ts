@@ -24,7 +24,7 @@ export class UserService {
   }
 
   getUsers() {
-    return of([]);
+    return this.http.get('api/current_user', this.httpOptions);
   }
 
   getUser() {

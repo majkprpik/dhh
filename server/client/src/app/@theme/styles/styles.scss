@@ -14,6 +14,7 @@
 @import './pace.theme';
 
 @import './bootstrap-rtl';
+@import "../../../../node_modules/angular-calendar/css/angular-calendar.css";
 
 // install the framework and custom global styles
 @include nb-install() {

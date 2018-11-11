@@ -5,7 +5,7 @@ import { FlatpickrModule } from 'angularx-flatpickr';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-import { DhhDashboardComponent } from './dhhdashboard.component';
+import { DhhDashboard1Component } from './dhhdashboard.component';
 
 @NgModule({
   imports: [
@@ -18,7 +18,7 @@ import { DhhDashboardComponent } from './dhhdashboard.component';
       useFactory: adapterFactory,
     }),
   ],
-  declarations: [DhhDashboardComponent],
-  exports: [DhhDashboardComponent],
+  declarations: [DhhDashboard1Component],
+  exports: [DhhDashboard1Component],
 })
-export class DhhDashboardModule { }
+export class DhhDashboard1Module { }

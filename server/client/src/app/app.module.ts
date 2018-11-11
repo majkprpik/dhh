@@ -52,4 +52,4 @@ import { NbAuthJWTToken } from '@nebular/auth';
   bootstrap: [AppComponent],
   providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
 })
-export class AppModule {}
+export class AppModule { }
