@@ -49,7 +49,7 @@ router.put("/update", (req, res) => {
         .catch(err => console.log(err));
   })
 
-// @route   GET api/schedules/
+// @route   GET api/schedules
 // @desc    Add a schedule
 // @access  Public
 router.get("/", (req, res) => {
