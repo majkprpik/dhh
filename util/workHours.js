@@ -3,26 +3,29 @@ const User = require("../models/User");
 const Schedule = require("../models/Schedule")
 
 
-module.exports = function setWorkHours(userId) {
+module.exports = async function setWorkHours(userId) {
     var sumOfHours = 0
 
-    Schedule.findOne({month: "01/2018"})
-        .then(schedule => {
-            var d, s
+    const schedule = await getSchedule({ month: "01/2018" })
 
-            for(d = 0; d < schedule.days.length; d++){
-                for(s = 0; s < schedule.days[d].shifts.length; s++){
-                    if(String(schedule.days[d].shifts[s]._user) === String(userId)){
-                        Shift.findOne({ _id: schedule.days[d].shifts[s]._shift })
-                            .then(shift => {
-                                sumOfHours += shift.duration
-                            })
-                    }
-                }
+    for(d = 0; d < schedule.days.length; d++){
+        for(s = 0; s < schedule.days[d].shifts.length; s++){
+            if(String(schedule.days[d].shifts[s]._user) === String(userId)){
+                const shift = await getShift(schedule.days[d].shifts[s]._shift)
+                sumOfHours += shift.duration
             }
-        })
-    
-    User.findByIdAndUpdate(userId, {totalNumberOfHours: sumOfHours})
+        }
+    }
+
+    await User.findByIdAndUpdate(userId, {totalNumberOfHours: sumOfHours})
         .then(user => console.log(user))
         .catch(err => console.log(err))
+}
+
+const getShift = function (shiftId) {
+    return Shift.findOne({ _id: shiftId })
+}
+
+const getSchedule = function (month) {
+    return Schedule.findOne({month: "01/2018"})
 }

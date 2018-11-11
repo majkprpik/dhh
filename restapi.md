@@ -1,4 +1,11 @@
-# User
+# Table of contents
+1. [Users](#Users)
+2. [Shift](#Shifts)
+3. [Roles](#Roles)
+4. [Schedules](#Schedules)
+5. [Permissions](#Permissions)
+
+# Users
 
 ## POST api/users/add  
 ### Add a user  
@@ -52,7 +59,7 @@
     ]
 ```
 
-## GET api/users/
+## GET api/users
 ### Get all users
 
 ### Response 200 (application/json)
