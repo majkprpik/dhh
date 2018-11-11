@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
 import { HttpClient } from '@angular/common/http';
@@ -23,6 +23,13 @@ export class UserService {
     });
   }
 
+  getUsers() {
+    return of([]);
+  }
+
+  getUser() {
+    return of({ name: 'nista' });
+  }
   getCurrentUser(): Observable<any> {
     return this.http.get('api/current_user', this.httpOptions);
   }
