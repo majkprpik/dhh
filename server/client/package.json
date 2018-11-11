@@ -1,5 +1,5 @@
 {
-  "name": "dhhadmin",
+  "name": "ngx-admin-demo",
   "version": "2.3.0",
   "license": "MIT",
   "repository": {
@@ -22,7 +22,7 @@
     "build:prod": "npm run build -- --prod --aot",
     "test": "ng test",
     "test:coverage": "rimraf coverage && npm run test -- --code-coverage",
-    "lint": "ng lint",
+    "lint": "ng lint --force ngx-admin-demo",
     "lint:fix": "ng lint ngx-admin-demo --fix",
     "lint:styles": "stylelint ./src/**/*.scss",
     "lint:ci": "npm run lint && npm run lint:styles",

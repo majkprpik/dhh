@@ -1,25 +1,21 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
-import { NbThemeService } from "@nebular/theme";
-import { takeWhile } from "rxjs/operators/takeWhile";
-import { AgentService } from "../../services/agent/agent.service";
+import { Component, OnInit } from '@angular/core';
+// import { AgentService } from '../../services/agent/agent.service';
 @Component({
-  selector: "ngx-agent",
-  styleUrls: ["./agent.component.scss"],
-  templateUrl: "./agent.component.html"
+  selector: 'ngx-agent',
+  styleUrls: ['./agent.component.scss'],
+  templateUrl: './agent.component.html',
 })
 export class AgentComponent implements OnInit {
-  private users = null;
+  // private users = null;
 
   getUsers(): void {
-    this.users = this.agentService.getCurrentUser().subscribe(agents => {
-      console.log(agents);
+    /* this.users = this.agentService.getCurrentUser().subscribe(agents => {
       this.users = agents.massage;
-    });
+    }); */
   }
   constructor(
-    private themeService: NbThemeService,
-    private agentService: AgentService
-  ) {}
+    // private agentService: AgentService,
+  ) { }
 
   ngOnInit() {
     this.getUsers();

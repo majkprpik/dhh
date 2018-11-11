@@ -1,16 +1,17 @@
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 
-import { NgxEchartsModule } from "ngx-echarts";
+import { NgxEchartsModule } from 'ngx-echarts';
 
-import { DhhDashboardComponent } from "./dhhdashboard.component";
-import { ThemeModule } from "../../@theme/theme.module";
+import { DhhDashboardComponent } from './dhhdashboard.component';
+import { ThemeModule } from '../../@theme/theme.module';
 
 /*import { StatusCardComponent } from "../dashboard/status-card/status-card.component";
 import { ContactsComponent } from "../dashboard/contacts/contacts.component";
 import { RoomsComponent } from "../dashboard/rooms/rooms.component";
 import { RoomSelectorComponent } from "../dashboard/rooms/room-selector/room-selector.component";
 import { TemperatureComponent } from "../dashboard/temperature/temperature.component";
-import { TemperatureDraggerComponent } from "../dashboard/temperature/temperature-dragger/temperature-dragger.component";
+import { TemperatureDraggerComponent }
+from "../dashboard/temperature/temperature-dragger/temperature-dragger.component";
 import { TeamComponent } from "../dashboard/team/team.component";
 import { KittenComponent } from "../dashboard/kitten/kitten.component";
 import { SecurityCamerasComponent } from "../dashboard/security-cameras/security-cameras.component";
@@ -25,7 +26,7 @@ import { TrafficChartComponent } from "../dashboard/traffic/traffic-chart.compon
 @NgModule({
   imports: [ThemeModule, NgxEchartsModule],
   declarations: [
-    DhhDashboardComponent
+    DhhDashboardComponent,
     /*StatusCardComponent,
     TemperatureDraggerComponent,
     ContactsComponent,
@@ -42,6 +43,6 @@ import { TrafficChartComponent } from "../dashboard/traffic/traffic-chart.compon
     SolarComponent,
     TrafficComponent,
     TrafficChartComponent*/
-  ]
+  ],
 })
-export class DhhDashboardModule {}
+export class DhhDashboardModule { }
