@@ -8,10 +8,33 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true,
   },
   {
+    title: 'DHH1',
+    icon: 'nb-e-commerce',
+    link: '/pages/dhh-dashboard1',
+    home: true,
+  },
+  {
+    title: 'DHH2',
+    icon: 'nb-e-commerce',
+    link: '/pages/dhh-dashboard2',
+    home: true,
+  },
+  {
     title: 'Agent',
     icon: 'nb-e-commerce',
     link: '/pages/agent',
     home: true,
+  },
+  {
+    title: 'Users',
+    icon: 'nb-tables',
+    link: '/pages/users',
+    children: [
+      {
+        title: 'Edit',
+        link: '/pages/users/smart-table',
+      },
+    ],
   },
   /*,
   {

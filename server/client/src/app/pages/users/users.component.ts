@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 // import { AgentService } from '../../services/agent/agent.service';
 @Component({
-  selector: 'ngx-agent',
-  styleUrls: ['./agent.component.scss'],
-  templateUrl: './agent.component.html',
+  selector: 'ngx-users',
+  template: `<router-outlet></router-outlet>`,
 })
-export class AgentComponent implements OnInit {
+export class UsersComponent implements OnInit {
   // private users = null;
 
   getUsers(): void {
@@ -21,3 +20,4 @@ export class AgentComponent implements OnInit {
     this.getUsers();
   }
 }
+
