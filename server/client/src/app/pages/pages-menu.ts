@@ -28,10 +28,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Users',
     icon: 'nb-tables',
+    link: '/pages/users',
     children: [
       {
         title: 'Edit',
-        link: '/pages/tables/smart-table',
+        link: '/pages/users/smart-table',
       },
     ],
   },
