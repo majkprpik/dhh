@@ -8,7 +8,7 @@
 # Users
 
 ## POST api/users  
-### Add/Register a user 
+### Add/Register a user
 ### Request (application/json)
 ```javascript    
     username: "perop" - string, 4-30 chars  
@@ -282,6 +282,98 @@
     norolesfound: "No roles where found"
 ```
 
+# Permissions
+## POST api/permissions
+### Add a permission
+### Request (application/json)
+```javascript
+    {
+      name: "lider", - string, 3-30 chars
+      view: "1", - number, 0-1
+      insert: "1", - number, 0-1
+      update: "1", - number, 0-1
+      delete: "1", - number, 0-1
+      request: "1" - number, 0-1
+    }
+```
+### Response 200 (application/json)
+  returns above sent permission
+
+### Response 400 (application/json)
+```javascript
+    name: "Permission already exists"
+```
+## DELETE api/permissions/:id
+### Remove a permission by id
+### Request (application/json)
+```javascript
+    id: "..." - permission id
+```
+### Response 200 (application/json)
+```javascript
+    success: "true"
+```
+### Response 404 (application/json)
+```javascript
+    id: "Permission to delete not found"
+```
+
+## PATCH api/permissions/:id
+### Update a permission by id
+### Request (application/json)
+```javascript
+    id: "..." - permission id
+```
+### Response 200 (application/json)
+  returns the updated above sent permission
+
+### Response 404 (application/json)
+```javascript
+    _id: "Permission to update not found"
+```
+
+## GET api/permissions/:id
+### Get permission by id
+### Request (application/json)
+```javascript
+    id: "..." - permission id
+```
+### Response 200 (application/json)
+```javascript
+    {
+      _id: "..." - permission id
+      name: "permission name",
+      view: "1",
+      insert: "1",
+      update: "0",
+      delete: "1",
+      request: "1"
+    }
+```
+
+
+### Response 404 (application/json)
+```javascript
+    nopermissionsfound: "No permissions were found"
+```
+## GET api/permissions
+### Get all permissions
+### Response 200 (application/json)
+```javascript
+    [{
+      _id: "..." - permission id
+      name: "permission name",
+      view: "1",
+      insert: "1",
+      update: "0",
+      delete: "1",
+      request: "1"
+    }]
+```
+### Response 404 (application/json)
+```javascript
+    nopermissionsfound: "No permissions were found"
+```
 
 # Schedules
 ## POST api/schedules

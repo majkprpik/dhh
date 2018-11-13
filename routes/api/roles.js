@@ -7,12 +7,11 @@ const validateRoleInput = require("../../validation/role")
 // Load agent model
 const Role = require("../../models/Role")
 
-// @route   POST api/roles/add
+// @route   POST api/roles
 // @desc    Add a role
 // @access  Public
-router.post("/add", (req, res) => {
+router.post("/", (req, res) => {
     const { errors, isValid } = validateRoleInput(req.body)
-
     if(!isValid) {
         return res.status(400).json(errors)
     }
@@ -30,15 +29,17 @@ router.post("/add", (req, res) => {
                 newRole.save()
                     .then(role => res.json(role))
                     .catch(err => console.log(err))
+                  return res.json({success: true});
             }
         })
+        .catch(err => console.log(err));
 })
 
-// @route   POST api/roles/remove
-// @desc    Remove a role
+// @route   DELETE api/roles/:id
+// @desc    Remove a role by id
 // @access  Public
-router.post("/remove", (req, res) => {
-    Role.findOneAndDelete({ _id: req.body._id})
+router.delete("/:id", (req, res) => {
+    Role.findOneAndDelete({ _id: req.params.id})
         .then(role => {
           if(!role){
             return res.status(404).json({ _id: "Role to delete not fund"});
@@ -50,21 +51,21 @@ router.post("/remove", (req, res) => {
         .catch(err => console.log(err));
 })
 
-// @route   PUT api/roles/update
-// @desc    Update a role
+// @route   PATCH api/roles/:id
+// @desc    Update a role by id
 // @access  Public
-router.put("/update", (req, res) => {
-  const { errors, isValid } = validateRoleInput(req.body)
+router.patch("/:id", (req, res) => {
+  /*const { errors, isValid } = validateRoleInput(req.body)
   if(!isValid) {
       return res.status(400).json(errors)
-  }
+  }*/
 
-  Role.findOneAndUpdate({_id: req.body.id}, req.body)
+  Role.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
       .then(role_update => {
         if(!role_update){
           return res.status(404).json({_id: "Role to update not found"});
         } else {
-          console.log("updated");
+          console.log("Role updated");
           return res.json( {success: true} );
         }
       })
@@ -72,11 +73,11 @@ router.put("/update", (req, res) => {
 
 })
 
-// @route   GET api/roles/get
+// @route   GET api/roles/:id
 // @desc    Get role by id
 // @access  Public
-router.get("/get", (req, res) => {
-    Role.findById(req.body._id)
+router.get("/:id", (req, res) => {
+    Role.findById(req.params.id)
         .then(shifts => res.json(shifts))
         .catch(err => res.status(404).json({ norolefound: "No role was found" }))
 })
