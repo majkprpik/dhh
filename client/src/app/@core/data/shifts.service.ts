@@ -6,7 +6,7 @@ import { HttpHeaders } from '@angular/common/http';
 
 
 @Injectable()
-export class UserService {
+export class ShiftsService {
 
   private httpOptions;
 
@@ -23,11 +23,16 @@ export class UserService {
     });
   }
 
-  getCurrentUser(): Observable<any> {
-    return this.http.get('api/users/current', this.httpOptions);
+  getShifts(): Observable<any> {
+    return this.http.get('api/shifts', this.httpOptions);
   }
-
-  getUsers(): Observable<any> {
-    return this.http.get('api/users', this.httpOptions);
+  addShifts(): Observable<any> {
+    return this.http.get('api/shifts/add', this.httpOptions);
+  }
+  deleteShifts(): Observable<any> {
+    return this.http.get('api/shifts/remove', this.httpOptions);
+  }
+  updateShifts(): Observable<any> {
+    return this.http.get('api/shifts/update', this.httpOptions);
   }
 }
