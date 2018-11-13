@@ -12,12 +12,15 @@ module.exports = async function setWorkHours(userId) {
         for(s = 0; s < schedule.days[d].shifts.length; s++){
             if(String(schedule.days[d].shifts[s]._user) === String(userId)){
                 const shift = await getShift(schedule.days[d].shifts[s]._shift)
-                sumOfHours += shift.duration
+                if(Number(shift.start) > Number(shift.end)){
+                    sumOfHours += shift.end + (24 - shift.start)
+                } else {
+                    sumOfHours += shift.end - shift.start
+                }
             }
         }
     }
-
-    await User.findByIdAndUpdate(userId, {totalNumberOfHours: sumOfHours})
+    await User.findByIdAndUpdate(userId, {totalNumberOfHours: sumOfHours}, { new: true })
         .then(user => console.log(user))
         .catch(err => console.log(err))
 }

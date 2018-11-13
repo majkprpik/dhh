@@ -8,10 +8,6 @@ module.exports = function validateShiftData(data) {
         errors.name = "Name field is required"
     }
 
-    if (!Validator.isAlpha(data.name)) {
-        errors.name = "Name must be a string"
-    }
-
     if (Validator.isEmpty(data.start)) {
         errors.start = "Start field is required"
     }

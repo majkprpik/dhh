@@ -111,8 +111,8 @@ router.delete("/:id", (req, res) => {
 // @route   GET api/users/:id
 // @desc    Get user
 // @access  Public
-router.get("/:id", (req, res) => {
-	setWorkHours(req.params.id)
+router.get("/:id", async (req, res) => {
+	await setWorkHours(req.params.id)
 	User.findById(req.params.id)
 		.then(user => res.json(user))
 		.catch(err => res.status(404).json({ nouserfound: "No user was found" }));
