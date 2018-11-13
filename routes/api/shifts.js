@@ -7,10 +7,10 @@ const validateShiftInput = require("../../validation/shift")
 // Load agent model
 const Shift = require("../../models/Shift")
 
-// @route   POST api/shifts/add
+// @route   POST api/shifts
 // @desc    Add a shift
 // @access  Public
-router.post("/add", (req, res) => {
+router.post("/", (req, res) => {
     const { errors, isValid } = validateShiftInput(req.body)
 
     if(!isValid) {
@@ -35,14 +35,14 @@ router.post("/add", (req, res) => {
         .catch(err => console.log(err));
 })
 
-// @route   POST api/shifts/remove
-// @desc    Remove a shift
+// @route   DELETE api/shifts/:id
+// @desc    Remove a shift by id
 // @access  Public
-router.post("/remove", (req, res) => {
-    Shift.findOneAndDelete({ _id: req.body._id})
+router.delete("/:id", (req, res) => {
+    Shift.findOneAndDelete({ _id: req.params.id})
         .then(shift => {
           if(!shift){
-            return res.status(404).json({ _id: "Shift to delete not found"});
+            return res.status(404).json({ id: "Shift to delete not found"});
           } else{
             console.log("Shift removed");
             return res.json( {success: true} );
@@ -51,33 +51,33 @@ router.post("/remove", (req, res) => {
         .catch(err => console.log(err));
 })
 
-// @route   PUT api/shifts/update
+// @route   PATCH api/shifts/:id
 // @desc    Update a shift
 // @access  Public
-router.put("/update", (req, res) => {
+router.patch("/:id", (req, res) => {
   const { errors, isValid } = validateShiftInput(req.body)
   if(!isValid) {
       return res.status(400).json(errors)
   }
 
-  Shift.findOneAndUpdate({_id: req.body.id}, req.body)
-      .then(shift_update => {
-        if(!shift_update){
+  Shift.findOneAndUpdate({_id: req.params.id}, req.body, { new: true })
+      .then(shift => {
+        if(!shift){
           return res.status(404).json({_id: "Shift to update not found"});
         } else {
           console.log("Shift updated");
-          return res.json( {success: true} )
+          return res.json(shift)
         }
       })
       .catch(err => console.log(err));
 
 })
 
-// @route   GET api/shifts/get
+// @route   GET api/shifts/:id
 // @desc    Get shift by id
 // @access  Public
-router.get("/get", (req, res) => {
-    Shift.findById(req.body._id)
+router.get("/:id", (req, res) => {
+    Shift.findById(req.params.id)
         .then(shift => res.json(shift))
         .catch(err => res.status(404).json({ noshiftfound: "No shift was found" }))
 })

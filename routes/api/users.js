@@ -13,17 +13,16 @@ const setWorkHours = require("../../util/workHours")
 
 // Load models
 const User = require("../../models/User");
-const Schedule = require("../../models/Schedule")
 
 // @route   GET api/users/test
 // @desc    Tests user route
 // @access  Public
 router.get("/test", (req, res) => res.json({ msg: "Users works!" }));
 
-// @route   POST api/users/register
+// @route   POST api/users
 // @desc    Registers a user
 // @access  Public
-router.post("/register", (req, res) => {
+router.post("/", (req, res) => {
 	const { errors, isValid } = validateUserInput(req.body);
 
 	if (!isValid) {
@@ -57,7 +56,7 @@ router.post("/register", (req, res) => {
 });
 
 // @route   POST api/users/login
-// @desc    Logs a user in
+// @desc    Login a user
 // @access  Public
 router.post("/login", (req, res) => {
 	const email = req.body.email;
@@ -93,17 +92,33 @@ router.post("/login", (req, res) => {
 	});
 });
 
-// @route   GET api/users/get
-// @desc    Get user by id
+// @route   DELETE api/users/:id
+// @desc    Remove a user
 // @access  Public
-router.get("/get", (req, res) => {
-	setWorkHours(req.body._id)
-	User.findById(req.body._id)
+router.delete("/:id", (req, res) => {
+    User.findOneAndDelete({ _id: req.params.id})
+        .then(user => {
+          if(!user){
+            return res.status(404).json({ id: "User to delete not found"});
+          } else{
+            console.log("User removed");
+            return res.json( {success: true} );
+          }
+        })
+        .catch(err => console.log(err));
+})
+
+// @route   GET api/users/:id
+// @desc    Get user
+// @access  Public
+router.get("/:id", (req, res) => {
+	setWorkHours(req.params.id)
+	User.findById(req.params.id)
 		.then(user => res.json(user))
 		.catch(err => res.status(404).json({ nouserfound: "No user was found" }));
 });
 
-// @route   GET api/users/all
+// @route   GET api/users
 // @desc    Get all users
 // @access  Public
 router.get("/", (req, res) => {

@@ -7,8 +7,8 @@
 
 # Users
 
-## POST api/users/add  
-### Add a user  
+## POST api/users  
+### Add/Register a user 
 ### Request (application/json)
 ```javascript    
     username: "perop" - string, 4-30 chars  
@@ -24,7 +24,7 @@
 
 
 ## POST api/users/login
-### Logs a user in
+### Login a user
 ### Request (application/json)
 ```javascript    
     email: "perop@gmail.com" - string, valid email
@@ -37,11 +37,23 @@
     token: "Bearer " + token - jwt
 ```
 
-## GET api/users/get
-### Get user by id
+## DELETE api/users/:id
+### Delete a user
 ### Request (application/json)
 ```javascript    
-    _id: user id
+    id: user id
+```
+
+### Response 200 (application/json)
+```javascript    
+    success: true
+```
+
+## GET api/users/:id
+### Get user
+### Request (application/json)
+```javascript    
+    id: user id
 ```
 
 ### Response 200 (application/json)
@@ -95,7 +107,7 @@
 
 
 # Shifts
-## POST api/shifts/add
+## POST api/shifts
 ### Add a shift
 ### Request (application/json)
 ```javascript    
@@ -111,12 +123,12 @@
     name: "Shift already exists"
 ```
 
-## POST api/shifts/remove
+## DELETE api/shifts/:id
 ### Remove a shift
-###  Public
+### Public
 ### Request (application/json)
 ```javascript    
-    _id: shift id
+    id: shift id
 ```
 
 ### Response 200 (application/json)
@@ -129,11 +141,11 @@
     _id: "Shift to delete not found"
 ```
 
-## PUT api/shifts/update
+## PATCH api/shifts/:id
 ### Update a shift
 ### Request (application/json)
 ```javascript    
-    _id: shift id
+    id: shift id
     start: "8" - number
     duration: "8" - number
 ```
@@ -148,11 +160,11 @@
     _id: "Shift to update not found"
 ```
 
-## GET api/shifts/get
-### Get shift by id
+## GET api/shifts/:id
+### Get shift
 ### Request (application/json)
 ```javascript    
-    _id: shift id
+    id: shift id
 ```
 
 ### Response 200 (application/json)
