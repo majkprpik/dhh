@@ -110,9 +110,10 @@
 ## POST api/shifts
 ### Add a shift
 ### Request (application/json)
-```javascript    
+```javascript
+    name: "Smjena 1" - string    
     start: "8" - number
-    duration: "8" - number
+    end: "16" - number
 ```
 
 ### Response 200 (application/json)
@@ -138,7 +139,7 @@
 
 ### Response 400 (application/json)
 ```javascript    
-    _id: "Shift to delete not found"
+    id: "Shift to delete not found"
 ```
 
 ## PATCH api/shifts/:id
@@ -146,8 +147,9 @@
 ### Request (application/json)
 ```javascript    
     id: shift id
+    name: "Smjena 1" - string    
     start: "8" - number
-    duration: "8" - number
+    end: "16" - number
 ```
 
 ### Response 200 (application/json)
@@ -157,7 +159,7 @@
 
 ### Response 400 (application/json)
 ```javascript    
-    _id: "Shift to update not found"
+    id: "Shift to update not found"
 ```
 
 ## GET api/shifts/:id
@@ -169,8 +171,9 @@
 
 ### Response 200 (application/json)
 ```javascript    
+    name: "Smjena 1" - string    
     start: "8" - number
-    duration: "8" - number
+    end: "16" - number
 ```
 
 ### Response 400 (application/json)
@@ -183,8 +186,9 @@
 
 ### Response 200 (application/json)
 ```javascript    
+    name: "Smjena 1" - string    
     start: "8" - number
-    duration: "8" - number
+    end: "16" - number
 ```
 
 ### Response 400 (application/json)
@@ -280,7 +284,7 @@
 
 
 # Schedules
-## POST api/schedules/add
+## POST api/schedules
 ### Add a schedule
 ### Request (application/json)
 ```javascript
@@ -306,11 +310,11 @@
     month: "Schedule already exists"
 ```
 
-## POST api/schedules/update
+## PATCH api/schedules/:id
 ### Update a schedule
 ### Request (application/json)
 ```javascript
-    _id: "..." - schedule id
+    id: "..." - schedule id
 
     month: "01/2018" - string
     days: [

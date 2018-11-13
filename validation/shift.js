@@ -4,6 +4,14 @@ const isEmpty = require("./isEmpty")
 module.exports = function validateShiftData(data) {
     let errors = {}
 
+    if (Validator.isEmpty(data.name)) {
+        errors.name = "Name field is required"
+    }
+
+    if (!Validator.isAlpha(data.name)) {
+        errors.name = "Name must be a string"
+    }
+
     if (Validator.isEmpty(data.start)) {
         errors.start = "Start field is required"
     }
@@ -12,12 +20,12 @@ module.exports = function validateShiftData(data) {
         errors.start = "Start must be numeric"
     }
 
-    if (Validator.isEmpty(data.duration)) {
-        errors.duration = "Duration field is required"
+    if (Validator.isEmpty(data.end)) {
+        errors.end = "End field is required"
     }
 
-    if (!Validator.isNumeric(data.duration)) {
-        errors.duration = "Duration must be numeric"
+    if (!Validator.isNumeric(data.end)) {
+        errors.end = "End must be numeric"
     }
 
     return {

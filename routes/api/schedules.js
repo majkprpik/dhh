@@ -6,10 +6,10 @@ const router = express.Router()
 // Load agent model
 const Schedule = require("../../models/Schedule")
 
-// @route   POST api/schedules/add
+// @route   POST api/schedules
 // @desc    Add a schedule
 // @access  Public
-router.post("/add", (req, res) => {
+router.post("/", (req, res) => {
     Schedule.findOne({ month: req.body.month })
         .then(schedule => {
             if(schedule) {
@@ -27,14 +27,14 @@ router.post("/add", (req, res) => {
         })
 })
 
-// @route   PUT api/schedules/update
+// @route   PATCH api/schedules/:id
 // @desc    Update a schedule
 // @access  Public
-router.put("/update", (req, res) => {
-    Schedule.findOneAndUpdate({_id: req.body._id}, req.body, { new: true })
+router.patch("/:id", (req, res) => {
+    Schedule.findOneAndUpdate({_id: req.params.id}, req.body, { new: true })
         .then(schedule => {
           if(!schedule){
-            return res.status(404).json({_id: "Schedule to update not found"});
+            return res.status(404).json({id: "Schedule to update not found"});
           } else {
             res.json(schedule)
           }

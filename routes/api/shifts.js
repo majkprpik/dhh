@@ -17,14 +17,15 @@ router.post("/", (req, res) => {
         return res.status(400).json(errors)
     }
 
-    Shift.findOne({ start: req.body.start, duration: req.body.duration })
+    Shift.findOne({ name: req.body.name })
         .then(shift => {
             if(shift) {
                 return res.status(400).json({ message: "Shift already exists" })
             } else {
                 const newShift = new Shift({
+                    name: req.body.name,
                     start: req.body.start,
-                    duration: req.body.duration
+                    end: req.body.end
                 })
 
                 newShift.save()

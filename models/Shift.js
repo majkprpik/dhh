@@ -3,11 +3,15 @@ const Schema = mongoose.Schema
 
 // Create schema
 const ShiftSchema = new Schema({
+    name: {
+        type: String,
+        required: true
+    },
     start: {
         type: Number,
         required: true
     },
-    duration: {
+    end: {
         type: Number,
         required: true
     }
