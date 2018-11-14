@@ -16,7 +16,7 @@
     email: "perop@gmail.com" - string, valid email  
     name: "Pero"
     surname: "Peric"
-    role: "/" - role id
+    role: "5bdda1fe66c7e619987328a3" - role id
 ```
 
 ### Response 200 (application/json)
@@ -63,7 +63,7 @@
     email: "perop@gmail.com" - string, valid email
     name: "Pero"
     surname: "Peric"
-    role: "/" - role id
+    role: "5bdda1fe66c7e619987328a3" - role id
     totalNumberOfHours: 250 - number
     monthlyNumberOfHours: [
         month: "Jan" - string
@@ -81,7 +81,7 @@
     email: "perop@gmail.com" - string, valid email
     name: "Pero"
     surname: "Peric"
-    role: "/" - role id
+    role: "5bdda1fe66c7e619987328a3" - role id
     totalNumberOfHours: 250 - number
     monthlyNumberOfHours: [
         month: "Jan" - string
