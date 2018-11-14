@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 
 import { ShiftsService } from '../../../@core/data/shifts.service';
-import { SmartTableService } from '../../../@core/data/smart-table.service';
 
 @Component({
   selector: 'ngx-smart-table',
@@ -53,14 +52,14 @@ export class SmartTableComponent {
     const data = this.service.getData();
     this.source.load(data);
     }
-  
+
 */
   constructor(private service: ShiftsService) {
     this.service.getShifts().subscribe(value => {
       const data = value;
       this.source.load(data);
     });
-  } 
+  }
 
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {

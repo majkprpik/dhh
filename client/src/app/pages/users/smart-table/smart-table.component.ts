@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 
 import { UserService } from '../../../@core/data/users.service';
-import { SmartTableService } from '../../../@core/data/smart-table.service';
+// import { SmartTableService } from '../../../@core/data/smart-table.service';
 
 @Component({
   selector: 'ngx-smart-table',
@@ -65,25 +65,17 @@ export class SmartTableComponent {
     const data = this.service.getData();
     this.source.load(data);
     }
-  
+
 */
   constructor(private service: UserService) {
     this.service.getUsers().subscribe(value => {
       const data = value;
       this.source.load(data);
     });
-  } 
+  }
 
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
-      event.confirm.resolve();
-    } else {
-      event.confirm.reject();
-    }
-  }
-
-  onEditConfirm(event): void {
-    if (window.confirm('Are you sure you want to edit?')) {
       event.confirm.resolve();
     } else {
       event.confirm.reject();
