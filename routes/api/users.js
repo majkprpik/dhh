@@ -38,7 +38,8 @@ router.post("/", (req, res) => {
 				password: req.body.password,
 				email: req.body.email,
 				name: req.body.name,
-				surname: req.body.surname
+				surname: req.body.surname,
+				role: req.body.role
 			});
 
 			bcrypt.genSalt(10, (err, salt) => {
