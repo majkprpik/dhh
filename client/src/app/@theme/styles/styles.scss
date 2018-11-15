@@ -16,6 +16,9 @@
 @import './bootstrap-rtl';
 @import "../../../../node_modules/angular-calendar/css/angular-calendar.css";
 
+/* Add application styles & imports to this file! */
+@import '~handsontable/dist/handsontable.full.css';
+
 // install the framework and custom global styles
 @include nb-install() {
 

@@ -6,13 +6,16 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { DhhDashboard1Component } from './dhhdashboard.component';
-
+import { HotTableModule } from '@handsontable/angular';
+import { NbCardModule } from '@nebular/theme';
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     NgbModalModule,
+    NbCardModule,
     FlatpickrModule.forRoot(),
+    HotTableModule.forRoot(),
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,
