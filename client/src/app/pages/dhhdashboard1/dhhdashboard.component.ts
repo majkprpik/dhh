@@ -12,5 +12,5 @@ import * as Handsontable from 'handsontable';
   `],
 })
 export class DhhDashboard1Component {
-  dataset: any[] = Handsontable.helper.createSpreadsheetData(30, 30)
+  dataset: any[] = Handsontable.helper.createSpreadsheetData(30, 30);
 }
