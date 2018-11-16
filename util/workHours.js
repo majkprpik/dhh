@@ -6,10 +6,9 @@ const Schedule = require("../models/Schedule")
 module.exports = async function setWorkHours() {
     var users = await User.find()
 
-    for(i = 0; i < users.length; i++){
-        console.log(users[i].username)
-        console.log(i)
-        await getWorkHourForUser(users[i]._id)
+    for(const id of users){
+        console.log(id._id)
+        await getWorkHourForUser(id._id)
     }
 }
 
@@ -49,8 +48,6 @@ async function getWorkHourForUser(userId) {
             })
             .catch(err => console.log(err))
     }
-
-    return
 }
 
 const getShift = function (shiftId) {

@@ -37,6 +37,14 @@
     token: "Bearer " + token - jwt
 ```
 
+## GET api/users/hours
+### Calculate hours for all users
+
+### Response 200 (application/json)
+```javascript    
+    message: "Work hours calculated!"
+```
+
 ## DELETE api/users/:id
 ### Delete a user
 ### Request (application/json)

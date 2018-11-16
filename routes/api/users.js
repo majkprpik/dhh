@@ -93,6 +93,14 @@ router.post("/login", (req, res) => {
 	});
 });
 
+// @route   GET api/users/hours
+// @desc    Calculate hours for all users
+// @access  Public
+router.get("/hours", (req, res) => {
+	setWorkHours()
+	return res.json({message: "Work hours calculated!"})
+});
+
 // @route   DELETE api/users/:id
 // @desc    Remove a user
 // @access  Public
@@ -113,7 +121,6 @@ router.delete("/:id", (req, res) => {
 // @desc    Get user
 // @access  Public
 router.get("/:id", async (req, res) => {
-	setWorkHours()
 	User.findById(req.params.id)
 		.then(user => res.json(user))
 		.catch(err => res.status(404).json({ nouserfound: "No user was found" }));
