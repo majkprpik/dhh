@@ -51,4 +51,27 @@ router.get("/", (req, res) => {
         .catch(err => res.status(404).json({ noschedulesfound: "No schedules where found" }))
 })
 
+// @route   DELETE api/schedules/:id
+// @desc    Remove a schedule by id
+// @access  Public
+router.delete("/:id", (req, res) => {
+    Schedule.findOneAndDelete({ _id: req.params.id})
+        .then(shift => {
+          if(!shift){
+            return res.status(404).json({ id: "Schedule to delete not found"});
+          } else{
+            console.log("Schedule removed");
+            return res.json( {success: true} );
+          }
+        })
+        .catch(err => console.log(err));
+})
+
+// @route   DELETE api/schedules/
+// @desc    Removes all schedules
+// @access  Public
+router.delete("/", (req, res) => {
+    Schedule.delete({})
+})
+
 module.exports = router

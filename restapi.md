@@ -457,3 +457,23 @@
 ```
 ### Response 400 (application/json)
     norolesfound: "No schedules where found"
+
+
+## DELETE api/schedules/:id
+### Remove a schedule by id
+### Request (application/json)
+```javascript
+    id: "..." - schedule id
+```
+### Response 200 (application/json)
+```javascript
+    success: "true"
+```
+### Response 404 (application/json)
+```javascript
+    id: "Schedule to delete not found"
+```
+
+
+## DELETE api/schedules/
+### Remove all schedules
