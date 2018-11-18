@@ -461,6 +461,6 @@ export class UserService {
   }
 
   getData2(): Observable<any> {
-    return this.http.get('api/users/all', this.httpOptions);
+    return this.http.get('api/users/', this.httpOptions);
   }
 }
