@@ -8,7 +8,7 @@
 # Users
 
 ## POST api/users  
-### Add/Register a user 
+### Add/Register a user
 ### Request (application/json)
 ```javascript    
     username: "perop" - string, 4-30 chars  
@@ -16,7 +16,7 @@
     email: "perop@gmail.com" - string, valid email  
     name: "Pero"
     surname: "Peric"
-    role: "/" - role id
+    role: "5bdda1fe66c7e619987328a3" - role id
 ```
 
 ### Response 200 (application/json)
@@ -35,6 +35,14 @@
 ```javascript    
     success: true
     token: "Bearer " + token - jwt
+```
+
+## GET api/users/hours
+### Calculate hours for all users
+
+### Response 200 (application/json)
+```javascript    
+    message: "Work hours calculated!"
 ```
 
 ## DELETE api/users/:id
@@ -63,7 +71,7 @@
     email: "perop@gmail.com" - string, valid email
     name: "Pero"
     surname: "Peric"
-    role: "/" - role id
+    role: "5bdda1fe66c7e619987328a3" - role id
     totalNumberOfHours: 250 - number
     monthlyNumberOfHours: [
         month: "Jan" - string
@@ -81,7 +89,7 @@
     email: "perop@gmail.com" - string, valid email
     name: "Pero"
     surname: "Peric"
-    role: "/" - role id
+    role: "5bdda1fe66c7e619987328a3" - role id
     totalNumberOfHours: 250 - number
     monthlyNumberOfHours: [
         month: "Jan" - string
@@ -282,6 +290,98 @@
     norolesfound: "No roles where found"
 ```
 
+# Permissions
+## POST api/permissions
+### Add a permission
+### Request (application/json)
+```javascript
+    {
+      name: "lider", - string, 3-30 chars
+      view: "1", - number, 0-1
+      insert: "1", - number, 0-1
+      update: "1", - number, 0-1
+      delete: "1", - number, 0-1
+      request: "1" - number, 0-1
+    }
+```
+### Response 200 (application/json)
+  returns above sent permission
+
+### Response 400 (application/json)
+```javascript
+    name: "Permission already exists"
+```
+## DELETE api/permissions/:id
+### Remove a permission by id
+### Request (application/json)
+```javascript
+    id: "..." - permission id
+```
+### Response 200 (application/json)
+```javascript
+    success: "true"
+```
+### Response 404 (application/json)
+```javascript
+    id: "Permission to delete not found"
+```
+
+## PATCH api/permissions/:id
+### Update a permission by id
+### Request (application/json)
+```javascript
+    id: "..." - permission id
+```
+### Response 200 (application/json)
+  returns the updated above sent permission
+
+### Response 404 (application/json)
+```javascript
+    _id: "Permission to update not found"
+```
+
+## GET api/permissions/:id
+### Get permission by id
+### Request (application/json)
+```javascript
+    id: "..." - permission id
+```
+### Response 200 (application/json)
+```javascript
+    {
+      _id: "..." - permission id
+      name: "permission name",
+      view: "1",
+      insert: "1",
+      update: "0",
+      delete: "1",
+      request: "1"
+    }
+```
+
+
+### Response 404 (application/json)
+```javascript
+    nopermissionsfound: "No permissions were found"
+```
+## GET api/permissions
+### Get all permissions
+### Response 200 (application/json)
+```javascript
+    [{
+      _id: "..." - permission id
+      name: "permission name",
+      view: "1",
+      insert: "1",
+      update: "0",
+      delete: "1",
+      request: "1"
+    }]
+```
+### Response 404 (application/json)
+```javascript
+    nopermissionsfound: "No permissions were found"
+```
 
 # Schedules
 ## POST api/schedules
@@ -357,3 +457,23 @@
 ```
 ### Response 400 (application/json)
     norolesfound: "No schedules where found"
+
+
+## DELETE api/schedules/:id
+### Remove a schedule by id
+### Request (application/json)
+```javascript
+    id: "..." - schedule id
+```
+### Response 200 (application/json)
+```javascript
+    success: "true"
+```
+### Response 404 (application/json)
+```javascript
+    id: "Schedule to delete not found"
+```
+
+
+## DELETE api/schedules/
+### Remove all schedules

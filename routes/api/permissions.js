@@ -4,10 +4,10 @@ const router = express.Router()
 // Load agent model
 const Permission = require("../../models/Permission")
 
-// @route   POST api/permissions/add
+// @route   POST api/permissions
 // @desc    Add a permission
 // @access  Public
-router.post("/add", (req, res) => {
+router.post("/", (req, res) => {
 
     Permission.findOne({ name: req.body.name })
         .then(permis => {
@@ -26,44 +26,53 @@ router.post("/add", (req, res) => {
                 newPermis.save()
                     .then(permis => res.json(permis))
                     .catch(err => console.log(err))
-                return res.status(200);
+                return res.json({success: true});
             }
         })
 })
 
-// @route   POST api/permissions/remove
+// @route   DELETE api/permissions/:id
 // @desc    Remove a permission
 // @access  Public
-router.post("/remove", (req, res) => {
-    Permission.findOneAndDelete({ _id: req.body.id})
+router.delete("/:id", (req, res) => {
+    Permission.findOneAndDelete({ _id: req.params.id})
         .then(permis => {
           if(!permis){
-            return res.status(404).json({ _id: "Permission to delete not fund"});
+            return res.status(404).json({ id: "Permission to delete not fund"});
           } else{
-            return res.status(200).end();
             console.log("Permission removed");
+            return res.json({success: true});
           }
         })
         .catch(err => console.log(err));
 })
 
-// @route   PUT api/permissions/update
-// @desc    Update a permission
+// @route   PATCH api/permissions/:id
+// @desc    Update a permission by id
 // @access  Public
-router.put("/update", (req, res) => {
+router.patch("/:id", (req, res) => {
 
-  Permission.findOneAndUpdate({_id: req.body.id}, req.body)
+  Permission.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
       .then(permis_update => {
         if(!permis_update){
           return res.status(404).json({_id: "Permission to update not found"});
         } else {
           console.log("Permission updated");
-          return res.status(200).end();
+          return res.json({success: true});
         }
       })
       .catch(err => console.log(err));
 })
 
+
+// @route   GET api/permissions/:id
+// @desc    Get permissions by id
+// @access  Public
+router.get("/:id", (req, res) => {
+    Permission.findById(req.params.id)
+        .then(permis => res.json(permis))
+        .catch(err => res.status(404).json({ nopermisionsfound: "No permissions were found" }))
+})
 
 // @route   GET api/permissions
 // @desc    Get all permissions

@@ -38,7 +38,8 @@ router.post("/", (req, res) => {
 				password: req.body.password,
 				email: req.body.email,
 				name: req.body.name,
-				surname: req.body.surname
+				surname: req.body.surname,
+				role: req.body.role
 			});
 
 			bcrypt.genSalt(10, (err, salt) => {
@@ -92,6 +93,14 @@ router.post("/login", (req, res) => {
 	});
 });
 
+// @route   GET api/users/hours
+// @desc    Calculate hours for all users
+// @access  Public
+router.get("/hours", (req, res) => {
+	setWorkHours()
+	return res.json({message: "Work hours calculated!"})
+});
+
 // @route   DELETE api/users/:id
 // @desc    Remove a user
 // @access  Public
@@ -112,7 +121,6 @@ router.delete("/:id", (req, res) => {
 // @desc    Get user
 // @access  Public
 router.get("/:id", async (req, res) => {
-	await setWorkHours(req.params.id)
 	User.findById(req.params.id)
 		.then(user => res.json(user))
 		.catch(err => res.status(404).json({ nouserfound: "No user was found" }));
@@ -130,9 +138,7 @@ router.get("/", (req, res) => {
 // @route   GET api/users/current
 // @desc    Returns current user
 // @access  Private
-router.get(
-	"/current",
-	passport.authenticate("jwt", { session: false }),
+router.get("/current", passport.authenticate("jwt", { session: false }),
 	(req, res) => {
 		res.json({
 			username: req.user.username,

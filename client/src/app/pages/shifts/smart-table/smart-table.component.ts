@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 
-import { UserService } from '../../../@core/data/users.service';
-// import { SmartTableService } from '../../../@core/data/smart-table.service';
+import { ShiftsService } from '../../../@core/data/shifts.service';
 
 @Component({
   selector: 'ngx-smart-table',
@@ -32,29 +31,17 @@ export class SmartTableComponent {
       confirmDelete: true,
     },
     columns: {
-      username: {
-        title: 'Username',
-        type: 'string',
-      },
-      password: {
-        title: 'Password',
-        type: 'string',
-      },
-      email: {
-        title: 'E-mail',
-        type: 'string',
-      },
       name: {
-        title: 'Name',
+        title: 'Shift name',
         type: 'string',
       },
-      surname: {
-        title: 'Surname',
+      start: {
+        title: 'Start',
         type: 'string',
       },
-      role: {
-        title: 'Role',
-        type: 'number',
+      end: {
+        title: 'End',
+        type: 'string',
       },
     },
   };
@@ -67,8 +54,8 @@ export class SmartTableComponent {
     }
 
 */
-  constructor(private service: UserService) {
-    this.service.getUsers().subscribe(value => {
+  constructor(private service: ShiftsService) {
+    this.service.getShifts().subscribe(value => {
       const data = value;
       this.source.load(data);
     });
@@ -76,6 +63,14 @@ export class SmartTableComponent {
 
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
+      event.confirm.resolve();
+    } else {
+      event.confirm.reject();
+    }
+  }
+
+  onEditConfirm(event): void {
+    if (window.confirm('Are you sure you want to edit?')) {
       event.confirm.resolve();
     } else {
       event.confirm.reject();
