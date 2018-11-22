@@ -56,6 +56,28 @@ router.post("/", (req, res) => {
 	});
 });
 
+
+// @route   PATCH api/shifts/:id
+// @desc    Update a shift
+// @access  Public
+router.patch("/:id", (req, res) => {
+	/*const { errors, isValid } = validateUserInput(req.body.user);
+
+	if (!isValid) {
+		return res.status(400).json(errors);
+	}*/
+
+	User.findOneAndUpdate({ _id: req.params.id }, req.body.user, { new: true })
+		.then(user => {
+			if (!user) {
+				return res.status(404).json({ error: "User to update not found" });
+			} else {
+				console.log("User updated");
+				return res.json(user)
+			}
+		})
+})
+
 // @route   POST api/users/login
 // @desc    Login a user
 // @access  Public
@@ -98,23 +120,23 @@ router.post("/login", (req, res) => {
 // @access  Public
 router.get("/hours", (req, res) => {
 	setWorkHours()
-	return res.json({message: "Work hours calculated!"})
+	return res.json({ message: "Work hours calculated!" })
 });
 
 // @route   DELETE api/users/:id
 // @desc    Remove a user
 // @access  Public
 router.delete("/:id", (req, res) => {
-    User.findOneAndDelete({ _id: req.params.id})
-        .then(user => {
-          if(!user){
-            return res.status(404).json({ id: "User to delete not found"});
-          } else{
-            console.log("User removed");
-            return res.json( {success: true} );
-          }
-        })
-        .catch(err => console.log(err));
+	User.findOneAndDelete({ _id: req.params.id })
+		.then(user => {
+			if (!user) {
+				return res.status(404).json({ id: "User to delete not found" });
+			} else {
+				console.log("User removed");
+				return res.json({ success: true });
+			}
+		})
+		.catch(err => console.log(err));
 })
 
 // @route   GET api/users/:id

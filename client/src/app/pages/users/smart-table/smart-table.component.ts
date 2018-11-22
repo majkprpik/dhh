@@ -25,7 +25,7 @@ export class SmartTableComponent {
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-      confirmEdit: true,
+      confirmSave: true,
     },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
@@ -60,25 +60,37 @@ export class SmartTableComponent {
   };
 
   source: LocalDataSource = new LocalDataSource();
-/*
-    constructor(private service: SmartTableService) {
-    const data = this.service.getData();
-    this.source.load(data);
-    }
-
-*/
-  constructor(private service: UserService) {
-    this.service.getUsers().subscribe(value => {
-      const data = value;
+  /*
+      constructor(private service: SmartTableService) {
+      const data = this.service.getData();
       this.source.load(data);
+      }
+  */
+  constructor(private userService: UserService) {
+    this.userService.getUsers().subscribe(value => {
+      this.source.load(value);
     });
   }
 
   onDeleteConfirm(event): void {
+    alert(event);
     if (window.confirm('Are you sure you want to delete?')) {
       event.confirm.resolve();
     } else {
       event.confirm.reject();
     }
+  }
+
+  onEditConfirm(event): void {
+    this.userService.updateUser(event.data).subscribe(value => {
+      // this.source.load(value);
+      event.confirm.resolve();
+      /* alert(event);
+      if (window.confirm('Are you sure you want to delete?')) {
+        });
+      } else {
+        event.confirm.reject();
+      }*/
+    });
   }
 }
