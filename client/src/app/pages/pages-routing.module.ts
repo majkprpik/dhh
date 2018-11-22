@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { PagesComponent } from './pages.component';
 import { DhhDashboardComponent } from './dhhdashboard/dhhdashboard.component';
-import { DhhDashboard1Component } from './dhhdashboard1/dhhdashboard.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 
 const routes: Routes = [
@@ -22,10 +21,6 @@ const routes: Routes = [
       {
         path: 'dhh-dashboard',
         component: DhhDashboardComponent,
-      },
-      {
-        path: 'dhh-dashboard1',
-        component: DhhDashboard1Component,
       },
       {
         path: 'ui-features',
@@ -62,6 +57,10 @@ const routes: Routes = [
       {
         path: 'shifts',
         loadChildren: './shifts/shifts.module#ShiftsModule',
+      },
+      {
+        path: 'dhh-dashboard1',
+        loadChildren: './dhhdashboard1/dhhdashboard1.module#DhhDashboard1Module',
       },
       {
         path: 'miscellaneous',

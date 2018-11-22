@@ -10,7 +10,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'DHHdashboard',
     icon: 'nb-e-commerce',
-    link: '/pages/dhh-dashboard1',
+    link: '/pages/dhh-dashboard1/handsontable',
     home: true,
   },
   {

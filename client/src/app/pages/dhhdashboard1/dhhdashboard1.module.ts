@@ -1,27 +1,19 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { FlatpickrModule } from 'angularx-flatpickr';
-import { CalendarModule, DateAdapter } from 'angular-calendar';
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-import { DhhDashboard1Component } from './dhhdashboard.component';
-import { HotTableModule } from '@handsontable/angular';
+
+import { NgxEchartsModule } from 'ngx-echarts';
+
+import { DhhDashboard1Component } from './dhhdashboard1.component';
+import { ThemeModule } from '../../@theme/theme.module';
 import { NbCardModule } from '@nebular/theme';
+import { HotTableModule } from '@handsontable/angular';
+import { FormsModule } from '@angular/forms';
+
+import { TablesRoutingModule, routedComponents } from './dhhdashboard1-routing.module';
+
+
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    NgbModalModule,
-    NbCardModule,
-    FlatpickrModule.forRoot(),
-    HotTableModule.forRoot(),
-    CalendarModule.forRoot({
-      provide: DateAdapter,
-      useFactory: adapterFactory,
-    }),
-  ],
-  declarations: [DhhDashboard1Component],
-  exports: [DhhDashboard1Component],
+  imports: [ThemeModule, NgxEchartsModule, NbCardModule, TablesRoutingModule,
+    HotTableModule, FormsModule ],
+  declarations: [...routedComponents, DhhDashboard1Component],
 })
 export class DhhDashboard1Module { }

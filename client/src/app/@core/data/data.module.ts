@@ -17,8 +17,10 @@ import { TrafficBarService } from './traffic-bar.service';
 import { ProfitBarAnimationChartService } from './profit-bar-animation-chart.service';
 import { LayoutService } from './layout.service';
 import { ShiftsService } from './shifts.service';
+import { HandsontableService } from './handsontable.service';
 
 const SERVICES = [
+  HandsontableService,
   UserService,
   ShiftsService,
   ElectricityService,

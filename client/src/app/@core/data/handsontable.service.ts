@@ -6,7 +6,7 @@ import { HttpHeaders } from '@angular/common/http';
 
 
 @Injectable()
-export class ShiftsService {
+export class HandsontableService {
 
   private httpOptions;
 
@@ -23,18 +23,7 @@ export class ShiftsService {
     });
   }
 
-  getShifts(): Observable<any> {
-    return this.http.get('api/shifts', this.httpOptions);
+  getSchedule(): Observable<any> {
+    return this.http.get('api/schedules', this.httpOptions);
   }
-  addShifts(): Observable<any> {
-    return this.http.get('api/shifts/add', this.httpOptions);
-  }
-  deleteShifts(): Observable<any> {
-    return this.http.get('api/shifts/remove', this.httpOptions);
-  }
-  updateShifts(): Observable<any> {
-    return this.http.get('api/shifts/update', this.httpOptions);
-  }
-
-
 }
