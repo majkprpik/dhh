@@ -33,4 +33,10 @@ export class UserService {
   getUsers(): Observable<any> {
     return this.http.get('api/users', this.httpOptions);
   }
+
+  updateUser(user): Observable<any> {
+    if (user != null) {
+      return this.http.patch('api/users/' + user._id, { user: user }, this.httpOptions);
+    }
+  }
 }

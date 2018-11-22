@@ -6,7 +6,7 @@ const Schedule = require("../models/Schedule")
 module.exports = async function setWorkHours() {
     var users = await User.find()
 
-    for(const id of users){
+    for (const id of users) {
         console.log(id._id)
         await getWorkHourForUser(id._id)
     }
@@ -15,14 +15,14 @@ module.exports = async function setWorkHours() {
 async function getWorkHourForUser(userId) {
     const schedule = await getSchedule()
 
-    for(m = 0; m < schedule.length; m++){
+    for (m = 0; m < schedule.length; m++) {
         var sumOfHours = 0
 
-        for(d = 0; d < schedule[m].days.length; d++){
-            for(s = 0; s < schedule[m].days[d].shifts.length; s++){
-                if(String(schedule[m].days[d].shifts[s]._user) === String(userId)){
+        for (d = 0; d < schedule[m].days.length; d++) {
+            for (s = 0; s < schedule[m].days[d].shifts.length; s++) {
+                if (String(schedule[m].days[d].shifts[s]._user) === String(userId)) {
                     const shift = await getShift(schedule[m].days[d].shifts[s]._shift)
-                    if(Number(shift.start) > Number(shift.end)){
+                    if (Number(shift.start) > Number(shift.end)) {
                         sumOfHours += shift.end + (24 - shift.start)
                     } else {
                         sumOfHours += shift.end - shift.start
@@ -33,16 +33,16 @@ async function getWorkHourForUser(userId) {
         await User.findById(userId)
             .then(user => {
                 var flag = 0
-    
-                for(i = 0; i < user.monthlyNumberOfHours.length; i++){
-                    if(user.monthlyNumberOfHours[i].month === schedule[m].month){
+
+                for (i = 0; i < user.monthlyNumberOfHours.length; i++) {
+                    if (user.monthlyNumberOfHours[i].month === schedule[m].month) {
                         user.monthlyNumberOfHours[i].numberOfHours = sumOfHours
                         flag = 1
                     }
                 }
-    
-                if(flag === 0){
-                    user.monthlyNumberOfHours.addToSet({month: schedule[m].month, numberOfHours: sumOfHours})
+
+                if (flag === 0) {
+                    user.monthlyNumberOfHours.addToSet({ month: schedule[m].month, numberOfHours: sumOfHours })
                 }
                 user.save()
             })
