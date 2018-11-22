@@ -391,7 +391,9 @@
     month: "01/2018" - string
     days: [
         {
-            day: "R" - string
+            day: "15" - string -> datum
+            type: "R" - string -> vrsta
+            dayOfWeek: "PO" - string -> dan_u_tjednu
             shifts: [
                 {
                     shift: "5bdda62c5af0de0b4c94a49c" - shift id
@@ -419,7 +421,9 @@
     month: "01/2018" - string
     days: [
         {
-            day: "R" - string
+              day: "15" - string
+              type: "R" - string
+              dayOfWeek: "PO" - string
             shifts: [
                 {
                     shift: "5bdda62c5af0de0b4c94a49c" - shift id
@@ -445,7 +449,9 @@
     month: "01/2018" - string
     days: [
         {
-            day: "R" - string
+            day: "15" - string
+            type: "R" - string
+            dayOfWeek: "PO" - string
             shifts: [
                 {
                     shift: "5bdda62c5af0de0b4c94a49c" - shift id

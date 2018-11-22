@@ -5,6 +5,7 @@ const router = express.Router()
 
 // Load agent model
 const Schedule = require("../../models/Schedule")
+const insertDays = require("../../util/insertHoliday");
 
 // @route   POST api/schedules
 // @desc    Add a schedule
@@ -71,7 +72,18 @@ router.delete("/:id", (req, res) => {
 // @desc    Removes all schedules
 // @access  Public
 router.delete("/", (req, res) => {
-    Schedule.delete({})
+    Schedule.deleteMany({})
+      .then(shift =>{
+        return res.json({success: true});
+      })
+})
+
+// @route   GET api/schedules/days
+// @desc    get all days
+// @access  Public
+router.get("/days", (req, res) => {
+    insertDays();
+    return res.json({messege: "days added"})
 })
 
 module.exports = router

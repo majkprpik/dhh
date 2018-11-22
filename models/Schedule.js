@@ -13,6 +13,14 @@ const ScheduleSchema = new Schema({
                 type: String,
                 required: true
             },
+            type:{
+                type: String,
+                required: true
+            },
+            dayOfWeek:{
+                type: String,
+                required: true
+            },
             shifts: [
                 {
                     _shift: {
