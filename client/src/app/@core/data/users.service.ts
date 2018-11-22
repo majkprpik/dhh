@@ -27,7 +27,16 @@ export class UserService {
     return this.http.get('api/users/current', this.httpOptions);
   }
 
+  getData2(): Observable<any> {
+    return this.http.get('api/users/', this.httpOptions);
+  }
   getUsers(): Observable<any> {
     return this.http.get('api/users', this.httpOptions);
+  }
+
+  updateUser(user): Observable<any> {
+    if (user != null) {
+      return this.http.patch('api/users/' + user._id, { user: user }, this.httpOptions);
+    }
   }
 }

@@ -27,7 +27,7 @@
 ### Login a user
 ### Request (application/json)
 ```javascript    
-    email: "perop@gmail.com" - string, valid email
+    email: "perop@gmail.com" // string, valid email
     password: "pero1234" - string, 6-30 chars
 ```
 
