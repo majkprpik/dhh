@@ -6,7 +6,7 @@ import { HttpHeaders } from '@angular/common/http';
 
 
 @Injectable()
-export class RoleService {
+export class UserService {
 
   private httpOptions;
 
@@ -23,23 +23,26 @@ export class RoleService {
     });
   }
 
-  getRole(): Observable<any> {
-    return this.http.get('api/roles', this.httpOptions);
+  getCurrentUser(): Observable<any> {
+    return this.http.get('api/users/current', this.httpOptions);
+  }
+  getUsers(): Observable<any> {
+    return this.http.get('api/users', this.httpOptions);
   }
 
-  updateUser(role): Observable<any> {
-    if (role != null) {
-      return this.http.put('api/roles/update' + role._id, { role: role }, this.httpOptions);
+  updateUser(user): Observable<any> {
+    if (user != null) {
+      return this.http.patch('api/users/' + user._id, { user: user }, this.httpOptions);
     }
   }
-  deleteUser(role): Observable<any> {
-    if (role != null) {
-      return this.http.post('api/roles/remove' + role._id, this.httpOptions);
+  deleteUser(user): Observable<any> {
+    if (user != null) {
+      return this.http.delete('api/users/' + user._id, this.httpOptions);
     }
   }
-  createRole(role): Observable<any> {
-    if (role != null) {
-      return this.http.post('api/roles/add', role, this.httpOptions);
+  createUser(user): Observable<any> {
+    if (user != null) {
+      return this.http.post('api/users/', user, this.httpOptions);
     }
   }
 }

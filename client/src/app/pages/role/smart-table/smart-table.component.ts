@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 
-import { RoleService } from '../../../@core/data/role.service';
+import { RolesService } from '../../../services/roles/roles.service';
 
 @Component({
   selector: 'ngx-smart-table',
@@ -50,26 +50,12 @@ export class SmartTableComponent {
     }
 
 */
-  constructor(private service: RoleService) {
-    this.service.getRole().subscribe(value => {
+  constructor(private service: RolesService) {
+    this.service.getRoles().subscribe(value => {
       const data = value;
       this.source.load(data);
     });
   }
 
-  onDeleteConfirm(event): void {
-    if (window.confirm('Are you sure you want to delete?')) {
-      event.confirm.resolve();
-    } else {
-      event.confirm.reject();
-    }
-  }
 
-  onEditConfirm(event): void {
-    if (window.confirm('Are you sure you want to edit?')) {
-      event.confirm.resolve();
-    } else {
-      event.confirm.reject();
-    }
-  }
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 
-import { ShiftsService } from '../../../@core/data/shifts.service';
+import { ShiftService } from '../../../services/shifts/shift.service';
 
 @Component({
   selector: 'ngx-smart-table',
@@ -19,12 +19,13 @@ export class SmartTableComponent {
       addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
+      confirmCreate: true,
     },
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-      confirmEdit: true,
+      confirmSave: true,
     },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
@@ -54,26 +55,35 @@ export class SmartTableComponent {
     }
 
 */
-  constructor(private service: ShiftsService) {
-    this.service.getShifts().subscribe(value => {
+  constructor(private shiftService: ShiftService) {
+    this.shiftService.getShifts().subscribe(value => {
       const data = value;
       this.source.load(data);
     });
   }
 
   onDeleteConfirm(event): void {
+    alert(event);
     if (window.confirm('Are you sure you want to delete?')) {
-      event.confirm.resolve();
+      this.shiftService.deleteShift(event.data).subscribe(value => {
+        event.confirm.resolve();
+      });
     } else {
       event.confirm.reject();
     }
   }
 
   onEditConfirm(event): void {
-    if (window.confirm('Are you sure you want to edit?')) {
+    this.shiftService.updateShift(event.newData).subscribe(value => {
+      this.source.update(event.data, value);
       event.confirm.resolve();
-    } else {
-      event.confirm.reject();
-    }
+
+    });
+  }
+  onCreateConfirm(event): void {
+    this.shiftService.createShift(event.newData).subscribe(value => {
+      event.confirm.resolve();
+
+    });
   }
 }

@@ -7,11 +7,14 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { NbCardModule } from '@nebular/theme';
 
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-
+import { RolesService } from '../../services/roles/roles.service';
 import { TablesRoutingModule, routedComponents } from './users-routing.module';
+import { UserService } from '../../services/user/users.service';
 @NgModule({
   imports: [ThemeModule, NgxEchartsModule, NbCardModule, TablesRoutingModule,
     Ng2SmartTableModule],
-  declarations: [...routedComponents, UsersComponent],
+  declarations: [...routedComponents, UsersComponent], providers: [
+  RolesService, UserService,
+  ],
 })
 export class UsersModule { }
