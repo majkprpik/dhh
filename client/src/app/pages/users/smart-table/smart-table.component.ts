@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 
 import { UserService } from '../../../@core/data/users.service';
+import { RolesService } from '../../../services/roles/roles.service';
 // import { SmartTableService } from '../../../@core/data/smart-table.service';
 
 @Component({
@@ -14,7 +15,11 @@ import { UserService } from '../../../@core/data/users.service';
   `],
 })
 export class SmartTableComponent {
-
+  roles = [
+    { value: '5bdda1fe66c7e619987328a3', title: 'L1 agent' },
+    { value: '5bdda2ad7a413708f0a13339', title: 'L2 agent' },
+    { value: '5bdf4f46151b933458c1c964', title: 'L2 senior' },
+  ];
   settings = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -52,9 +57,17 @@ export class SmartTableComponent {
         title: 'Surname',
         type: 'string',
       },
-      role: {
+      _role: {
         title: 'Role',
-        type: 'number',
+        type: 'html',
+        valuePrepareFunction: (cell, row) =>
+          cell ? this.roles.find(v => v.value === cell).title : 'Unknown',
+        editor: {
+          type: 'list',
+          config: {
+            list: this.roles,
+          },
+        },
       },
     },
   };
@@ -66,9 +79,14 @@ export class SmartTableComponent {
       this.source.load(data);
       }
   */
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private rolesService: RolesService) {
     this.userService.getUsers().subscribe(value => {
       this.source.load(value);
+    });
+    this.rolesService.getRoles().subscribe((value) => {
+      // console.log(value);
+      this.roles = value.map(r => ({ 'value': r._id, 'title': r.name }));
+      this.roles.push({ 'value': '0', 'title': 'Unknown' });
     });
   }
 
@@ -82,8 +100,9 @@ export class SmartTableComponent {
   }
 
   onEditConfirm(event): void {
-    this.userService.updateUser(event.data).subscribe(value => {
+    this.userService.updateUser(event.newData).subscribe(value => {
       // this.source.load(value);
+      this.source.update(event.data, value);
       event.confirm.resolve();
       /* alert(event);
       if (window.confirm('Are you sure you want to delete?')) {
