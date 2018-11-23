@@ -4,6 +4,7 @@
 3. [Roles](#Roles)
 4. [Schedules](#Schedules)
 5. [Permissions](#Permissions)
+6. [RuleRoleShift](#RuleRoleShift)
 
 # Users
 
@@ -487,4 +488,65 @@
 ### Response 200 (application/json)
 ```json
     success: "true"
+```
+
+# RuleRoleShift
+## POST api/ruleroleshift
+### Add a rule
+### Request (application/json)
+```json
+    _role: "5bdda1fe66c7e619987328a3" - role id
+    _shift: "5bdda62c5af0de0b4c94a49c" - shift id
+```
+
+### Response 200 (application/json)
+    returns above sent rule
+
+### Response 400 (application/json)
+```json
+    month: "Rule already exists"
+```
+
+## DELETE api/ruleroleshift/:id
+### Remove a rule by id
+### Request (application/json)
+```json
+    id: "..." - rule id
+```
+### Response 200 (application/json)
+```json
+    success: "true"
+```
+### Response 404 (application/json)
+```json
+    id: "Rule to delete not found"
+```
+
+## PATCH api/ruleroleshift/:id
+### Update a rule
+### Request (application/json)
+```json
+    _role: "5bdda1fe66c7e619987328a3" - role id
+    _shift: "5bdda62c5af0de0b4c94a49c" - shift id
+```
+
+### Response 200 (application/json)
+    returns above sent rule
+
+### Response 400 (application/json)
+```json
+    _id: "Rule to update not found"
+```
+
+## GET api/ruleroleshift
+### Returns all rules
+### Response 200 (application/json)
+```json
+    _role: "5bdda1fe66c7e619987328a3" - role id
+    _shift: "5bdda62c5af0de0b4c94a49c" - shift id
+```
+
+### Response 400 (application/json)
+```json
+    norulesfound: "No rules where found"
 ```
