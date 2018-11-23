@@ -10,7 +10,7 @@
 ## POST api/users  
 ### Add/Register a user
 ### Request (application/json)
-```javascript    
+```json    
     username: "perop" - string, 4-30 chars  
     password: "pero1234" - string, 6-30 chars  
     email: "perop@gmail.com" - string, valid email  
@@ -26,13 +26,13 @@
 ## POST api/users/login
 ### Login a user
 ### Request (application/json)
-```javascript    
+```json    
     email: "perop@gmail.com" // string, valid email
     password: "pero1234" - string, 6-30 chars
 ```
 
 ### Response 200 (application/json)
-```javascript    
+```json    
     success: true
     token: "Bearer " + token - jwt
 ```
@@ -41,31 +41,31 @@
 ### Calculate hours for all users
 
 ### Response 200 (application/json)
-```javascript    
+```json    
     message: "Work hours calculated!"
 ```
 
 ## DELETE api/users/:id
 ### Delete a user
 ### Request (application/json)
-```javascript    
+```json    
     id: user id
 ```
 
 ### Response 200 (application/json)
-```javascript    
+```json    
     success: true
 ```
 
 ## GET api/users/:id
 ### Get user
 ### Request (application/json)
-```javascript    
+```json    
     id: user id
 ```
 
 ### Response 200 (application/json)
-```javascript    
+```json    
     username: "perop" - string, 4-30 chars
     password: "pero1234" - string, 6-30 chars
     email: "perop@gmail.com" - string, valid email
@@ -83,7 +83,7 @@
 ### Get all users
 
 ### Response 200 (application/json)
-```javascript    
+```json    
     username: "perop" - string, 4-30 chars
     password: "pero1234" - string, 6-30 chars
     email: "perop@gmail.com" - string, valid email
@@ -100,14 +100,14 @@
 ## GET api/users/current
 ### Returns current user
 ### Request (application/json)
-```javascript    
+```json    
     header{
         token: "Bearer " + token - jwt
     }
 ```
 
 ### Response 200 (application/json)
-```javascript
+```json
     username: "perop" - string
     name: "Pero" - string
     email: "perop@gmail.com" - string, valid email
@@ -118,7 +118,7 @@
 ## POST api/shifts
 ### Add a shift
 ### Request (application/json)
-```javascript
+```json
     name: "Smjena 1" - string    
     start: "8" - number
     end: "16" - number
@@ -128,7 +128,7 @@
     returns above sent shift
 
 ### Response 400 (application/json)
-```javascript    
+```json    
     name: "Shift already exists"
 ```
 
@@ -136,24 +136,24 @@
 ### Remove a shift
 ### Public
 ### Request (application/json)
-```javascript    
+```json    
     id: shift id
 ```
 
 ### Response 200 (application/json)
-```javascript    
+```json    
     success: true
 ```
 
 ### Response 400 (application/json)
-```javascript    
+```json    
     id: "Shift to delete not found"
 ```
 
 ## PATCH api/shifts/:id
 ### Update a shift
 ### Request (application/json)
-```javascript    
+```json    
     id: shift id
     name: "Smjena 1" - string    
     start: "8" - number
@@ -161,31 +161,31 @@
 ```
 
 ### Response 200 (application/json)
-```javascript    
+```json    
     success: true
 ```
 
 ### Response 400 (application/json)
-```javascript    
+```json    
     id: "Shift to update not found"
 ```
 
 ## GET api/shifts/:id
 ### Get shift
 ### Request (application/json)
-```javascript    
+```json    
     id: shift id
 ```
 
 ### Response 200 (application/json)
-```javascript    
+```json    
     name: "Smjena 1" - string    
     start: "8" - number
     end: "16" - number
 ```
 
 ### Response 400 (application/json)
-```javascript    
+```json    
     noshiftfound: "No shift was found"
 ```
 
@@ -193,14 +193,14 @@
 ### Get all shifts
 
 ### Response 200 (application/json)
-```javascript    
+```json    
     name: "Smjena 1" - string    
     start: "8" - number
     end: "16" - number
 ```
 
 ### Response 400 (application/json)
-```javascript    
+```json    
     noshiftsfound: "No shifts was found"
 ```
 
@@ -209,7 +209,7 @@
 ## POST api/roles/add
 ### Add a role
 ### Request (application/json)
-```javascript    
+```json    
     name: "L1 agent" - string, 3-30 chars
     permission: "..." - id
 ```
@@ -218,24 +218,24 @@
     returns above sent role
 
 ### Response 400 (application/json)
-```javascript    
+```json    
     name: "Role already exists"
 ```
 
 ## POST api/roles/remove
 ### Remove a role
 ### Request (application/json)
-```javascript    
+```json    
     _id: role id
 ```
 
 ### Response 200 (application/json)
-```javascript    
+```json    
     success: true
 ```
 
 ### Response 400 (application/json)
-```javascript    
+```json    
     _id: "Role to delete not found"
 ```
 
@@ -243,50 +243,50 @@
 ## PUT api/roles/update
 ### Update a role
 ### Request (application/json)
-```javascript    
+```json    
     _id: role id
     name: "L1 agent" - string, 3-30 chars
     permission: "..." - id
 ```
 
 ### Response 200 (application/json)
-```javascript    
+```json    
     success: true
 ```
 
 ### Response 400 (application/json)
-```javascript    
+```json    
     _id: "Role to update not found"
 ```
 
 ## GET api/roles/get
 ### Get role by id
 ### Request (application/json)
-```javascript    
+```json    
     _id: role id
 ```
 
 ### Response 200 (application/json)
-```javascript    
+```json    
     name: "L1 agent" - string, 3-30 chars
     permission: "..." - id
 ```
 
 ### Response 400 (application/json)
-```javascript    
+```json    
     norolefound: "No role was found"
 ```
 
 ## GET api/roles
 ### Get all roles
 ### Response 200 (application/json)
-```javascript
+```json
     name: "L1 agent" - string, 3-30 chars
     permission: "..." - id
 ```
 
 ### Response 400 (application/json)
-```javascript
+```json
     norolesfound: "No roles where found"
 ```
 
@@ -294,7 +294,7 @@
 ## POST api/permissions
 ### Add a permission
 ### Request (application/json)
-```javascript
+```json
     {
       name: "lider", - string, 3-30 chars
       view: "1", - number, 0-1
@@ -308,46 +308,46 @@
   returns above sent permission
 
 ### Response 400 (application/json)
-```javascript
+```json
     name: "Permission already exists"
 ```
 ## DELETE api/permissions/:id
 ### Remove a permission by id
 ### Request (application/json)
-```javascript
+```json
     id: "..." - permission id
 ```
 ### Response 200 (application/json)
-```javascript
+```json
     success: "true"
 ```
 ### Response 404 (application/json)
-```javascript
+```json
     id: "Permission to delete not found"
 ```
 
 ## PATCH api/permissions/:id
 ### Update a permission by id
 ### Request (application/json)
-```javascript
+```json
     id: "..." - permission id
 ```
 ### Response 200 (application/json)
   returns the updated above sent permission
 
 ### Response 404 (application/json)
-```javascript
+```json
     _id: "Permission to update not found"
 ```
 
 ## GET api/permissions/:id
 ### Get permission by id
 ### Request (application/json)
-```javascript
+```json
     id: "..." - permission id
 ```
 ### Response 200 (application/json)
-```javascript
+```json
     {
       _id: "..." - permission id
       name: "permission name",
@@ -361,13 +361,13 @@
 
 
 ### Response 404 (application/json)
-```javascript
+```json
     nopermissionsfound: "No permissions were found"
 ```
 ## GET api/permissions
 ### Get all permissions
 ### Response 200 (application/json)
-```javascript
+```json
     [{
       _id: "..." - permission id
       name: "permission name",
@@ -379,7 +379,7 @@
     }]
 ```
 ### Response 404 (application/json)
-```javascript
+```json
     nopermissionsfound: "No permissions were found"
 ```
 
@@ -387,7 +387,7 @@
 ## POST api/schedules
 ### Add a schedule
 ### Request (application/json)
-```javascript
+```json
     month: "01/2018" - string
     days: [
         {
@@ -408,14 +408,14 @@
     returns above sent schedule
 
 ### Response 400 (application/json)
-```javascript
+```json
     month: "Schedule already exists"
 ```
 
 ## PATCH api/schedules/:id
 ### Update a schedule
 ### Request (application/json)
-```javascript
+```json
     id: "..." - schedule id
 
     month: "01/2018" - string
@@ -438,14 +438,14 @@
     returns above sent schedule
 
 ### Response 400 (application/json)
-```javascript
+```json
     _id: "Schedule to update not found"
 ```
 
 ## GET api/schedules
 ### Returns all schedules
 ### Response 200 (application/json)
-```javascript
+```json
     month: "01/2018" - string
     days: [
         {
@@ -468,18 +468,23 @@
 ## DELETE api/schedules/:id
 ### Remove a schedule by id
 ### Request (application/json)
-```javascript
+```json
     id: "..." - schedule id
 ```
 ### Response 200 (application/json)
-```javascript
+```json
     success: "true"
 ```
 ### Response 404 (application/json)
-```javascript
+```json
     id: "Schedule to delete not found"
 ```
 
 
 ## DELETE api/schedules/
 ### Remove all schedules
+
+### Response 200 (application/json)
+```json
+    success: "true"
+```
