@@ -18,8 +18,10 @@ import { ProfitBarAnimationChartService } from './profit-bar-animation-chart.ser
 import { LayoutService } from './layout.service';
 import { ShiftsService } from './shifts.service';
 import { HandsontableService } from './handsontable.service';
+import { RoleService } from './role.service';
 
 const SERVICES = [
+  RoleService,
   HandsontableService,
   UserService,
   ShiftsService,

@@ -20,6 +20,7 @@ export class SmartTableComponent {
       addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
+      confirmCreate: true,
     },
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
@@ -75,7 +76,9 @@ export class SmartTableComponent {
   onDeleteConfirm(event): void {
     alert(event);
     if (window.confirm('Are you sure you want to delete?')) {
-      event.confirm.resolve();
+      this.userService.deleteUser(event.data).subscribe(value => {
+        event.confirm.resolve();
+      });
     } else {
       event.confirm.reject();
     }
@@ -83,6 +86,18 @@ export class SmartTableComponent {
 
   onEditConfirm(event): void {
     this.userService.updateUser(event.data).subscribe(value => {
+      // this.source.load(value);
+      event.confirm.resolve();
+      /* alert(event);
+      if (window.confirm('Are you sure you want to delete?')) {
+        });
+      } else {
+        event.confirm.reject();
+      }*/
+    });
+  }
+  onCreateConfirm(event): void {
+    this.userService.createUser(event.newData).subscribe(value => {
       // this.source.load(value);
       event.confirm.resolve();
       /* alert(event);

@@ -63,6 +63,10 @@ const routes: Routes = [
         loadChildren: './dhhdashboard1/dhhdashboard1.module#DhhDashboard1Module',
       },
       {
+        path: 'role',
+        loadChildren: './role/role.module#RoleModule',
+      },
+      {
         path: 'miscellaneous',
         loadChildren: './miscellaneous/miscellaneous.module#MiscellaneousModule',
       },

@@ -25,6 +25,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/shifts/smart-table',
     home: true,
   },
+  {
+    title: 'Role',
+    icon: 'nb-tables',
+    link: '/pages/role/smart-table',
+    home: true,
+  },
   /*,
   {
     title: "E-commerce",

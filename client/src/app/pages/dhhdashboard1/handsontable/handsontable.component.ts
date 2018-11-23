@@ -39,7 +39,8 @@ export class HandsontableComponent {
         }, autoWrapRow: true,
         height: 500, manualColumnMove: true, manualColumnResize: true,
         manualRowMove: true, manualRowResize: true, maxRows: 20,
-        rowHeaders: true, width: 1150,
+        rowHeaders: true, width: 1150, contextMenu: true,
+        bindRowsWithHeaders: 'strict',
     };
   }
   public funCaller() {
