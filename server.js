@@ -9,6 +9,7 @@ const roles = require("./routes/api/roles");
 const shifts = require("./routes/api/shifts");
 const schedules = require("./routes/api/schedules");
 const permissions = require("./routes/api/permissions");
+const ruleroleshift = require("./routes/api/ruleroleshift");
 
 const app = express();
 
@@ -48,6 +49,7 @@ app.use("/roles", roles);
 app.use("/shifts", shifts);
 app.use("/schedules", schedules);
 app.use("/permissions", permissions);
+app.use("/ruleroleshift", ruleroleshift);
 
 const port = process.env.PORT || 5000;
 
