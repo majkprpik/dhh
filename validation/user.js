@@ -12,13 +12,13 @@ module.exports = function validateUserData(data) {
         errors.username = "Username must be between 4 and 30 characters"
     }
 
-    if (Validator.isEmpty(data.password)) {
+    /*if (Validator.isEmpty(data.password)) {
         errors.password = "Password field is required"
     }
     
     if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
         errors.password = "Password must be between 6 and 30 characters"
-    }
+    }*/
 
     if (Validator.isEmpty(data.email)) {
         errors.email = "Email field is required";
@@ -32,12 +32,12 @@ module.exports = function validateUserData(data) {
         errors.name = "Name field is required"
     }
 
-    if (Validator.isEmpty(data.name)) {
-        errors.name = "Surname field is required"
+    if (Validator.isEmpty(data.surname)) {
+        errors.surname = "Surname field is required"
     }
 
-    if (Validator.isEmpty(data.role)) {
-        errors.name = "Role field is required"
+    if (Validator.isEmpty(data._role)) {
+        errors._role = "Role field is required"
     }
 
     return {

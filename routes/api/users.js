@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
 const passport = require("passport");
+const Validator = require("validator")
 
 // Load input validation
 const validateUserInput = require("../../validation/user");
@@ -14,16 +15,19 @@ const setWorkHours = require("../../util/workHours")
 // Load models
 const User = require("../../models/User");
 
-// @route   GET api/users/test
-// @desc    Tests user route
-// @access  Public
-router.get("/test", (req, res) => res.json({ msg: "Users works!" }));
-
 // @route   POST api/users
 // @desc    Registers a user
 // @access  Public
 router.post("/", (req, res) => {
 	const { errors, isValid } = validateUserInput(req.body);
+
+	if (Validator.isEmpty(data.password)) {
+        errors.password = "Password field is required"
+    }
+    
+    if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
+        errors.password = "Password must be between 6 and 30 characters"
+    }
 
 	if (!isValid) {
 		return res.status(400).json(errors);
@@ -39,16 +43,25 @@ router.post("/", (req, res) => {
 				email: req.body.email,
 				name: req.body.name,
 				surname: req.body.surname,
-				role: req.body.role
+				_role: req.body._role
 			});
 
 			bcrypt.genSalt(10, (err, salt) => {
 				bcrypt.hash(newUser.password, salt, (err, hash) => {
-					// if(err){ throw err}
 					newUser.password = hash;
 					newUser
 						.save()
-						.then(user => res.json(user))
+						.then(user => {
+							res.json({
+								"_id": user._id, 
+								"username" :user.username, 
+								"email" : user.email, 
+								"name" : user.name, 
+								"surname" : user.surname, 
+								"_role" : user._role, 
+								"monthlyNumberOfHours" : user.monthlyNumberOfHours
+							})
+						})
 						.catch(err => console.log(err));
 				});
 			});
@@ -61,11 +74,11 @@ router.post("/", (req, res) => {
 // @desc    Update a shift
 // @access  Public
 router.patch("/:id", (req, res) => {
-	/*const { errors, isValid } = validateUserInput(req.body.user);
+	const { errors, isValid } = validateUserInput(req.body);
 
 	if (!isValid) {
 		return res.status(400).json(errors);
-	}*/
+	}
 
 	User.findOneAndUpdate({ _id: req.params.id }, req.body.user, { new: true })
 		.then(user => {
@@ -73,7 +86,15 @@ router.patch("/:id", (req, res) => {
 				return res.status(404).json({ error: "User to update not found" });
 			} else {
 				console.log("User updated");
-				return res.json(user)
+				return res.json({
+					"_id": user._id, 
+					"username" :user.username, 
+					"email" : user.email, 
+					"name" : user.name, 
+					"surname" : user.surname, 
+					"_role" : user._role, 
+					"monthlyNumberOfHours" : user.monthlyNumberOfHours
+				})
 			}
 		})
 })
@@ -143,8 +164,10 @@ router.delete("/:id", (req, res) => {
 // @desc    Get user
 // @access  Public
 router.get("/:id", async (req, res) => {
-	User.findById(req.params.id)
-		.then(user => res.json(user))
+	User.findById(req.params.id, ("-password"))
+		.then(user => {
+			res.json(user)
+		})
 		.catch(err => res.status(404).json({ nouserfound: "No user was found" }));
 });
 
@@ -152,7 +175,7 @@ router.get("/:id", async (req, res) => {
 // @desc    Get all users
 // @access  Public
 router.get("/", (req, res) => {
-	User.find()
+	User.find({}, ("-password"))
 		.then(user => res.json(user))
 		.catch(err => res.status(404).json({ nousersfound: "No users was found" }));
 });
