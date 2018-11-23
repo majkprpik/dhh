@@ -7,6 +7,9 @@ const validateRuleInput = require("../../validation/ruleroleshift")
 // Load agent model
 const Rule = require("../../models/RuleRoleShift")
 
+// Load utils
+const checkRules = require("../../util/ruleroleshift")
+
 // @route   POST api/ruleroleshift
 // @desc    Add a rule
 // @access  Public
@@ -76,6 +79,12 @@ router.patch("/:id", (req, res) => {
 // @desc    Get all rules
 // @access  Public
 router.get("/", (req, res) => {
+	/*const { errors, isValid } = checkRules()
+
+	if (!isValid) {
+		return res.status(400).json(errors);
+	}*/
+
 	Rule.find()
 		.then(role => res.json(role))
 		.catch(err => res.status(404).json({ norulesfound: "No rules where found" }))
