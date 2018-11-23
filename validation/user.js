@@ -36,15 +36,9 @@ module.exports = function validateUserData(data) {
         errors.surname = "Surname field is required"
     }
 
-<<<<<<< HEAD
-    // if (Validator.isEmpty(data.role)) {
-    //     errors.name = "Role field is required"
-    // }
-=======
     if (Validator.isEmpty(data._role)) {
         errors._role = "Role field is required"
     }
->>>>>>> 797ca36eaeb3e5981c5e1a7ae184fbc6392f894a
 
     return {
         errors,

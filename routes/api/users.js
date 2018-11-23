@@ -22,12 +22,12 @@ router.post("/", (req, res) => {
 	const { errors, isValid } = validateUserInput(req.body);
 
 	if (Validator.isEmpty(data.password)) {
-        errors.password = "Password field is required"
-    }
-    
-    if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
-        errors.password = "Password must be between 6 and 30 characters"
-    }
+		errors.password = "Password field is required"
+	}
+
+	if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
+		errors.password = "Password must be between 6 and 30 characters"
+	}
 
 	if (!isValid) {
 		return res.status(400).json(errors);
@@ -53,13 +53,13 @@ router.post("/", (req, res) => {
 						.save()
 						.then(user => {
 							res.json({
-								"_id": user._id, 
-								"username" :user.username, 
-								"email" : user.email, 
-								"name" : user.name, 
-								"surname" : user.surname, 
-								"_role" : user._role, 
-								"monthlyNumberOfHours" : user.monthlyNumberOfHours
+								"_id": user._id,
+								"username": user.username,
+								"email": user.email,
+								"name": user.name,
+								"surname": user.surname,
+								"_role": user._role,
+								"monthlyNumberOfHours": user.monthlyNumberOfHours
 							})
 						})
 						.catch(err => console.log(err));
@@ -80,20 +80,20 @@ router.patch("/:id", (req, res) => {
 		return res.status(400).json(errors);
 	}
 
-	User.findOneAndUpdate({ _id: req.params.id }, req.body.user, { new: true })
+	User.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
 		.then(user => {
 			if (!user) {
 				return res.status(404).json({ error: "User to update not found" });
 			} else {
 				console.log("User updated");
 				return res.json({
-					"_id": user._id, 
-					"username" :user.username, 
-					"email" : user.email, 
-					"name" : user.name, 
-					"surname" : user.surname, 
-					"_role" : user._role, 
-					"monthlyNumberOfHours" : user.monthlyNumberOfHours
+					"_id": user._id,
+					"username": user.username,
+					"email": user.email,
+					"name": user.name,
+					"surname": user.surname,
+					"_role": user._role,
+					"monthlyNumberOfHours": user.monthlyNumberOfHours
 				})
 			}
 		})
