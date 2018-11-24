@@ -14,8 +14,8 @@
 ```json    
     password: "pero1234" - string, 6-30 chars  
     email: "perop@gmail.com" - string, valid email  
-    name: "Pero"
-    surname: "Peric"
+    firstname: "Pero"
+    lastname: "Peric"
     _role: "5bdda1fe66c7e619987328a3" - role id
 ```
 
@@ -68,8 +68,8 @@
 ```json    
     password: "pero1234" - string, 6-30 chars
     email: "perop@gmail.com" - string, valid email
-    name: "Pero"
-    surname: "Peric"
+    firstname: "Pero"
+    lastname: "Peric"
     _role: "5bdda1fe66c7e619987328a3" - role id
     monthlyNumberOfHours: [
         month: "Jan" - string
@@ -84,8 +84,8 @@
 ```json    
     password: "pero1234" - string, 6-30 chars
     email: "perop@gmail.com" - string, valid email
-    name: "Pero"
-    surname: "Peric"
+    firstname: "Pero"
+    lastname: "Peric"
     _role: "5bdda1fe66c7e619987328a3" - role id
     monthlyNumberOfHours: [
         month: "Jan" - string
@@ -104,8 +104,7 @@
 
 ### Response 200 (application/json)
 ```json
-    username: "perop" - string
-    name: "Pero" - string
+    firstname: "Pero" - string
     email: "perop@gmail.com" - string, valid email
 ```
 
