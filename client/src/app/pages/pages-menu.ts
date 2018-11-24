@@ -10,7 +10,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'DHHdashboard',
     icon: 'nb-e-commerce',
-    link: '/pages/dhh-dashboard1',
+    link: '/pages/dhh-dashboard1/handsontable',
     home: true,
   },
   {
@@ -23,6 +23,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Shfts',
     icon: 'nb-tables',
     link: '/pages/shifts/smart-table',
+    home: true,
+  },
+  {
+    title: 'Role',
+    icon: 'nb-tables',
+    link: '/pages/role/smart-table',
     home: true,
   },
   /*,

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 
-import { ShiftService } from '../../../services/shifts/shift.service';
+import { RolesService } from '../../../services/roles/roles.service';
 
 @Component({
   selector: 'ngx-smart-table',
@@ -19,13 +19,12 @@ export class SmartTableComponent {
       addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-      confirmCreate: true,
     },
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-      confirmSave: true,
+      confirmEdit: true,
     },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
@@ -33,15 +32,11 @@ export class SmartTableComponent {
     },
     columns: {
       name: {
-        title: 'Shift name',
+        title: 'Role name',
         type: 'string',
       },
-      start: {
-        title: 'Start',
-        type: 'string',
-      },
-      end: {
-        title: 'End',
+      permission: {
+        title: 'Permission',
         type: 'string',
       },
     },
@@ -55,35 +50,12 @@ export class SmartTableComponent {
     }
 
 */
-  constructor(private shiftService: ShiftService) {
-    this.shiftService.getShifts().subscribe(value => {
+  constructor(private service: RolesService) {
+    this.service.getRoles().subscribe(value => {
       const data = value;
       this.source.load(data);
     });
   }
 
-  onDeleteConfirm(event): void {
-    alert(event);
-    if (window.confirm('Are you sure you want to delete?')) {
-      this.shiftService.deleteShift(event.data).subscribe(value => {
-        event.confirm.resolve();
-      });
-    } else {
-      event.confirm.reject();
-    }
-  }
 
-  onEditConfirm(event): void {
-    this.shiftService.updateShift(event.newData).subscribe(value => {
-      this.source.update(event.data, value);
-      event.confirm.resolve();
-
-    });
-  }
-  onCreateConfirm(event): void {
-    this.shiftService.createShift(event.newData).subscribe(value => {
-      event.confirm.resolve();
-
-    });
-  }
 }

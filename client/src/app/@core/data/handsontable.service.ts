@@ -1,14 +1,15 @@
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class AgentService {
+
+@Injectable()
+export class HandsontableService {
+
   private httpOptions;
+
   constructor(private http: HttpClient, private authService: NbAuthService) {
     this.authService.onTokenChange().subscribe((token: NbAuthJWTToken) => {
       if (token.isValid()) {
@@ -22,7 +23,7 @@ export class AgentService {
     });
   }
 
-  getCurrentUser(): Observable<any> {
-    return this.http.get('api/users/current', this.httpOptions);
+  getSchedule(): Observable<any> {
+    return this.http.get('api/schedules', this.httpOptions);
   }
 }

@@ -23,20 +23,22 @@ export class ShiftService {
         });
     }
 
-    getCurrentUser(): Observable<any> {
-        return this.http.get('api/users/current', this.httpOptions);
-    }
-
-    getData2(): Observable<any> {
-        return this.http.get('api/users/', this.httpOptions);
-    }
     getShifts(): Observable<any> {
         return this.http.get('api/shifts', this.httpOptions);
-    }
-
-    updateUser(user): Observable<any> {
-        if (user != null) {
-            return this.http.patch('api/users/' + user._id, { user: user }, this.httpOptions);
+      }
+    updateShift(shift): Observable<any> {
+        if (shift != null) {
+          return this.http.patch('api/shifts/' + shift._id, { shift: shift }, this.httpOptions);
         }
-    }
+      }
+    deleteShift(shift): Observable<any> {
+        if (shift != null) {
+          return this.http.delete('api/shifts/' + shift._id, this.httpOptions);
+        }
+      }
+    createShift(shift): Observable<any> {
+        if (shift != null) {
+          return this.http.post('api/shifts/', shift, this.httpOptions);
+        }
+      }
 }

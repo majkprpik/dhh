@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 
-import { UserService } from '../../../@core/data/users.service';
+import { UserService } from '../../../services/user/users.service';
 import { RolesService } from '../../../services/roles/roles.service';
 // import { SmartTableService } from '../../../@core/data/smart-table.service';
 
@@ -25,6 +25,7 @@ export class SmartTableComponent {
       addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
+      confirmCreate: true,
     },
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
@@ -39,10 +40,6 @@ export class SmartTableComponent {
     columns: {
       username: {
         title: 'Username',
-        type: 'string',
-      },
-      password: {
-        title: 'Password',
         type: 'string',
       },
       email: {
@@ -93,7 +90,9 @@ export class SmartTableComponent {
   onDeleteConfirm(event): void {
     alert(event);
     if (window.confirm('Are you sure you want to delete?')) {
-      event.confirm.resolve();
+      this.userService.deleteUser(event.data).subscribe(value => {
+        event.confirm.resolve();
+      });
     } else {
       event.confirm.reject();
     }
@@ -101,6 +100,19 @@ export class SmartTableComponent {
 
   onEditConfirm(event): void {
     this.userService.updateUser(event.newData).subscribe(value => {
+      // this.source.load(value);
+      this.source.update(event.data, value);
+      event.confirm.resolve();
+      /* alert(event);
+      if (window.confirm('Are you sure you want to delete?')) {
+        });
+      } else {
+        event.confirm.reject();
+      }*/
+    });
+  }
+  onCreateConfirm(event): void {
+    this.userService.createUser(event.newData).subscribe(value => {
       // this.source.load(value);
       this.source.update(event.data, value);
       event.confirm.resolve();

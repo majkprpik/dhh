@@ -32,7 +32,7 @@ export class UserService {
 
   updateUser(user): Observable<any> {
     if (user != null) {
-      return this.http.patch('api/users/' + user._id, { user: user }, this.httpOptions);
+      return this.http.patch('api/users/' + user._id, user, this.httpOptions);
     }
   }
   deleteUser(user): Observable<any> {

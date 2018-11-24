@@ -23,20 +23,23 @@ export class RolesService {
         });
     }
 
-    getCurrentUser(): Observable<any> {
-        return this.http.get('api/users/current', this.httpOptions);
-    }
-
-    getData2(): Observable<any> {
-        return this.http.get('api/users/', this.httpOptions);
-    }
     getRoles(): Observable<any> {
         return this.http.get('api/roles', this.httpOptions);
-    }
+      }
 
-    updateUser(user): Observable<any> {
-        if (user != null) {
-            return this.http.patch('api/users/' + user._id, { user: user }, this.httpOptions);
+    updateRole(role): Observable<any> {
+        if (role != null) {
+          return this.http.put('api/roles/update' + role._id, { role: role }, this.httpOptions);
         }
-    }
+      }
+    deleteRole(role): Observable<any> {
+        if (role != null) {
+          return this.http.post('api/roles/remove' + role._id, this.httpOptions);
+        }
+      }
+    createRole(role): Observable<any> {
+        if (role != null) {
+          return this.http.post('api/roles/add', role, this.httpOptions);
+        }
+      }
 }

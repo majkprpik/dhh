@@ -23,6 +23,17 @@ const User = require("../../models/User");
 router.post("/", (req, res) => {
 	const { errors, isValid } = validateUserInput(req.body);
 
+<<<<<<< HEAD
+=======
+	if (Validator.isEmpty(data.password)) {
+		errors.password = "Password field is required"
+	}
+
+	if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
+		errors.password = "Password must be between 6 and 30 characters"
+	}
+
+>>>>>>> 8c145cc724f472015cf9598cf3550814e32a978f
 	if (!isValid) {
 		return res.status(400).json(errors);
 	}
@@ -77,7 +88,7 @@ router.patch("/:id", (req, res) => {
 		return res.status(400).json(errors);
 	}
 
-	User.findOneAndUpdate({ _id: req.params.id }, req.body.user, { new: true })
+	User.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
 		.then(user => {
 			if (!user) {
 				return res.status(404).json({ error: "User to update not found" });
