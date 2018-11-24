@@ -23,17 +23,6 @@ const User = require("../../models/User");
 router.post("/", (req, res) => {
 	const { errors, isValid } = validateUserInput(req.body);
 
-<<<<<<< HEAD
-=======
-	if (Validator.isEmpty(data.password)) {
-		errors.password = "Password field is required"
-	}
-
-	if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
-		errors.password = "Password must be between 6 and 30 characters"
-	}
-
->>>>>>> 8c145cc724f472015cf9598cf3550814e32a978f
 	if (!isValid) {
 		return res.status(400).json(errors);
 	}
@@ -47,8 +36,8 @@ router.post("/", (req, res) => {
 			const newUser = new User({
 				password: generatedPassword,
 				email: req.body.email,
-				name: req.body.name,
-				surname: req.body.surname,
+				firstname: req.body.firstname,
+				lastname: req.body.lastname,
 				_role: req.body._role
 			});
 
@@ -62,10 +51,9 @@ router.post("/", (req, res) => {
 						.then(user => {
 							res.json({
 								"_id": user._id,
-								"username": user.username,
 								"email": user.email,
-								"name": user.name,
-								"surname": user.surname,
+								"firstname": user.firstname,
+								"lastname": user.lastname,
 								"_role": user._role,
 								"monthlyNumberOfHours": user.monthlyNumberOfHours
 							})
@@ -96,10 +84,9 @@ router.patch("/:id", (req, res) => {
 				console.log("User updated");
 				return res.json({
 					"_id": user._id,
-					"username": user.username,
 					"email": user.email,
-					"name": user.name,
-					"surname": user.surname,
+					"firstname": user.firstname,
+					"lastname": user.lastname,
 					"_role": user._role,
 					"monthlyNumberOfHours": user.monthlyNumberOfHours
 				})
@@ -123,7 +110,7 @@ router.post("/login", (req, res) => {
 		bcrypt.compare(password, user.password).then(isMatch => {
 			if (isMatch) {
 				// User matched
-				const payload = { id: user.id, username: user.username }; // Create JWT Payload
+				const payload = { id: user.id, email: user.email }; // Create JWT Payload
 
 				// Sign token
 				jwt.sign(
@@ -194,7 +181,7 @@ router.get("/", (req, res) => {
 router.get("/current", passport.authenticate("jwt", { session: false }),
 	(req, res) => {
 		res.json({
-			name: req.user.name,
+			firstname: req.user.firstname,
 			email: req.user.email
 		});
 	}

@@ -20,12 +20,12 @@ module.exports = function validateUserData(data) {
         errors.email = "Email is invalid";
     }
 
-    if (Validator.isEmpty(data.name)) {
-        errors.name = "Name field is required"
+    if (Validator.isEmpty(data.firstname)) {
+        errors.firstname = "Name field is required"
     }
 
-    if (Validator.isEmpty(data.surname)) {
-        errors.surname = "Surname field is required"
+    if (Validator.isEmpty(data.lastname)) {
+        errors.lastname = "Surname field is required"
     }
 
     if (Validator.isEmpty(data._role)) {
