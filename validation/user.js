@@ -3,15 +3,7 @@ const isEmpty = require("./isEmpty")
 
 module.exports = function validateUserData(data) {
     let errors = {}
-
-    if (Validator.isEmpty(data.username)) {
-        errors.username = "Username field is required"
-    }
-
-    if (!Validator.isLength(data.username, { min: 4, max: 30 })) {
-        errors.username = "Username must be between 4 and 30 characters"
-    }
-
+    
     /*if (Validator.isEmpty(data.password)) {
         errors.password = "Password field is required"
     }

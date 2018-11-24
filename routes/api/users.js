@@ -5,12 +5,14 @@ const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
 const passport = require("passport");
 const Validator = require("validator")
+const randomstring = require("randomstring");
 
 // Load input validation
 const validateUserInput = require("../../validation/user");
 
 // Load utils
 const setWorkHours = require("../../util/workHours")
+const sendPassword = require("../../util/passwordMail")
 
 // Load models
 const User = require("../../models/User");
@@ -21,14 +23,6 @@ const User = require("../../models/User");
 router.post("/", (req, res) => {
 	const { errors, isValid } = validateUserInput(req.body);
 
-	if (Validator.isEmpty(data.password)) {
-        errors.password = "Password field is required"
-    }
-    
-    if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
-        errors.password = "Password must be between 6 and 30 characters"
-    }
-
 	if (!isValid) {
 		return res.status(400).json(errors);
 	}
@@ -37,14 +31,17 @@ router.post("/", (req, res) => {
 		if (user) {
 			return res.status(400).json({ email: "Email already exists" });
 		} else {
+			const generatedPassword = randomstring.generate(6)
+
 			const newUser = new User({
-				username: req.body.username,
-				password: req.body.password,
+				password: generatedPassword,
 				email: req.body.email,
 				name: req.body.name,
 				surname: req.body.surname,
 				_role: req.body._role
 			});
+
+			sendPassword(generatedPassword, newUser.email)
 
 			bcrypt.genSalt(10, (err, salt) => {
 				bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -53,13 +50,13 @@ router.post("/", (req, res) => {
 						.save()
 						.then(user => {
 							res.json({
-								"_id": user._id, 
-								"username" :user.username, 
-								"email" : user.email, 
-								"name" : user.name, 
-								"surname" : user.surname, 
-								"_role" : user._role, 
-								"monthlyNumberOfHours" : user.monthlyNumberOfHours
+								"_id": user._id,
+								"username": user.username,
+								"email": user.email,
+								"name": user.name,
+								"surname": user.surname,
+								"_role": user._role,
+								"monthlyNumberOfHours": user.monthlyNumberOfHours
 							})
 						})
 						.catch(err => console.log(err));
@@ -87,13 +84,13 @@ router.patch("/:id", (req, res) => {
 			} else {
 				console.log("User updated");
 				return res.json({
-					"_id": user._id, 
-					"username" :user.username, 
-					"email" : user.email, 
-					"name" : user.name, 
-					"surname" : user.surname, 
-					"_role" : user._role, 
-					"monthlyNumberOfHours" : user.monthlyNumberOfHours
+					"_id": user._id,
+					"username": user.username,
+					"email": user.email,
+					"name": user.name,
+					"surname": user.surname,
+					"_role": user._role,
+					"monthlyNumberOfHours": user.monthlyNumberOfHours
 				})
 			}
 		})
@@ -186,7 +183,6 @@ router.get("/", (req, res) => {
 router.get("/current", passport.authenticate("jwt", { session: false }),
 	(req, res) => {
 		res.json({
-			username: req.user.username,
 			name: req.user.name,
 			email: req.user.email
 		});

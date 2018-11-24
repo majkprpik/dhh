@@ -12,7 +12,6 @@
 ### Add/Register a user
 ### Request (application/json)
 ```json    
-    username: "perop" - string, 4-30 chars  
     password: "pero1234" - string, 6-30 chars  
     email: "perop@gmail.com" - string, valid email  
     name: "Pero"
@@ -67,13 +66,11 @@
 
 ### Response 200 (application/json)
 ```json    
-    username: "perop" - string, 4-30 chars
     password: "pero1234" - string, 6-30 chars
     email: "perop@gmail.com" - string, valid email
     name: "Pero"
     surname: "Peric"
     _role: "5bdda1fe66c7e619987328a3" - role id
-    totalNumberOfHours: 250 - number
     monthlyNumberOfHours: [
         month: "Jan" - string
         numberOfHours: 100 - number
@@ -85,13 +82,11 @@
 
 ### Response 200 (application/json)
 ```json    
-    username: "perop" - string, 4-30 chars
     password: "pero1234" - string, 6-30 chars
     email: "perop@gmail.com" - string, valid email
     name: "Pero"
     surname: "Peric"
     _role: "5bdda1fe66c7e619987328a3" - role id
-    totalNumberOfHours: 250 - number
     monthlyNumberOfHours: [
         month: "Jan" - string
         numberOfHours: 100 - number
