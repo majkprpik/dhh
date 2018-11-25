@@ -12,10 +12,6 @@ module.exports = function validateRoleData(data) {
         errors.name = "Name must be between 3 and 30 characters"
     }
 
-    if (Validator.isEmpty(data.permission)) {
-        errors.permission = "Permission field is required"
-    }
-
     return {
         errors,
         isValid: isEmpty(errors)

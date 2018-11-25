@@ -14,6 +14,17 @@ const ShiftSchema = new Schema({
     end: {
         type: Number,
         required: true
+    },
+    roles: [
+        {
+            _role: {
+                type: Schema.Types.ObjectId, ref: 'Role'
+            }
+        }
+    ],
+    priority: {
+        type: Boolean,
+        default: false
     }
 })
 

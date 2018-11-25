@@ -22,12 +22,7 @@ router.post("/", (req, res) => {
             if(shift) {
                 return res.status(400).json({ message: "Shift already exists" })
             } else {
-                const newShift = new Shift({
-                    name: req.body.name,
-                    start: req.body.start,
-                    end: req.body.end
-                })
-
+                const newShift = new Shift(req.body)
                 newShift.save()
                     .then(shift => res.json(shift))
                     .catch(err => console.log(err))

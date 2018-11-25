@@ -12,24 +12,21 @@ const Role = require("../../models/Role")
 // @access  Public
 router.post("/", (req, res) => {
     const { errors, isValid } = validateRoleInput(req.body)
-    if(!isValid) {
+    if (!isValid) {
         return res.status(400).json(errors)
     }
 
     Role.findOne({ name: req.body.name })
         .then(role => {
-            if(role) {
+            if (role) {
                 return res.status(400).json({ name: "Role already exists" })
             } else {
-                const newRole = new Role({
-                    name: req.body.name,
-                    permission: req.body.permission
-                })
+                const newRole = new Role(req.body)
 
                 newRole.save()
                     .then(role => res.json(role))
                     .catch(err => console.log(err))
-                  return res.json({success: true});
+                return res.json({ success: true });
             }
         })
         .catch(err => console.log(err));
@@ -39,14 +36,14 @@ router.post("/", (req, res) => {
 // @desc    Remove a role by id
 // @access  Public
 router.delete("/:id", (req, res) => {
-    Role.findOneAndDelete({ _id: req.params.id})
+    Role.findOneAndDelete({ _id: req.params.id })
         .then(role => {
-          if(!role){
-            return res.status(404).json({ _id: "Role to delete not fund"});
-          } else{
-            console.log("Role removed");
-            return res.json( {success: true} );
-          }
+            if (!role) {
+                return res.status(404).json({ _id: "Role to delete not fund" });
+            } else {
+                console.log("Role removed");
+                return res.json({ success: true });
+            }
         })
         .catch(err => console.log(err));
 })
@@ -55,21 +52,21 @@ router.delete("/:id", (req, res) => {
 // @desc    Update a role by id
 // @access  Public
 router.patch("/:id", (req, res) => {
-  /*const { errors, isValid } = validateRoleInput(req.body)
-  if(!isValid) {
-      return res.status(400).json(errors)
-  }*/
+    const { errors, isValid } = validateRoleInput(req.body)
+    if(!isValid) {
+        return res.status(400).json(errors)
+    }
 
-  Role.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
-      .then(role_update => {
-        if(!role_update){
-          return res.status(404).json({_id: "Role to update not found"});
-        } else {
-          console.log("Role updated");
-          return res.json( {success: true} );
-        }
-      })
-      .catch(err => console.log(err));
+    Role.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
+        .then(role_update => {
+            if (!role_update) {
+                return res.status(404).json({ _id: "Role to update not found" });
+            } else {
+                console.log("Role updated");
+                return res.json({ success: true });
+            }
+        })
+        .catch(err => console.log(err));
 
 })
 

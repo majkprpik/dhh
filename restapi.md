@@ -117,6 +117,8 @@
     name: "Smjena 1" - string    
     start: "8" - number
     end: "16" - number
+    priority: "false" - boolean, not required
+    roles: [] - role id, not required
 ```
 
 ### Response 200 (application/json)
@@ -148,11 +150,13 @@
 ## PATCH api/shifts/:id
 ### Update a shift
 ### Request (application/json)
-```json    
+```json
     id: shift id
     name: "Smjena 1" - string    
     start: "8" - number
     end: "16" - number
+    priority: "false" - boolean, not required
+    roles: [] - role id, not required
 ```
 
 ### Response 200 (application/json)
@@ -173,10 +177,13 @@
 ```
 
 ### Response 200 (application/json)
-```json    
+```json
+    id: shift id
     name: "Smjena 1" - string    
     start: "8" - number
     end: "16" - number
+    priority: "false" - boolean, not required
+    roles: [] - role id, not required
 ```
 
 ### Response 400 (application/json)
@@ -188,10 +195,13 @@
 ### Get all shifts
 
 ### Response 200 (application/json)
-```json    
+```json
+    id: shift id
     name: "Smjena 1" - string    
     start: "8" - number
     end: "16" - number
+    priority: "false" - boolean, not required
+    roles: [] - role id, not required
 ```
 
 ### Response 400 (application/json)
@@ -206,7 +216,7 @@
 ### Request (application/json)
 ```json    
     name: "L1 agent" - string, 3-30 chars
-    permission: "..." - id
+    permission: "..." - id, not required
 ```
 
 ### Response 200 (application/json)
@@ -241,7 +251,7 @@
 ```json    
     _id: role id
     name: "L1 agent" - string, 3-30 chars
-    permission: "..." - id
+    permission: "..." - id, not required
 ```
 
 ### Response 200 (application/json)
@@ -264,7 +274,7 @@
 ### Response 200 (application/json)
 ```json    
     name: "L1 agent" - string, 3-30 chars
-    permission: "..." - id
+    permission: "..." - id, not required
 ```
 
 ### Response 400 (application/json)
@@ -277,7 +287,7 @@
 ### Response 200 (application/json)
 ```json
     name: "L1 agent" - string, 3-30 chars
-    permission: "..." - id
+    permission: "..." - id, not required
 ```
 
 ### Response 400 (application/json)
@@ -290,14 +300,12 @@
 ### Add a permission
 ### Request (application/json)
 ```json
-    {
       name: "lider", - string, 3-30 chars
       view: "1", - number, 0-1
       insert: "1", - number, 0-1
       update: "1", - number, 0-1
       delete: "1", - number, 0-1
       request: "1" - number, 0-1
-    }
 ```
 ### Response 200 (application/json)
   returns above sent permission
@@ -343,7 +351,6 @@
 ```
 ### Response 200 (application/json)
 ```json
-    {
       _id: "..." - permission id
       name: "permission name",
       view: "1",
@@ -351,7 +358,6 @@
       update: "0",
       delete: "1",
       request: "1"
-    }
 ```
 
 
@@ -363,7 +369,6 @@
 ### Get all permissions
 ### Response 200 (application/json)
 ```json
-    [{
       _id: "..." - permission id
       name: "permission name",
       view: "1",
@@ -371,7 +376,6 @@
       update: "0",
       delete: "1",
       request: "1"
-    }]
 ```
 ### Response 404 (application/json)
 ```json
