@@ -66,8 +66,8 @@ router.post("/", (req, res) => {
 });
 
 
-// @route   PATCH api/shifts/:id
-// @desc    Update a shift
+// @route   PATCH api/users/:id
+// @desc    Update a user
 // @access  Public
 router.patch("/:id", (req, res) => {
 	const { errors, isValid } = validateUserInput(req.body);
@@ -88,10 +88,44 @@ router.patch("/:id", (req, res) => {
 					"firstname": user.firstname,
 					"lastname": user.lastname,
 					"_role": user._role,
-					"monthlyNumberOfHours": user.monthlyNumberOfHours
+					//"monthlyNumberOfHours": user.monthlyNumberOfHours
 				})
 			}
 		})
+})
+
+// @route   PATCH api/users/:id/password
+// @desc    Update users password
+// @access  Public
+router.patch("/:id/password", (req, res) => {
+	let errors = {}
+
+	if (Validator.isEmpty(req.body.password)) {
+		errors.password = "Password field is required"
+	}
+
+	if (!Validator.isLength(req.body.password, { min: 5, max: 30 })) {
+		errors.password = "Password must be between 5 and 30 characters"
+	}
+
+	User.findOne({ _id: req.params.id }).then(user => {
+		if (user) {
+			bcrypt.genSalt(10, (err, salt) => {
+				bcrypt.hash(req.body.password, salt, (err, hash) => {
+					user.password = hash;
+					user
+						.save()
+						.then(user => {
+							res.json({
+								"message": "Password changed!",
+								"email": user.email
+							})
+						})
+						.catch(err => console.log(err));
+				});
+			});
+		}
+	});
 })
 
 // @route   POST api/users/login
