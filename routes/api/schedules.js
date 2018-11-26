@@ -79,11 +79,11 @@ router.delete("/", (req, res) => {
 })
 
 // @route   GET api/schedules/days
-// @desc    get all days
+// @desc    Add all schedules
 // @access  Public
-router.get("/days", (req, res) => {
-    insertDays();
-    return res.json({messege: "days added"})
+router.get("/generate/:year", (req, res) => {
+    insertDays(req.params.year);
+    return res.json({messege: "Schedules added"})
 })
 
 module.exports = router

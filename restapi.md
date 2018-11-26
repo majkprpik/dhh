@@ -488,6 +488,13 @@
     success: "true"
 ```
 
+## GET api/schedules/generate/:year
+### generate shedules for the hole year
+### Response 200 (application/json)
+```json
+    messege: "Schedules added"
+```
+
 # RuleRoleShift
 ## POST api/ruleroleshift
 ### Add a rule
@@ -547,4 +554,89 @@
 ### Response 400 (application/json)
 ```json
     norulesfound: "No rules where found"
+```
+
+# RuleHoursLimit
+## POST api/rulehourslimit
+### Add a rule
+### Request (application/json)
+```json
+    {
+      month: "04/2018", -> String
+      hoursLimit: "200" -> Number
+    }
+```
+
+### Response 200 (application/json)
+    returns above sent rule
+
+### Response 400 (application/json)
+```json
+    message: "Rule already exists"
+```
+
+## DELETE api/rulehourslimit/:id
+### Remove a rule of hours limit by id
+### Request (application/json)
+```json
+    id: "..." - rule id
+```
+### Response 200 (application/json)
+```json
+    success: "true"
+```
+### Response 404 (application/json)
+```json
+    id: "Rule to delete not found"
+```
+
+## PATCH api/rulehourslimit/:id
+### Update a rule of hours limit
+### Request (application/json)
+```json
+    {
+      month: "05/2018", -> String
+      hoursLimit: "150" -> Number
+    }
+```
+
+### Response 200 (application/json)
+    returns above sent rule
+
+### Response 404 (application/json)
+```json
+    _id: "Rule to update not found"
+```
+
+## GET api/rulehourslimit
+### Returns all rules of hours limit
+### Response 200 (application/json)
+```json
+    {
+      month: "04/2018",
+      hoursLimit: "150"
+    }
+```
+### Response 404 (application/json)
+```json
+    {
+      norulesfound:  "No rules were found"
+    }
+```
+## GET api/rulehourslimit/:month/:year
+### Return all users that defines limit of working hours
+### Response 200 (application/json)
+```json
+    [{
+      firstname: "name", -> String
+      lastname: "lasnname", -> string
+      now: "15", -> Number
+      mustBe: "30" -> Number
+      }]
+```
+### Response 404 (application/json)
+```json
+    {
+      message:  "0 kills"
+    }
 ```
