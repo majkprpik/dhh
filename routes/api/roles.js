@@ -19,14 +19,13 @@ router.post("/", (req, res) => {
     Role.findOne({ name: req.body.name })
         .then(role => {
             if (role) {
-                return res.status(400).json({ name: "Role already exists" })
+                return res.status(400).json({ message: "Role already exists" })
             } else {
                 const newRole = new Role(req.body)
 
                 newRole.save()
                     .then(role => res.json(role))
                     .catch(err => console.log(err))
-                return res.json({ success: true });
             }
         })
         .catch(err => console.log(err));
@@ -39,10 +38,10 @@ router.delete("/:id", (req, res) => {
     Role.findOneAndDelete({ _id: req.params.id })
         .then(role => {
             if (!role) {
-                return res.status(404).json({ _id: "Role to delete not fund" });
+                return res.status(404).json({ message: "Role to delete not fund" });
             } else {
                 console.log("Role removed");
-                return res.json({ success: true });
+                return res.json({ message: "Role removed" });
             }
         })
         .catch(err => console.log(err));
@@ -60,10 +59,10 @@ router.patch("/:id", (req, res) => {
     Role.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
         .then(role_update => {
             if (!role_update) {
-                return res.status(404).json({ _id: "Role to update not found" });
+                return res.status(404).json({ message: "Role to update not found" });
             } else {
                 console.log("Role updated");
-                return res.json({ success: true });
+                return res.json(role_update);
             }
         })
         .catch(err => console.log(err));
@@ -76,7 +75,7 @@ router.patch("/:id", (req, res) => {
 router.get("/:id", (req, res) => {
     Role.findById(req.params.id)
         .then(shifts => res.json(shifts))
-        .catch(err => res.status(404).json({ norolefound: "No role was found" }))
+        .catch(err => res.status(404).json({ message: "No role was found" }))
 })
 
 // @route   GET api/roles
@@ -85,7 +84,7 @@ router.get("/:id", (req, res) => {
 router.get("/", (req, res) => {
     Role.find()
         .then(roles => res.json(roles))
-        .catch(err => res.status(404).json({ norolesfound: "No roles where found" }))
+        .catch(err => res.status(404).json({ message: "No roles where found" }))
 })
 
 module.exports = router

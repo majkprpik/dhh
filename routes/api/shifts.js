@@ -38,10 +38,10 @@ router.delete("/:id", (req, res) => {
     Shift.findOneAndDelete({ _id: req.params.id})
         .then(shift => {
           if(!shift){
-            return res.status(404).json({ id: "Shift to delete not found"});
+            return res.status(404).json({ message: "Shift to delete not found"});
           } else{
             console.log("Shift removed");
-            return res.json( {success: true} );
+            return res.json( {message: "Shift deleted"} );
           }
         })
         .catch(err => console.log(err));
@@ -59,7 +59,7 @@ router.patch("/:id", (req, res) => {
   Shift.findOneAndUpdate({_id: req.params.id}, req.body, { new: true })
       .then(shift => {
         if(!shift){
-          return res.status(404).json({_id: "Shift to update not found"});
+          return res.status(404).json({message: "Shift to update not found"});
         } else {
           console.log("Shift updated");
           return res.json(shift)
@@ -75,7 +75,7 @@ router.patch("/:id", (req, res) => {
 router.get("/:id", (req, res) => {
     Shift.findById(req.params.id)
         .then(shift => res.json(shift))
-        .catch(err => res.status(404).json({ noshiftfound: "No shift was found" }))
+        .catch(err => res.status(404).json({ message: "No shift was found" }))
 })
 
 // @route   GET api/shifts
@@ -84,7 +84,7 @@ router.get("/:id", (req, res) => {
 router.get("/", (req, res) => {
     Shift.find()
         .then(shifts => res.json(shifts))
-        .catch(err => res.status(404).json({ noshiftsfound: "No shifts where found" }))
+        .catch(err => res.status(404).json({ message: "No shifts where found" }))
 })
 
 module.exports = router

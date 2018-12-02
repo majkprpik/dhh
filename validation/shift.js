@@ -8,19 +8,19 @@ module.exports = function validateShiftData(data) {
         errors.name = "Name field is required"
     }
 
-    if (Validator.isEmpty(data.start)) {
+    if (Validator.isEmpty(String(data.start))) {
         errors.start = "Start field is required"
     }
 
-    if (!Validator.isNumeric(data.start)) {
+    if (!Validator.isNumeric(String(data.start))) {
         errors.start = "Start must be numeric"
     }
 
-    if (Validator.isEmpty(data.end)) {
+    if (Validator.isEmpty(String(data.end))) {
         errors.end = "End field is required"
     }
 
-    if (!Validator.isNumeric(data.end)) {
+    if (!Validator.isNumeric(String(data.end))) {
         errors.end = "End must be numeric"
     }
 

@@ -26,7 +26,7 @@ router.post("/", (req, res) => {
                 newPermis.save()
                     .then(permis => res.json(permis))
                     .catch(err => console.log(err))
-                return res.json({success: true});
+                return res.json({message: true});
             }
         })
 })
@@ -38,10 +38,10 @@ router.delete("/:id", (req, res) => {
     Permission.findOneAndDelete({ _id: req.params.id})
         .then(permis => {
           if(!permis){
-            return res.status(404).json({ id: "Permission to delete not fund"});
+            return res.status(404).json({ message: "Permission to delete not fund"});
           } else{
             console.log("Permission removed");
-            return res.json({success: true});
+            return res.json({message: true});
           }
         })
         .catch(err => console.log(err));
@@ -55,10 +55,10 @@ router.patch("/:id", (req, res) => {
   Permission.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
       .then(permis_update => {
         if(!permis_update){
-          return res.status(404).json({_id: "Permission to update not found"});
+          return res.status(404).json({message: "Permission to update not found"});
         } else {
           console.log("Permission updated");
-          return res.json({success: true});
+          return res.json(permis_update);
         }
       })
       .catch(err => console.log(err));
@@ -71,7 +71,7 @@ router.patch("/:id", (req, res) => {
 router.get("/:id", (req, res) => {
     Permission.findById(req.params.id)
         .then(permis => res.json(permis))
-        .catch(err => res.status(404).json({ nopermisionsfound: "No permissions were found" }))
+        .catch(err => res.status(404).json({ message: "No permissions were found" }))
 })
 
 // @route   GET api/permissions
@@ -80,7 +80,7 @@ router.get("/:id", (req, res) => {
 router.get("/", (req, res) => {
     Permission.find()
         .then(permis => res.json(permis))
-        .catch(err => res.status(404).json({ nopermisionsfound: "No permissions were found" }))
+        .catch(err => res.status(404).json({ message: "No permissions were found" }))
 })
 
 module.exports = router

@@ -29,7 +29,7 @@ router.post("/", (req, res) => {
 
 	User.findOne({ email: req.body.email }).then(user => {
 		if (user) {
-			return res.status(400).json({ email: "Email already exists" });
+			return res.status(400).json({ message: "Email already exists" });
 		} else {
 			const generatedPassword = randomstring.generate(6)
 
@@ -117,8 +117,8 @@ router.patch("/:id/password", (req, res) => {
 						.save()
 						.then(user => {
 							res.json({
-								"message": "Password changed!",
-								"email": user.email
+								message: "Password changed!",
+								email: user.email
 							})
 						})
 						.catch(err => console.log(err));
@@ -137,7 +137,7 @@ router.post("/login", (req, res) => {
 
 	User.findOne({ email }).then(user => {
 		if (!user) {
-			return res.status(404).json({ email: "User not found" });
+			return res.status(404).json({ message: "User not found" });
 		}
 
 		// Check password
@@ -159,7 +159,7 @@ router.post("/login", (req, res) => {
 					}
 				);
 			} else {
-				return res.status(400).json({ password: "Password incorrect" });
+				return res.status(400).json({ message: "Password incorrect" });
 			}
 		});
 	});
@@ -180,10 +180,10 @@ router.delete("/:id", (req, res) => {
 	User.findOneAndDelete({ _id: req.params.id })
 		.then(user => {
 			if (!user) {
-				return res.status(404).json({ id: "User to delete not found" });
+				return res.status(404).json({ message: "User to delete not found" });
 			} else {
 				console.log("User removed");
-				return res.json({ success: true });
+				return res.json({ message: "User deleted" });
 			}
 		})
 		.catch(err => console.log(err));
@@ -197,7 +197,7 @@ router.get("/:id", async (req, res) => {
 		.then(user => {
 			res.json(user)
 		})
-		.catch(err => res.status(404).json({ nouserfound: "No user was found" }));
+		.catch(err => res.status(404).json({ message: "No user was found" }));
 });
 
 // @route   GET api/users
@@ -206,7 +206,7 @@ router.get("/:id", async (req, res) => {
 router.get("/", (req, res) => {
 	User.find({}, ("-password"))
 		.then(user => res.json(user))
-		.catch(err => res.status(404).json({ nousersfound: "No users was found" }));
+		.catch(err => res.status(404).json({ message: "No users was found" }));
 });
 
 // @route   GET api/users/current

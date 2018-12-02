@@ -44,10 +44,10 @@ router.delete("/:id", (req, res) => {
 	Rule.findOneAndDelete({ _id: req.params.id })
 		.then(rule => {
 			if (!rule) {
-				return res.status(404).json({ id: "Rule to delete not found" });
+				return res.status(404).json({ message: "Rule to delete not found" });
 			} else {
 				console.log("Rule removed");
-				return res.json({ success: true });
+				return res.json({ message: "Rule deleted" });
 			}
 		})
 		.catch(err => console.log(err));
@@ -65,7 +65,7 @@ router.patch("/:id", (req, res) => {
 	Rule.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
 		.then(role => {
 			if (!role) {
-				return res.status(404).json({ _id: "Role to update not found" });
+				return res.status(404).json({ message: "Role to update not found" });
 			} else {
 				console.log("Role updated");
 				return res.json(role)
@@ -87,7 +87,7 @@ router.get("/", (req, res) => {
 
 	Rule.find()
 		.then(role => res.json(role))
-		.catch(err => res.status(404).json({ norulesfound: "No rules where found" }))
+		.catch(err => res.status(404).json({ message: "No rules where found" }))
 })
 
 module.exports = router
