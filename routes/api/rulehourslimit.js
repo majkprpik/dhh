@@ -29,10 +29,10 @@ router.post("/", (req, res) => {
 router.delete("/:id", (req, res) =>{
   HoursLimit.findOneAndDelete({_id: req.params.id})
       .then(limit => {
-        if(!limit){return res.status(404).json({id: "Rule to delete not found"})}
+        if(!limit){return res.status(404).json({message: "Rule to delete not found"})}
         else{
           console.log("Rule removed");
-          return res.json({success: true});
+          return res.json({message: "Rule deleted"});
         }
       }).catch(err => console.log(err))
 })
@@ -43,7 +43,7 @@ router.delete("/:id", (req, res) =>{
 router.patch("/:id", (req, res) => {
   HoursLimit.findOneAndUpdate({_id: req.params.id}, req.body, {new: true})
       .then(limit => {
-        if(!limit) {return res.status(404).json({_id: "Rule to update not fund"})}
+        if(!limit) {return res.status(404).json({message: "Rule to update not fund"})}
         else{
           console.log("Rule updated");
           return res.json(limit)
@@ -69,7 +69,7 @@ router.get("/:month/:year", (req, res) => {
 // @access  Public
 router.get("/", (req, res) => {
   HoursLimit.find().then(limit => res.json(limit))
-      .catch(err => res.status(404).json({norulesfound: "No rules were found"}))
+      .catch(err => res.status(404).json({message: "No rules were found"}))
 })
 
 module.exports = router;

@@ -14,7 +14,7 @@ router.post("/", (req, res) => {
     Schedule.findOne({ month: req.body.month })
         .then(schedule => {
             if(schedule) {
-                return res.status(400).json({ month: "Schedule already exists" })
+                return res.status(400).json({ message: "Schedule already exists" })
             } else {
                 const newSchedule = new Schedule({
                     month: req.body.month,
@@ -35,7 +35,7 @@ router.patch("/:id", (req, res) => {
     Schedule.findOneAndUpdate({_id: req.params.id}, req.body, { new: true })
         .then(schedule => {
           if(!schedule){
-            return res.status(404).json({id: "Schedule to update not found"});
+            return res.status(404).json({message: "Schedule to update not found"});
           } else {
             res.json(schedule)
           }
@@ -49,7 +49,7 @@ router.patch("/:id", (req, res) => {
 router.get("/", (req, res) => {
     Schedule.find()
         .then(schedule => res.json(schedule))
-        .catch(err => res.status(404).json({ noschedulesfound: "No schedules where found" }))
+        .catch(err => res.status(404).json({ message: "No schedules where found" }))
 })
 
 // @route   DELETE api/schedules/:id
@@ -59,10 +59,10 @@ router.delete("/:id", (req, res) => {
     Schedule.findOneAndDelete({ _id: req.params.id})
         .then(shift => {
           if(!shift){
-            return res.status(404).json({ id: "Schedule to delete not found"});
+            return res.status(404).json({ message: "Schedule to delete not found"});
           } else{
             console.log("Schedule removed");
-            return res.json( {success: true} );
+            return res.json( {message: "Schedule removed"} );
           }
         })
         .catch(err => console.log(err));
@@ -74,7 +74,7 @@ router.delete("/:id", (req, res) => {
 router.delete("/", (req, res) => {
     Schedule.deleteMany({})
       .then(shift =>{
-        return res.json({success: true});
+        return res.json({message: "Schedules removed"});
       })
 })
 
@@ -83,7 +83,7 @@ router.delete("/", (req, res) => {
 // @access  Public
 router.get("/generate/:year", (req, res) => {
     insertDays(req.params.year);
-    return res.json({messege: "Schedules added"})
+    return res.json({message: "Schedules added"})
 })
 
 module.exports = router

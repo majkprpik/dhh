@@ -54,7 +54,7 @@
 
 ### Response 200 (application/json)
 ```json    
-    success: true
+    message: "User deleted"
 ```
 
 ## GET api/users/:id
@@ -126,7 +126,7 @@
 
 ### Response 400 (application/json)
 ```json    
-    name: "Shift already exists"
+    message: "Shift already exists"
 ```
 
 ## DELETE api/shifts/:id
@@ -139,12 +139,12 @@
 
 ### Response 200 (application/json)
 ```json    
-    success: true
+    message: "Shift deleted"
 ```
 
 ### Response 400 (application/json)
 ```json    
-    id: "Shift to delete not found"
+    message: "Shift to delete not found"
 ```
 
 ## PATCH api/shifts/:id
@@ -160,9 +160,7 @@
 ```
 
 ### Response 200 (application/json)
-```json    
-    success: true
-```
+    returns above sent user with hashed password
 
 ### Response 400 (application/json)
 ```json    
@@ -188,7 +186,7 @@
 
 ### Response 400 (application/json)
 ```json    
-    noshiftfound: "No shift was found"
+    message: "No shift was found"
 ```
 
 ## GET api/shifts
@@ -206,12 +204,12 @@
 
 ### Response 400 (application/json)
 ```json    
-    noshiftsfound: "No shifts was found"
+    message: "No shifts was found"
 ```
 
 
 # Roles
-## POST api/roles/add
+## POST api/roles
 ### Add a role
 ### Request (application/json)
 ```json    
@@ -224,51 +222,49 @@
 
 ### Response 400 (application/json)
 ```json    
-    name: "Role already exists"
+    message: "Role already exists"
 ```
 
-## POST api/roles/remove
+## DELETE api/roles/:id
 ### Remove a role
 ### Request (application/json)
 ```json    
-    _id: role id
+    id: role id
 ```
 
 ### Response 200 (application/json)
 ```json    
-    success: true
+    message: "Role removed"
 ```
 
 ### Response 400 (application/json)
 ```json    
-    _id: "Role to delete not found"
+    message: "Role to delete not found"
 ```
 
 
-## PUT api/roles/update
+## PATCH api/roles
 ### Update a role
 ### Request (application/json)
 ```json    
-    _id: role id
+    id: role id
     name: "L1 agent" - string, 3-30 chars
     permission: "..." - id, not required
 ```
 
 ### Response 200 (application/json)
-```json    
-    success: true
-```
+    returns updated role
 
 ### Response 400 (application/json)
 ```json    
-    _id: "Role to update not found"
+    message: "Role to update not found"
 ```
 
-## GET api/roles/get
+## GET api/roles/:id
 ### Get role by id
 ### Request (application/json)
 ```json    
-    _id: role id
+    id: role id
 ```
 
 ### Response 200 (application/json)
@@ -279,7 +275,7 @@
 
 ### Response 400 (application/json)
 ```json    
-    norolefound: "No role was found"
+    message: "No role was found"
 ```
 
 ## GET api/roles
@@ -292,7 +288,7 @@
 
 ### Response 400 (application/json)
 ```json
-    norolesfound: "No roles where found"
+    message: "No roles where found"
 ```
 
 # Permissions
@@ -308,12 +304,13 @@
       request: "1" - number, 0-1
 ```
 ### Response 200 (application/json)
-  returns above sent permission
+    returns above sent permission
 
 ### Response 400 (application/json)
 ```json
-    name: "Permission already exists"
+    message: "Permission already exists"
 ```
+
 ## DELETE api/permissions/:id
 ### Remove a permission by id
 ### Request (application/json)
@@ -322,11 +319,11 @@
 ```
 ### Response 200 (application/json)
 ```json
-    success: "true"
+    message: "Permission removed"
 ```
 ### Response 404 (application/json)
 ```json
-    id: "Permission to delete not found"
+    message: "Permission to delete not found"
 ```
 
 ## PATCH api/permissions/:id
@@ -336,11 +333,11 @@
     id: "..." - permission id
 ```
 ### Response 200 (application/json)
-  returns the updated above sent permission
+    returns the updated above sent permission
 
 ### Response 404 (application/json)
 ```json
-    _id: "Permission to update not found"
+    message: "Permission to update not found"
 ```
 
 ## GET api/permissions/:id
@@ -363,8 +360,9 @@
 
 ### Response 404 (application/json)
 ```json
-    nopermissionsfound: "No permissions were found"
+    message: "No permissions were found"
 ```
+
 ## GET api/permissions
 ### Get all permissions
 ### Response 200 (application/json)
@@ -379,7 +377,7 @@
 ```
 ### Response 404 (application/json)
 ```json
-    nopermissionsfound: "No permissions were found"
+    message: "No permissions were found"
 ```
 
 # Schedules
@@ -408,7 +406,7 @@
 
 ### Response 400 (application/json)
 ```json
-    month: "Schedule already exists"
+    message: "Schedule already exists"
 ```
 
 ## PATCH api/schedules/:id
@@ -438,7 +436,7 @@
 
 ### Response 400 (application/json)
 ```json
-    _id: "Schedule to update not found"
+    message: "Schedule to update not found"
 ```
 
 ## GET api/schedules
@@ -461,7 +459,7 @@
     ]
 ```
 ### Response 400 (application/json)
-    norolesfound: "No schedules where found"
+    message: "No schedules where found"
 
 
 ## DELETE api/schedules/:id
@@ -472,11 +470,11 @@
 ```
 ### Response 200 (application/json)
 ```json
-    success: "true"
+    message: "Schedule removed"
 ```
 ### Response 404 (application/json)
 ```json
-    id: "Schedule to delete not found"
+    message: "Schedule to delete not found"
 ```
 
 
@@ -485,14 +483,14 @@
 
 ### Response 200 (application/json)
 ```json
-    success: "true"
+    message: "All schedules removed"
 ```
 
 ## GET api/schedules/generate/:year
 ### generate shedules for the hole year
 ### Response 200 (application/json)
 ```json
-    messege: "Schedules added"
+    message: "Schedules added"
 ```
 
 # RuleRoleShift
@@ -509,7 +507,7 @@
 
 ### Response 400 (application/json)
 ```json
-    month: "Rule already exists"
+    message: "Rule already exists"
 ```
 
 ## DELETE api/ruleroleshift/:id
@@ -520,11 +518,11 @@
 ```
 ### Response 200 (application/json)
 ```json
-    success: "true"
+    message: "Rule removed"
 ```
 ### Response 404 (application/json)
 ```json
-    id: "Rule to delete not found"
+    message: "Rule to delete not found"
 ```
 
 ## PATCH api/ruleroleshift/:id
@@ -540,7 +538,7 @@
 
 ### Response 400 (application/json)
 ```json
-    _id: "Rule to update not found"
+    message: "Rule to update not found"
 ```
 
 ## GET api/ruleroleshift
@@ -553,7 +551,7 @@
 
 ### Response 400 (application/json)
 ```json
-    norulesfound: "No rules where found"
+    message: "No rules where found"
 ```
 
 # RuleHoursLimit
@@ -583,11 +581,11 @@
 ```
 ### Response 200 (application/json)
 ```json
-    success: "true"
+    message: "Rule removed"
 ```
 ### Response 404 (application/json)
 ```json
-    id: "Rule to delete not found"
+    message: "Rule to delete not found"
 ```
 
 ## PATCH api/rulehourslimit/:id
@@ -605,7 +603,7 @@
 
 ### Response 404 (application/json)
 ```json
-    _id: "Rule to update not found"
+    message: "Rule to update not found"
 ```
 
 ## GET api/rulehourslimit
@@ -619,9 +617,7 @@
 ```
 ### Response 404 (application/json)
 ```json
-    {
-      norulesfound:  "No rules were found"
-    }
+      message:  "No rules were found"
 ```
 ## GET api/rulehourslimit/:month/:year
 ### Return all users that defines limit of working hours
@@ -636,7 +632,5 @@
 ```
 ### Response 404 (application/json)
 ```json
-    {
       message:  "0 kills"
-    }
 ```

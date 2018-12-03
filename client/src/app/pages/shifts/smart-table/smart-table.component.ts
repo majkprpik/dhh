@@ -50,7 +50,7 @@ export class SmartTableComponent {
         editor: {
           type: 'checkbox',
         },
-      }
+      },
     },
   };
 
