@@ -38,20 +38,16 @@ export class SmartTableComponent {
       confirmDelete: true,
     },
     columns: {
-      username: {
-        title: 'Username',
+      firstname: {
+        title: 'Firstname',
+        type: 'string',
+      },
+      lastname: {
+        title: 'Lastname',
         type: 'string',
       },
       email: {
         title: 'E-mail',
-        type: 'string',
-      },
-      name: {
-        title: 'Name',
-        type: 'string',
-      },
-      surname: {
-        title: 'Surname',
         type: 'string',
       },
       _role: {

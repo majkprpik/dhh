@@ -38,12 +38,19 @@ export class SmartTableComponent {
       },
       start: {
         title: 'Start',
-        type: 'string',
+        type: 'number',
       },
       end: {
         title: 'End',
-        type: 'string',
+        type: 'number',
       },
+      priority: {
+        title: 'Priority',
+        type: 'boolean',
+        editor: {
+          type: 'checkbox',
+        },
+      }
     },
   };
 

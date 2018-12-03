@@ -28,7 +28,7 @@ export class ShiftService {
       }
     updateShift(shift): Observable<any> {
         if (shift != null) {
-          return this.http.patch('api/shifts/' + shift._id, { shift: shift }, this.httpOptions);
+          return this.http.patch('api/shifts/' + shift._id, shift, this.httpOptions);
         }
       }
     deleteShift(shift): Observable<any> {
