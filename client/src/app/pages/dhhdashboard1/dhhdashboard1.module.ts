@@ -15,11 +15,11 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 
 @NgModule({
-  imports: [ThemeModule, 
-    NgxEchartsModule, 
-    NbCardModule, 
+  imports: [ThemeModule,
+    NgxEchartsModule,
+    NbCardModule,
     TablesRoutingModule,
-    HotTableModule.forRoot(), 
+    HotTableModule.forRoot(),
     FormsModule,
     FlatpickrModule.forRoot(),
     CalendarModule.forRoot({

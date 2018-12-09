@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
-import { Response } from '@angular/http';
 
 import { UserService } from '../../../services/user/users.service';
 import { RolesService } from '../../../services/roles/roles.service';
@@ -16,7 +15,7 @@ import { RolesService } from '../../../services/roles/roles.service';
     }
   `],
 })
-export class SmartTableComponent{
+export class SmartTableComponent {
   Roles: {_id: {type: 'string' }, name: {type: 'string'}} [] = [];
   roles = [
     { value: '5bdda1fe66c7e619987328a3', title: 'L1 agent' },
@@ -24,8 +23,8 @@ export class SmartTableComponent{
     { value: '5bdf4f46151b933458c1c964', title: 'L2 senior' },
   ];
 
-  addRole(id:string, name: string){
-    this.roles.push({value:id, title:name});
+  addRole(id: string, name: string) {
+    this.roles.push({value: id, title: name});
 
   }
   settings = {
@@ -85,14 +84,14 @@ export class SmartTableComponent{
       this.source.load(value);
     });
     this.rolesService.getRoles().subscribe(data => {
-       console.log(data);
+      // console.log(data);
       // this.roles = value.map(r => ({ 'value': r._id, 'title': r.name }));
       // this.roles.push({ value: data._id, title: data.name });
       this.Roles.push(data);
-      console.log(this.Roles);
+      // console.log(this.Roles);
     });
   }
-  
+
   // onAdd(){
   //   this.rolesService.getRoles().subscribe((value: Response) => {
   //     // console.log(value);
@@ -100,8 +99,8 @@ export class SmartTableComponent{
   //     console.log(data);
   //   });
   // }
-  
-  
+
+
 
   onDeleteConfirm(event): void {
     alert(event);

@@ -8,7 +8,7 @@ import { NgForm } from '@angular/forms';
 })
 export class NgxLoginComponent extends NbLoginComponent {
   @ViewChild('form') signupForm: NgForm;
-  login(){
-    console.log(this.signupForm);
+  login() {
+    // console.log(this.signupForm);
   }
 }

@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
-import * as Handsontable from 'handsontable';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { CalendarView } from 'angular-calendar';
@@ -20,7 +19,7 @@ import * as dhhdashboardActions from '../store/dhhdashboard.actions';
     }
   `],
 })
-export class HandsontableComponent implements OnInit{
+export class HandsontableComponent implements OnInit {
   @ViewChild('modalContent')
   modalContent: TemplateRef<any>;
   view: CalendarView = CalendarView.Month;
@@ -30,43 +29,43 @@ export class HandsontableComponent implements OnInit{
   dhhdashboardState: Observable<{schedules: Schedule[]}>;
   settings;
   dashboard;
-  
+
   constructor(private store: Store<{dhhdashborad: {schedules: Schedule[]}}>) {
-    this.dhhdashboardState = this.store.select('dhhdashboard');    
-    console.log(this.settings);
+    this.dhhdashboardState = this.store.select('dhhdashboard');
+    // console.log(this.settings);
   }
-  
-  
-  ngOnInit(){
+
+
+  ngOnInit() {
     this.getRoles();
     this.settings = {
       data: [
-        [11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56],
-        [11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56],
-        [11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56],
-        [11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56],
-        [11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56],
-        [11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56],
-        [11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56],
-        [11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56],
-        [11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56],
-        [11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56],
-        [11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56],
-        [11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56]
+        [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56],
+        [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56],
+        [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56],
+        [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56],
+        [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56],
+        [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56],
+        [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56],
+        [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56],
+        [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56],
+        [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56],
+        [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56],
+        [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56],
       ],
-      colHeaders: [1.,2.,3.,4.,5.,6.,1.,2.,3.,4.,5.,6.,1.,2.,3.,4.,5.,6.,1.,2.,3.,4.,5.,6.,],
-  
+      colHeaders: [1., 2., 3., 4., 5., 6., 1., 2., 3., 4., 5., 6., 1., 2., 3., 4., 5., 6., 1., 2., 3., 4., 5., 6.],
+
       rowHeaders: this.dashboard,
-  
-      manualColumnResize: true, manualRowMove: true, manualRowResize: true, 
-      maxRows: 50, maxColumns: 35, rowHeaderWidth: 100, stretchH: 'all'
-    }
+
+      manualColumnResize: true, manualRowMove: true, manualRowResize: true,
+      maxRows: 50, maxColumns: 35, rowHeaderWidth: 100, stretchH: 'all',
+    };
   }
   getRoles(): void {
     this.dhhdashboardState
-        .subscribe(heroes => this.dashboard = heroes.schedules.map(v=>v.name));
+        .subscribe(heroes => this.dashboard = heroes.schedules.map(v => v.name));
   }
-  onAdd(){
-    this.store.dispatch(new dhhdashboardActions.AddSchedule(new Schedule('dsfsd',6)))
+  onAdd() {
+    this.store.dispatch(new dhhdashboardActions.AddSchedule(new Schedule('dsfsd', 6)));
   }
 }

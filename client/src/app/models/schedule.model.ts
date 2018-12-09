@@ -2,7 +2,7 @@ export class Schedule {
     _id: String;
     month: Date;
     days: [
-        {   
+        {
             _id: string;
             day: number;
             type: string;
@@ -14,8 +14,7 @@ export class Schedule {
                     _user: string;
                 }
             ],
-            
         }
-    ]
+    ];
     constructor(public name: string, public amount: number) {}
 }
