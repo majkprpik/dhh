@@ -9,11 +9,24 @@ import { HotTableModule } from '@handsontable/angular';
 import { FormsModule } from '@angular/forms';
 
 import { TablesRoutingModule, routedComponents } from './dhhdashboard1-routing.module';
+import { FlatpickrModule } from 'angularx-flatpickr';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 
 @NgModule({
-  imports: [ThemeModule, NgxEchartsModule, NbCardModule, TablesRoutingModule,
-    HotTableModule, FormsModule ],
+  imports: [ThemeModule, 
+    NgxEchartsModule, 
+    NbCardModule, 
+    TablesRoutingModule,
+    HotTableModule.forRoot(), 
+    FormsModule,
+    FlatpickrModule.forRoot(),
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
+  ],
   declarations: [...routedComponents, DhhDashboard1Component],
 })
 export class DhhDashboard1Module { }

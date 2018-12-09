@@ -17,6 +17,7 @@
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "flatpickr": "^4.5.2",
+    "handsontable-pro": "^6.2.0",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.3.8",
     "node-calendar": "^0.1.5",

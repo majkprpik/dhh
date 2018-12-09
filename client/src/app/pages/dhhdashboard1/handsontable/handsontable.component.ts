@@ -1,8 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import * as Handsontable from 'handsontable';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import { CalendarView } from 'angular-calendar';
+
+import { Schedule } from '../../../models/schedule.model';
+import * as dhhdashboardActions from '../store/dhhdashboard.actions';
+
+
 
 @Component({
   selector: 'ngx-handsontable',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './handsontable.component.html',
   styleUrls: ['./handsontable.component.scss'],
   styles: [`
@@ -11,45 +20,53 @@ import * as Handsontable from 'handsontable';
     }
   `],
 })
-export class HandsontableComponent {
-  dataset: any[] = Handsontable.helper.createSpreadsheetData(30, 30);
-  public settings: any;
-  public funCalls: object[];
-  public columns: object[];
-  public rows: object[];
+export class HandsontableComponent implements OnInit{
+  @ViewChild('modalContent')
+  modalContent: TemplateRef<any>;
+  view: CalendarView = CalendarView.Month;
+  CalendarView = CalendarView;
+  viewDate: Date = new Date();
 
-  constructor() {
-    this.funCalls = [];
-    this.columns = [
-      { data: 'name', title: 'Name'},
-      { data: 'id', title: 'ID'},
-      { data: 'age', title: 'age'},
-    ];
-    this.rows = [
-      { data: 'name', title: 'Name'},
-      { data: 'id', title: 'ID'},
-      { data: 'age', title: 'age'},
-    ];
-    this.settings = {
-        afterColumnMove: (key, target, newPosition) => {
-          this.funCalls.push({
-            funcName: 'moveColumns',
-            params: [target, newPosition],
-          });
-        }, autoWrapRow: true,
-        height: 500, manualColumnMove: true, manualColumnResize: true,
-        manualRowMove: true, manualRowResize: true, maxRows: 20,
-        rowHeaders: true, width: 1150, contextMenu: true,
-        bindRowsWithHeaders: 'strict',
-    };
+  dhhdashboardState: Observable<{schedules: Schedule[]}>;
+  settings;
+  dashboard;
+  
+  constructor(private store: Store<{dhhdashborad: {schedules: Schedule[]}}>) {
+    this.dhhdashboardState = this.store.select('dhhdashboard');    
+    console.log(this.settings);
   }
-  public funCaller() {
-    for (const A of this.funCalls) {
-      if (A['funcName'] === 'moveColumns') {
-        const columns = A['params'][0];
-        const target = A['params'][1];
-        Handsontable.plugins.ManualColumnMove.moveColumns(columns, target);
-      }
+  
+  
+  ngOnInit(){
+    this.getRoles();
+    this.settings = {
+      data: [
+        [11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56],
+        [11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56],
+        [11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56],
+        [11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56],
+        [11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56],
+        [11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56],
+        [11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56],
+        [11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56],
+        [11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56],
+        [11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56],
+        [11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56],
+        [11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56,11,11,12,25,56,56]
+      ],
+      colHeaders: [1.,2.,3.,4.,5.,6.,1.,2.,3.,4.,5.,6.,1.,2.,3.,4.,5.,6.,1.,2.,3.,4.,5.,6.,],
+  
+      rowHeaders: this.dashboard,
+  
+      manualColumnResize: true, manualRowMove: true, manualRowResize: true, 
+      maxRows: 50, maxColumns: 35, rowHeaderWidth: 100, stretchH: 'all'
     }
+  }
+  getRoles(): void {
+    this.dhhdashboardState
+        .subscribe(heroes => this.dashboard = heroes.schedules.map(v=>v.name));
+  }
+  onAdd(){
+    this.store.dispatch(new dhhdashboardActions.AddSchedule(new Schedule('dsfsd',6)))
   }
 }

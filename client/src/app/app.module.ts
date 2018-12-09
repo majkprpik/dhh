@@ -10,12 +10,15 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { NbPasswordAuthStrategy, NbAuthModule } from '@nebular/auth';
 import { CoreModule } from './@core/core.module';
+import { StoreModule } from '@ngrx/store';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ThemeModule } from './@theme/theme.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NbAuthJWTToken } from '@nebular/auth';
+import { dhhdashboardReducer } from './pages/dhhdashboard1/store/dhhdashboard.reducers';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -24,6 +27,7 @@ import { NbAuthJWTToken } from '@nebular/auth';
     HttpClientModule,
     AppRoutingModule,
 
+    StoreModule.forRoot({dhhdashboard: dhhdashboardReducer}),
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
     CoreModule.forRoot(),

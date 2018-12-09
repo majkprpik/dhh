@@ -26,4 +26,25 @@ export class HandsontableService {
   getSchedule(): Observable<any> {
     return this.http.get('api/schedules', this.httpOptions);
   }
+
+  updateSchedule(schedule): Observable<any> {
+    if (schedule != null) {
+      return this.http.patch('api/schedules/' + schedule._id, { schedule: schedule }, this.httpOptions);
+    }
+  }
+  deleteSchedule(schedule): Observable<any> {
+    if (schedule != null) {
+      return this.http.delete('api/schedules/' + schedule._id, this.httpOptions);
+    }
+  }
+  deleteSchedules(schedule): Observable<any> {
+    if (schedule != null) {
+      return this.http.delete('api/schedules/', this.httpOptions);
+    }
+  }
+  createSchedule(schedule): Observable<any> {
+    if (schedule != null) {
+      return this.http.post('api/schedules/', schedule, this.httpOptions);
+    }
+  }
 }
