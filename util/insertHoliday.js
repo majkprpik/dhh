@@ -35,7 +35,7 @@ module.exports = async function getCalendar(year){
         }
       })
       var insertObject = {month:m+"/"+year, days};
-      save new schedule
+    //save new schedule
       const newSchedule = new Schedule(insertObject);
       newSchedule.save().catch(err => console.log(err));
   })
