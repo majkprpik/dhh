@@ -6,12 +6,19 @@ import { LayoutService } from '../../../@core/data/layout.service';
 import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
 
 import { filter, map } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+
+import * as fromApp from '../../../store/app.reducers';
+import * as fromAuth from '../../../auth/store/auth.reducers';
+import { Observable } from 'rxjs/Observable';
 @Component({
   selector: 'ngx-header',
   styleUrls: ['./header.component.scss'],
   templateUrl: './header.component.html',
 })
 export class HeaderComponent implements OnInit {
+  authState: Observable<fromAuth.State>;
+
   @Input()
   position = 'normal';
   userMenuClicks = {
@@ -27,6 +34,8 @@ export class HeaderComponent implements OnInit {
     private analyticsService: AnalyticsService,
     private layoutService: LayoutService,
     private authService: NbAuthService,
+    private store: Store<fromApp.AppState>,
+
   ) {
     this.authService.onTokenChange().subscribe((token: NbAuthJWTToken) => {
       if (token.isValid()) {
@@ -57,6 +66,7 @@ export class HeaderComponent implements OnInit {
   ];
 
   ngOnInit() {
+    this.authState = this.store.select('auth');
     this.menuService
       .onItemClick()
       .pipe(

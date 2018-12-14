@@ -10,9 +10,10 @@ import {
   subDays,
   addDays,
   endOfMonth,
-  isSameDay,
   isSameMonth,
   addHours,
+  getMonth,
+  getYear,
 } from 'date-fns';
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -47,7 +48,8 @@ const colors: any = {
 export class DhhDashboardComponent {
   @ViewChild('modalContent')
   modalContent: TemplateRef<any>;
-
+  month;
+  year;
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
@@ -125,15 +127,16 @@ export class DhhDashboardComponent {
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       this.viewDate = date;
-      if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
-      ) {
-        this.activeDayIsOpen = false;
-      } else {
-        this.activeDayIsOpen = true;
-      }
+      this.month = getMonth(date);
+      // console.log(this.month + 1);
+      this.year = getYear(date);
+      // console.log(this.year);
     }
+  }
+  monthClicked(): void {
+    this.month = getMonth(this.viewDate);
+    this.year = getYear(this.viewDate);
+
   }
 
   eventTimesChanged({

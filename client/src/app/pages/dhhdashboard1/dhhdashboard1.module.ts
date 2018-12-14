@@ -12,6 +12,8 @@ import { TablesRoutingModule, routedComponents } from './dhhdashboard1-routing.m
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { StoreModule } from '@ngrx/store';
+import { dhhdashboardReducer } from './store/dhhdashboard.reducers';
 
 
 @NgModule({
@@ -22,6 +24,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     HotTableModule.forRoot(),
     FormsModule,
     FlatpickrModule.forRoot(),
+    StoreModule.forFeature('dhhdashboard', dhhdashboardReducer),
+
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,

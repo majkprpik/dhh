@@ -13,7 +13,9 @@ import { RolesService } from '../../../services/roles/roles.service';
   `],
 })
 export class SmartTableComponent {
-
+  permissions = [
+    { value: '5be5af5c4478b1243c054827', title: 'admin_v3' },
+  ];
   settings = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
@@ -37,7 +39,15 @@ export class SmartTableComponent {
       },
       permission: {
         title: 'Permission',
-        type: 'string',
+          type: 'html',
+          valuePrepareFunction: (cell, row) =>
+            cell ? this.permissions.find(v => v.value === cell).title : 'Unknown',
+          editor: {
+            type: 'list',
+            config: {
+              list: this.permissions,
+            },
+          },
       },
     },
   };

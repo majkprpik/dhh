@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
 
 import { UserService } from '../../../services/user/users.service';
-import { RolesService } from '../../../services/roles/roles.service';
+import { User } from '../../../models/user.model';
+
+
 
 // import { SmartTableService } from '../../../@core/data/smart-table.service';
 
@@ -15,62 +19,71 @@ import { RolesService } from '../../../services/roles/roles.service';
     }
   `],
 })
-export class SmartTableComponent {
-  Roles: {_id: {type: 'string' }, name: {type: 'string'}} [] = [];
+export class SmartTableComponent implements OnInit {
+  usersState: Observable<{users: User[]}>;
+
+  settings;
   roles = [
     { value: '5bdda1fe66c7e619987328a3', title: 'L1 agent' },
     { value: '5bdda2ad7a413708f0a13339', title: 'L2 agent' },
     { value: '5bdf4f46151b933458c1c964', title: 'L2 senior' },
   ];
 
-  addRole(id: string, name: string) {
-    this.roles.push({value: id, title: name});
+  constructor(private userService: UserService,
+    private store: Store<{USERS: {users: User[]}}>) {
+      this.usersState = this.store.select('USERS');
 
+    this.userService.getUsers().subscribe(value => {
+      this.source.load(value);
+    });
   }
-  settings = {
-    add: {
-      addButtonContent: '<i class="nb-plus"></i>',
-      createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-      confirmCreate: true,
-    },
-    edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-      confirmSave: true,
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
-    },
-    columns: {
-      firstname: {
-        title: 'Firstname',
-        type: 'string',
+  ngOnInit() {
+    this.settings = {
+      add: {
+        addButtonContent: '<i class="nb-plus"></i>',
+        createButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>',
+        confirmCreate: true,
       },
-      lastname: {
-        title: 'Lastname',
-        type: 'string',
+      edit: {
+        editButtonContent: '<i class="nb-edit"></i>',
+        saveButtonContent: '<i class="nb-checkmark"></i>',
+        cancelButtonContent: '<i class="nb-close"></i>',
+        confirmSave: true,
       },
-      email: {
-        title: 'E-mail',
-        type: 'string',
+      delete: {
+        deleteButtonContent: '<i class="nb-trash"></i>',
+        confirmDelete: true,
       },
-      _role: {
-        title: 'Role',
-        type: 'html',
-        valuePrepareFunction: (cell, row) =>
-          cell ? this.roles.find(v => v.value === cell).title : 'Unknown',
-        editor: {
-          type: 'list',
-          config: {
-            list: this.roles,
+      columns: {
+        firstname: {
+          title: 'Firstname',
+          type: 'string',
+        },
+        lastname: {
+          title: 'Lastname',
+          type: 'string',
+        },
+        email: {
+          title: 'E-mail',
+          type: 'string',
+        },
+        _role: {
+          title: 'Role',
+          type: 'html',
+          valuePrepareFunction: (cell, row) =>
+            cell ? this.roles.find(v => v.value === cell).title : 'Unknown',
+          editor: {
+            type: 'list',
+            config: {
+              list: this.roles,
+            },
           },
         },
       },
-    },
-  };
+    };
+  }
+
 
   source: LocalDataSource = new LocalDataSource();
   /*
@@ -79,18 +92,7 @@ export class SmartTableComponent {
       this.source.load(data);
       }
   */
-  constructor(private userService: UserService, private rolesService: RolesService) {
-    this.userService.getUsers().subscribe(value => {
-      this.source.load(value);
-    });
-    this.rolesService.getRoles().subscribe(data => {
-      // console.log(data);
-      // this.roles = value.map(r => ({ 'value': r._id, 'title': r.name }));
-      // this.roles.push({ value: data._id, title: data.name });
-      this.Roles.push(data);
-      // console.log(this.Roles);
-    });
-  }
+
 
   // onAdd(){
   //   this.rolesService.getRoles().subscribe((value: Response) => {

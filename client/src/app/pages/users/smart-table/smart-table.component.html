@@ -6,6 +6,19 @@
   <nb-card-body>
     <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)" (editConfirm)="onEditConfirm($event)" (createConfirm)="onCreateConfirm($event)">
     </ng2-smart-table>
-    <button class="btn btn-primary" (click)="onAdd()">Add</button>
+
+    
   </nb-card-body>
 </nb-card>
+<br>
+    <ul class="list-group">
+      <a
+          class="list-group-item"
+          style="cursor: pointer"
+          *ngFor="let user of (usersState | async).users; let i = index"
+          (click)="onEditItem(i)"
+        >
+        
+        {{ user.firstname }} {{user.lastname}}
+      </a>
+    </ul>

@@ -11,13 +11,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { NbPasswordAuthStrategy, NbAuthModule } from '@nebular/auth';
 import { CoreModule } from './@core/core.module';
 import { StoreModule } from '@ngrx/store';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { environment } from '../environments/environment';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ThemeModule } from './@theme/theme.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NbAuthJWTToken } from '@nebular/auth';
-import { dhhdashboardReducer } from './pages/dhhdashboard1/store/dhhdashboard.reducers';
+import { reducers } from './store/app.reducers';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,10 +31,12 @@ import { dhhdashboardReducer } from './pages/dhhdashboard1/store/dhhdashboard.re
     HttpClientModule,
     AppRoutingModule,
 
-    StoreModule.forRoot({dhhdashboard: dhhdashboardReducer}),
+    StoreModule.forRoot(reducers),
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
     CoreModule.forRoot(),
+    StoreRouterConnectingModule,
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
     NbAuthModule.forRoot({
       strategies: [
         NbPasswordAuthStrategy.setup({

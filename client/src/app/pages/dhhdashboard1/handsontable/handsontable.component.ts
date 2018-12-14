@@ -2,9 +2,13 @@ import { Component, OnInit, ViewChild, TemplateRef, ChangeDetectionStrategy } fr
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { CalendarView } from 'angular-calendar';
+import { getMonth, getYear } from 'date-fns';
 
 import { Schedule } from '../../../models/schedule.model';
 import * as dhhdashboardActions from '../store/dhhdashboard.actions';
+import * as fromDhhdashboard from '../store/dhhdashboard.reducers';
+import { Day } from '../../../models/days.model';
+import { Shift } from '../../../models/shift.model';
 
 
 
@@ -25,47 +29,84 @@ export class HandsontableComponent implements OnInit {
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
   viewDate: Date = new Date();
-
-  dhhdashboardState: Observable<{schedules: Schedule[]}>;
+  dhhdashboardState: Observable<fromDhhdashboard.State>;
   settings;
   dashboard;
+  Month;
+  dateMatch;
+  month= getMonth(this.viewDate) + 1;
+  year= getYear(this.viewDate);
 
-  constructor(private store: Store<{dhhdashborad: {schedules: Schedule[]}}>) {
+  constructor(private store: Store<fromDhhdashboard.FutureState>) {
     this.dhhdashboardState = this.store.select('dhhdashboard');
     // console.log(this.settings);
   }
 
 
   ngOnInit() {
-    this.getRoles();
-    this.settings = {
-      data: [
-        [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56],
-        [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56],
-        [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56],
-        [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56],
-        [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56],
-        [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56],
-        [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56],
-        [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56],
-        [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56],
-        [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56],
-        [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56],
-        [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56],
-      ],
-      colHeaders: [1., 2., 3., 4., 5., 6., 1., 2., 3., 4., 5., 6., 1., 2., 3., 4., 5., 6., 1., 2., 3., 4., 5., 6.],
+    this.dateMatch = false;
+    this.getmonth();
+    this.month = getMonth(this.viewDate) + 1;
+    this.Month.forEach(element => {
+      if (this.month === element) {
+        this.dateMatch = true;
+      }
+    });
+    this.getSchedule(); // by month and year
+      this.settings = {
+        data: [
+          [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25,
+            56, 56, 11, 11, 12, 25, 56, 56, 56, 56, 11, 11, 12, 25, 56],
+          [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25,
+             56, 56, 11, 11, 12, 25, 56, 56, 56, 56, 11, 11, 12, 25, 56],
+          [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25,
+             56, 56, 11, 11, 12, 25, 56, 56, 56, 56, 11, 11, 12, 25, 56],
+          [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25,
+             56, 56, 11, 11, 12, 25, 56, 56, 56, 56, 11, 11, 12, 25, 56],
+          [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25,
+             56, 56, 11, 11, 12, 25, 56, 56, 56, 56, 11, 11, 12, 25, 56],
+          [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25,
+            56, 56, 11, 11, 12, 25, 56, 56, 56, 56, 11, 11, 12, 25, 56],
+          [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25,
+             56, 56, 11, 11, 12, 25, 56, 56, 56, 56, 11, 11, 12, 25, 56],
+          [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25,
+            56, 56, 11, 11, 12, 25, 56, 56, 56, 56, 11, 11, 12, 25, 56],
+          [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25,
+             56, 56, 11, 11, 12, 25, 56, 56, 56, 56, 11, 11, 12, 25, 56],
+          [11, 11, 12, 25, 56, 56, 11, 11, 12, 25, 56, 56, 11, 11, 12, 25,
+            56, 56, 11, 11, 12, 25, 56, 56, 56, 56, 11, 11, 12, 25, 56],
+        ],
+        colHeaders: this.dashboard ,
 
-      rowHeaders: this.dashboard,
+        rowHeaders: ['Agent L1', 'Senior L1', 'Senior L1', 'Agent L2', 'Agent L2', 'Agent L2',
+            'Agent L2', 'Agent L2', 'Agent L2', 'Agent L2'],
 
-      manualColumnResize: true, manualRowMove: true, manualRowResize: true,
-      maxRows: 50, maxColumns: 35, rowHeaderWidth: 100, stretchH: 'all',
-    };
+        manualRowMove: true, manualRowResize: true,
+        maxRows: 50, maxColumns: 32, rowHeaderWidth: 100, /* stretchH: 'all',*/
+        };
+  }
+  getSchedule(): void {
+    this.dhhdashboardState
+        .subscribe(data => this.dashboard = data.schedules.map(v => v.month + ' ' + v.days[0].dayOfWeek));
+  }
+  getmonth(): void {
+    this.dhhdashboardState
+        .subscribe(data => this.Month = data.schedules.map(v => v.month));
   }
   getRoles(): void {
     this.dhhdashboardState
-        .subscribe(heroes => this.dashboard = heroes.schedules.map(v => v.name));
+        .subscribe(heroes => this.dashboard = heroes.schedules.map(v => v.month));
   }
   onAdd() {
-    this.store.dispatch(new dhhdashboardActions.AddSchedule(new Schedule('dsfsd', 6)));
+    this.store.dispatch(new dhhdashboardActions.AddSchedule(new Schedule('fffsfdfsfs5544sd54f4f', 2 ,
+      [new Day('56df5g6g', 15, 'Blagdan', 'UT', [new Shift('f6gdf5g', 'dfg6d5g6', '5g6df5g')])] )));
   }
+  monthClicked(): void {
+    this.month = getMonth(this.viewDate) + 1;
+    // console.log(this.month);
+    this.year = getYear(this.viewDate);
+    // console.log(this.year);
+  }
+
+
 }
