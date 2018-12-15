@@ -19,6 +19,10 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
+    vacationDays: {
+        type: Number,
+        default: 0
+    },
     _role: {
         type: Schema.Types.ObjectId, ref: 'Role',
         required: true
