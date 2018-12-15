@@ -24,10 +24,10 @@ const User = require("../../models/User");
  * @apiSuccess {String} email User email
  * @apiSuccess {String} firstname User firstname
  * @apiSuccess {String} lastname User lastname
- * @apiSuccess {String} vacationDays User vacationDays 
+ * @apiSuccess {Number} vacationDays User vacationDays 
  * @apiSuccess {String} _role Role id 
  * @apiSuccess {Array} monthlyNumberOfHours User number of hours
- * @apiSuccess {Array} monthlyNumberOfHours.month Month
+ * @apiSuccess {Array} monthlyNumberOfHours.month="01/2018" Month
  * @apiSuccess {Array} monthlyNumberOfHours.numberOfHours Number of hours
  */
 
@@ -157,7 +157,7 @@ router.post("/login", (req, res) => {
  * @apiSuccess {String} email User email
  * @apiSuccess {String} firstname User firstname
  * @apiSuccess {String} lastname User lastname
- * @apiSuccess {String} vacationDays User vacationDays 
+ * @apiSuccess {Number} vacationDays User vacationDays 
  * @apiSuccess {String} _role Role id 
  * 
  * @apiError {String} message="User to update not found"

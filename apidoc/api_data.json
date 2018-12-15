@@ -1,6 +1,564 @@
 [
   {
     "type": "delete",
+    "url": "ruleroleshift/:id",
+    "title": "Delete rule",
+    "name": "DeleteRule",
+    "group": "RuleRoleShift",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Rule id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "defaultValue": "Rule deleted",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "defaultValue": "Rule to delete not found",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/api/ruleroleshift.js",
+    "groupTitle": "RuleRoleShift"
+  },
+  {
+    "type": "get",
+    "url": "ruleroleshift/:id",
+    "title": "Get rules",
+    "name": "GetRules",
+    "group": "RuleRoleShift",
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "defaultValue": "No rules where found",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/api/ruleroleshift.js",
+    "groupTitle": "RuleRoleShift",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Id",
+            "optional": false,
+            "field": "_role",
+            "defaultValue": "5bdda1fe66c7e619987328a3",
+            "description": "<p>Role id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Id",
+            "optional": false,
+            "field": "_shift",
+            "defaultValue": "5bdda62c5af0de0b4c94a49c",
+            "description": "<p>Shift id</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "post",
+    "url": "ruleroleshift/",
+    "title": "Post rule",
+    "name": "PostRule",
+    "group": "RuleRoleShift",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "_role",
+            "description": "<p>Role id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "_shift",
+            "description": "<p>Shift id</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "defaultValue": "Rule already exists",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/api/ruleroleshift.js",
+    "groupTitle": "RuleRoleShift",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Id",
+            "optional": false,
+            "field": "_role",
+            "defaultValue": "5bdda1fe66c7e619987328a3",
+            "description": "<p>Role id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Id",
+            "optional": false,
+            "field": "_shift",
+            "defaultValue": "5bdda62c5af0de0b4c94a49c",
+            "description": "<p>Shift id</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "patch",
+    "url": "ruleroleshift/:id",
+    "title": "Update rule",
+    "name": "UpdateRule",
+    "group": "RuleRoleShift",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Rule id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Body",
+            "optional": false,
+            "field": "body",
+            "description": "<p>Cijeli rule body, da ne ponavljam dva puta, identicno je bodyu koji se vrati na success (osim sto ne saljete _id nego id, kako sto je difinirano tu u parametrima)</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "defaultValue": "Rule to update not found",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/api/ruleroleshift.js",
+    "groupTitle": "RuleRoleShift",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Id",
+            "optional": false,
+            "field": "_role",
+            "defaultValue": "5bdda1fe66c7e619987328a3",
+            "description": "<p>Role id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Id",
+            "optional": false,
+            "field": "_shift",
+            "defaultValue": "5bdda62c5af0de0b4c94a49c",
+            "description": "<p>Shift id</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "delete",
+    "url": "schedules/:id",
+    "title": "Delete a schedule",
+    "name": "DeleteSchedule",
+    "group": "Schedule",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Id",
+            "optional": false,
+            "field": "id",
+            "description": "<p>User id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "defaultValue": "Schedule removed",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "defaultValue": "Schedule to delete not found",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/api/schedules.js",
+    "groupTitle": "Schedule"
+  },
+  {
+    "type": "delete",
+    "url": "schedules/:id",
+    "title": "Delete all schedules",
+    "name": "DeleteSchedules",
+    "group": "Schedule",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "defaultValue": "Schedules removed",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/api/schedules.js",
+    "groupTitle": "Schedule"
+  },
+  {
+    "type": "get",
+    "url": "schedules/genereate/year",
+    "title": "Generate schedule",
+    "name": "GenerateSchedules",
+    "group": "Schedule",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "allowedValues": [
+              "2018"
+            ],
+            "optional": false,
+            "field": "year",
+            "description": "<p>Schedule year</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "defaultValue": "Schedules added",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/api/schedules.js",
+    "groupTitle": "Schedule"
+  },
+  {
+    "type": "get",
+    "url": "schedules/",
+    "title": "Get schedules",
+    "name": "GetSchedules",
+    "group": "Schedule",
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "defaultValue": "No schedules where found",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/api/schedules.js",
+    "groupTitle": "Schedule",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Id",
+            "optional": false,
+            "field": "_id",
+            "description": "<p>Schedule id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "month",
+            "defaultValue": "01/2018",
+            "description": "<p>Schedule month</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "days",
+            "description": "<p>Schedule days</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "days.day",
+            "defaultValue": "02",
+            "description": "<p>Days day</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "days.type",
+            "defaultValue": "R",
+            "description": "<p>Days type</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "days.dayOfWeek",
+            "defaultValue": "PO",
+            "description": "<p>Days day of week</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "shifts",
+            "description": "<p>Days shifts</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "shifts._shift",
+            "description": "<p>Shift id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "shifts._user",
+            "description": "<p>User id</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "patch",
+    "url": "schedules/:id",
+    "title": "Update a schedule",
+    "name": "PatchSchedule",
+    "group": "Schedule",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Id",
+            "optional": false,
+            "field": "id",
+            "description": "<p>User id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Body",
+            "optional": false,
+            "field": "body",
+            "description": "<p>Cijeli schedule body, da ne ponavljam dva puta, identicno je bodyu koji se vrati na success (osim sto ne saljete _id nego id, kako sto je difinirano tu u parametrima)</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "defaultValue": "Schedule to update not found",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/api/schedules.js",
+    "groupTitle": "Schedule",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Id",
+            "optional": false,
+            "field": "_id",
+            "description": "<p>Schedule id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "month",
+            "defaultValue": "01/2018",
+            "description": "<p>Schedule month</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "days",
+            "description": "<p>Schedule days</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "days.day",
+            "defaultValue": "02",
+            "description": "<p>Days day</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "days.type",
+            "defaultValue": "R",
+            "description": "<p>Days type</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "days.dayOfWeek",
+            "defaultValue": "PO",
+            "description": "<p>Days day of week</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "shifts",
+            "description": "<p>Days shifts</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "shifts._shift",
+            "description": "<p>Shift id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "shifts._user",
+            "description": "<p>User id</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "delete",
     "url": "users/:id",
     "title": "Delete user",
     "name": "DeleteUser",
@@ -173,7 +731,7 @@
           },
           {
             "group": "Success 200",
-            "type": "String",
+            "type": "Number",
             "optional": false,
             "field": "vacationDays",
             "description": "<p>User vacationDays</p>"
@@ -197,6 +755,7 @@
             "type": "Array",
             "optional": false,
             "field": "monthlyNumberOfHours.month",
+            "defaultValue": "01/2018",
             "description": "<p>Month</p>"
           },
           {
@@ -266,7 +825,7 @@
           },
           {
             "group": "Success 200",
-            "type": "String",
+            "type": "Number",
             "optional": false,
             "field": "vacationDays",
             "description": "<p>User vacationDays</p>"
@@ -290,6 +849,7 @@
             "type": "Array",
             "optional": false,
             "field": "monthlyNumberOfHours.month",
+            "defaultValue": "01/2018",
             "description": "<p>Month</p>"
           },
           {
@@ -474,7 +1034,7 @@
           },
           {
             "group": "Success 200",
-            "type": "String",
+            "type": "Number",
             "optional": false,
             "field": "vacationDays",
             "description": "<p>User vacationDays</p>"
@@ -656,7 +1216,7 @@
           },
           {
             "group": "Success 200",
-            "type": "String",
+            "type": "Number",
             "optional": false,
             "field": "vacationDays",
             "description": "<p>User vacationDays</p>"
@@ -680,6 +1240,7 @@
             "type": "Array",
             "optional": false,
             "field": "monthlyNumberOfHours.month",
+            "defaultValue": "01/2018",
             "description": "<p>Month</p>"
           },
           {
