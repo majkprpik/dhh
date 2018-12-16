@@ -864,6 +864,30 @@ define({ "api": [
     }
   },
   {
+    "type": "get",
+    "url": "users/vacation",
+    "title": "Calculate vacation days for all users",
+    "name": "GetVacation",
+    "group": "User",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "defaultValue": "Vacation days calculated!",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/api/users.js",
+    "groupTitle": "User"
+  },
+  {
     "type": "post",
     "url": "users/login",
     "title": "Login a user",

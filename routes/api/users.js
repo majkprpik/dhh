@@ -12,6 +12,7 @@ const validateUserInput = require("../../validation/user");
 
 // Load utils
 const setWorkHours = require("../../util/workHours")
+const setVacationDays = require("../../util/vacationDays")
 const sendPassword = require("../../util/passwordMail")
 
 // Load models
@@ -242,6 +243,18 @@ router.get("/hours", (req, res) => {
 	return res.json({ message: "Work hours calculated!" })
 });
 
+/**
+ * @api {get} users/vacation Calculate vacation days for all users
+ * @apiName GetVacation
+ * @apiGroup User
+ *
+ * @apiSuccess {String} message="Vacation days calculated!"
+ */
+router.get("/hours", (req, res) => {
+	setVacationDays()
+	return res.json({ message: "Vacation days calculated!" })
+});
+
 
 /**
  * @api {delete} users/:id Delete user
@@ -321,9 +334,7 @@ router.get("/current", passport.authenticate("jwt", { session: false }),
 	}
 );
 
-// @route   Post api/users/logout
-// @desc    Logout
-// @access  Public
+
 /**
  * @api {post} users/logout Logout
  * @apiName LogoutUser
