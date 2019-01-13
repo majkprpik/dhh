@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { UserService } from '../../../services/user/users.service';
 import { User } from '../../../models/user.model';
 
-
+import * as UsersActions from '../store/users.actions';
 
 // import { SmartTableService } from '../../../@core/data/smart-table.service';
 
@@ -20,7 +20,7 @@ import { User } from '../../../models/user.model';
   `],
 })
 export class SmartTableComponent implements OnInit {
-  usersState: Observable<{users: User[]}>;
+  usersState: Observable<{ users: User[] }>;
 
   settings;
   roles = [
@@ -30,8 +30,8 @@ export class SmartTableComponent implements OnInit {
   ];
 
   constructor(private userService: UserService,
-    private store: Store<{USERS: {users: User[]}}>) {
-      this.usersState = this.store.select('USERS');
+    private store: Store<{ USERS: { users: User[] } }>) {
+    this.usersState = this.store.select('USERS');
 
     this.userService.getUsers().subscribe(value => {
       this.source.load(value);
@@ -129,16 +129,17 @@ export class SmartTableComponent implements OnInit {
     });
   }
   onCreateConfirm(event): void {
-    this.userService.createUser(event.newData).subscribe(value => {
-      // this.source.load(value);
-      this.source.update(event.data, value);
-      event.confirm.resolve();
-      /* alert(event);
-      if (window.confirm('Are you sure you want to delete?')) {
-        });
-      } else {
-        event.confirm.reject();
-      }*/
-    });
+    this.store.dispatch(new UsersActions.TryAddUser(event.newData));
+    // this.userService.createUser(event.newData).subscribe(value => {
+    //   // this.source.load(value);
+    //   this.source.update(event.data, value);
+    //   event.confirm.resolve();
+    //   /* alert(event);
+    //   if (window.confirm('Are you sure you want to delete?')) {
+    //     });
+    //   } else {
+    //     event.confirm.reject();
+    //   }*/
+    // });
   }
 }
