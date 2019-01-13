@@ -12,6 +12,8 @@ import { RolesService } from '../../services/roles/roles.service';
 import { TablesRoutingModule, routedComponents } from './users-routing.module';
 import { UserService } from '../../services/user/users.service';
 import { usersReducer } from './store/users.reducers';
+import { UsersEffects } from './store/users.effects';
+import { EffectsModule } from '@ngrx/effects';
 
 
 @NgModule({
@@ -21,9 +23,11 @@ import { usersReducer } from './store/users.reducers';
     TablesRoutingModule,
     Ng2SmartTableModule,
     StoreModule.forFeature('USERS', usersReducer),
+    EffectsModule.forRoot([UsersEffects]),
   ],
-  declarations: [...routedComponents, UsersComponent], providers: [
-  RolesService, UserService,
+  declarations: [...routedComponents, UsersComponent],
+  providers: [
+    RolesService, UserService,
   ],
 })
 export class UsersModule { }

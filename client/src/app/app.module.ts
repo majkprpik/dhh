@@ -21,8 +21,6 @@ import { ThemeModule } from './@theme/theme.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NbAuthJWTToken } from '@nebular/auth';
 import { reducers } from './store/app.reducers';
-
-
 @NgModule({
   declarations: [AppComponent],
   imports: [
