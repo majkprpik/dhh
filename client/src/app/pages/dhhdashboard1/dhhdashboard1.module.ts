@@ -14,6 +14,8 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { StoreModule } from '@ngrx/store';
 import { dhhdashboardReducer } from './store/dhhdashboard.reducers';
+import { HandsontableService } from '../../services/schedule/schedule.service';
+import { ShiftService } from '../../services/shifts/shift.service';
 
 
 @NgModule({
@@ -31,6 +33,8 @@ import { dhhdashboardReducer } from './store/dhhdashboard.reducers';
       useFactory: adapterFactory,
     }),
   ],
-  declarations: [...routedComponents, DhhDashboard1Component],
+  declarations: [...routedComponents, DhhDashboard1Component], providers: [
+    HandsontableService, ShiftService,
+    ],
 })
 export class DhhDashboard1Module { }
