@@ -318,16 +318,18 @@ router.get("/", (req, res) => {
 
 
 /**
- * @api {get} users/:id Get current user
+ * @api {get} users/login/current Get current user
  * @apiName GetCurrentUser
  * @apiGroup User
  *
+ * @apiSuccess {Id} _id User id
  * @apiSuccess {Email} email User email
  * @apiSuccess {String} firstname User firstname
  */
-router.get("/current", passport.authenticate("jwt", { session: false }),
+router.get("/login/current", passport.authenticate("jwt", { session: false }),
 	(req, res) => {
 		res.json({
+			_id: req.user._id,
 			firstname: req.user.firstname,
 			email: req.user.email
 		});

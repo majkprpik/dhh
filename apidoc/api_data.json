@@ -610,13 +610,20 @@
   },
   {
     "type": "get",
-    "url": "users/:id",
+    "url": "users/login/current",
     "title": "Get current user",
     "name": "GetCurrentUser",
     "group": "User",
     "success": {
       "fields": {
         "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Id",
+            "optional": false,
+            "field": "_id",
+            "description": "<p>User id</p>"
+          },
           {
             "group": "Success 200",
             "type": "Email",
@@ -1273,6 +1280,406 @@
             "optional": false,
             "field": "monthlyNumberOfHours.numberOfHours",
             "description": "<p>Number of hours</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
+    "url": "vacations/",
+    "title": "Get vacations",
+    "name": "GetVacations",
+    "group": "Vacation",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>User token</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "defaultValue": "Vacation request not found",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/api/vacations.js",
+    "groupTitle": "Vacation",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Id",
+            "optional": false,
+            "field": "_id",
+            "description": "<p>Vacation id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "start",
+            "description": "<p>Vacation start date</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "end",
+            "description": "<p>Vacation start end</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Id",
+            "optional": false,
+            "field": "_user",
+            "description": "<p>User id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Enum",
+            "allowedValues": [
+              "\"Odbijen/Prihvaćen/U tijeku\""
+            ],
+            "optional": false,
+            "field": "status",
+            "description": "<p>Vacation status</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
+    "url": "vacations/:id",
+    "title": "Get vacations for a user",
+    "name": "GetVacationsUser",
+    "group": "Vacation",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Id",
+            "optional": false,
+            "field": "id",
+            "description": "<p>User id</p>"
+          }
+        ]
+      }
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>User token</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "defaultValue": "Vacation request not found",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/api/vacations.js",
+    "groupTitle": "Vacation",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Id",
+            "optional": false,
+            "field": "_id",
+            "description": "<p>Vacation id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "start",
+            "description": "<p>Vacation start date</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "end",
+            "description": "<p>Vacation start end</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Id",
+            "optional": false,
+            "field": "_user",
+            "description": "<p>User id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Enum",
+            "allowedValues": [
+              "\"Odbijen/Prihvaćen/U tijeku\""
+            ],
+            "optional": false,
+            "field": "status",
+            "description": "<p>Vacation status</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "patch",
+    "url": "vacations/:id",
+    "title": "Approve or deny vacation",
+    "name": "PatchVacation",
+    "group": "Vacation",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Id",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Vacation id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Enum",
+            "allowedValues": [
+              "\"Odbijen/Prihvaćen\""
+            ],
+            "optional": false,
+            "field": "status",
+            "description": "<p>Vacation status</p>"
+          }
+        ]
+      }
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>User token</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "defaultValue": "Vacation request not found",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/api/vacations.js",
+    "groupTitle": "Vacation",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Id",
+            "optional": false,
+            "field": "_id",
+            "description": "<p>Vacation id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "start",
+            "description": "<p>Vacation start date</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "end",
+            "description": "<p>Vacation start end</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Id",
+            "optional": false,
+            "field": "_user",
+            "description": "<p>User id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Enum",
+            "allowedValues": [
+              "\"Odbijen/Prihvaćen/U tijeku\""
+            ],
+            "optional": false,
+            "field": "status",
+            "description": "<p>Vacation status</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "post",
+    "url": "vacations/",
+    "title": "Add a vacation request",
+    "name": "PostVacation",
+    "group": "Vacation",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Date",
+            "allowedValues": [
+              "\"2019-01-01\""
+            ],
+            "optional": false,
+            "field": "start",
+            "description": "<p>Vacation start date</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Date",
+            "allowedValues": [
+              "\"2019-01-01\""
+            ],
+            "optional": false,
+            "field": "end",
+            "description": "<p>Vacation start end</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Id",
+            "optional": false,
+            "field": "_user",
+            "description": "<p>User id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "lastname",
+            "description": "<p>User lastname</p>"
+          }
+        ]
+      }
+    },
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>User token</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "defaultValue": "Vacation request already exists",
+            "description": ""
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/api/vacations.js",
+    "groupTitle": "Vacation",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Id",
+            "optional": false,
+            "field": "_id",
+            "description": "<p>Vacation id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "start",
+            "description": "<p>Vacation start date</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "end",
+            "description": "<p>Vacation start end</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Id",
+            "optional": false,
+            "field": "_user",
+            "description": "<p>User id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Enum",
+            "allowedValues": [
+              "\"Odbijen/Prihvaćen/U tijeku\""
+            ],
+            "optional": false,
+            "field": "status",
+            "description": "<p>Vacation status</p>"
           }
         ]
       }
