@@ -6,8 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { User } from '../../../models/user.model';
 
 import * as UsersActions from '../store/users.actions';
-
-// import { SmartTableService } from '../../../@core/data/smart-table.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'ngx-smart-table',
@@ -20,7 +19,7 @@ import * as UsersActions from '../store/users.actions';
 })
 export class SmartTableComponent implements OnInit {
   usersState: Observable<{ users: User[] }>;
-
+  subsc = new Subscription();
   settings;
   roles = [
     { value: '5bdda1fe66c7e619987328a3', title: 'L1 agent' },
@@ -84,23 +83,6 @@ export class SmartTableComponent implements OnInit {
 
 
   source: LocalDataSource = new LocalDataSource();
-  /*
-      constructor(private service: SmartTableService) {
-      const data = this.service.getData();
-      this.source.load(data);
-      }
-  */
-
-
-  // onAdd(){
-  //   this.rolesService.getRoles().subscribe((value: Response) => {
-  //     // console.log(value);
-  //     const data = value.json();
-  //     console.log(data);
-  //   });
-  // }
-
-
 
   onDeleteConfirm(event): void {
     alert(event);
@@ -124,31 +106,14 @@ export class SmartTableComponent implements OnInit {
       updatedUser: event.newData,
     }));
     event.confirm.resolve();
-    // this.userService.updateUser(event.newData).subscribe(value => {
-      // this.source.load(value);
-      // this.source.update(event.data, value);
-      // event.confirm.resolve();
-      /* alert(event);
-      if (window.confirm('Are you sure you want to delete?')) {
-        });
-      } else {
-        event.confirm.reject();
-      }*/
-    // });
   }
   onCreateConfirm(event): void {
-    this.store.dispatch(new UsersActions.TryAddUser(event.newData));
-    event.confirm.resolve();
-    // this.userService.createUser(event.newData).subscribe(value => {
-    //   // this.source.load(value);
-    //   this.source.update(event.data, value);
-    //   event.confirm.resolve();
-    //   /* alert(event);
-    //   if (window.confirm('Are you sure you want to delete?')) {
-    //     });
-    //   } else {
-    //     event.confirm.reject();
-    //   }*/
-    // });
+    /*this.subsc = this.actionsSubj.subscribe(data => {
+       if (data.type === 'ADD_USER') {
+         event.confirm.resolve();
+         this.subsc.unsubscribe();
+       }
+     });*/
+    this.store.dispatch(new UsersActions.TryAddUser(event.newData, event.confirm.resolve));
   }
 }

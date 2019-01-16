@@ -9,6 +9,7 @@ const roles = require("./routes/api/roles");
 const shifts = require("./routes/api/shifts");
 const schedules = require("./routes/api/schedules");
 const permissions = require("./routes/api/permissions");
+const vacations = require("./routes/api/vacations");
 const ruleroleshift = require("./routes/api/ruleroleshift");
 const rulehourslimit = require("./routes/api/rulehourslimit");
 
@@ -50,6 +51,7 @@ app.use("/roles", roles);
 app.use("/shifts", shifts);
 app.use("/schedules", schedules);
 app.use("/permissions", permissions);
+app.use("/vacations", vacations);
 app.use("/ruleroleshift", ruleroleshift);
 app.use("/rulehourslimit", rulehourslimit);
 
