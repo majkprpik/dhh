@@ -12,6 +12,7 @@ const validateUserInput = require("../../validation/user");
 
 // Load utils
 const setWorkHours = require("../../util/workHours")
+const setVacationDays = require("../../util/vacationDays")
 const sendPassword = require("../../util/passwordMail")
 
 // Load models
@@ -24,10 +25,10 @@ const User = require("../../models/User");
  * @apiSuccess {String} email User email
  * @apiSuccess {String} firstname User firstname
  * @apiSuccess {String} lastname User lastname
- * @apiSuccess {String} vacationDays User vacationDays 
+ * @apiSuccess {Number} vacationDays User vacationDays 
  * @apiSuccess {String} _role Role id 
  * @apiSuccess {Array} monthlyNumberOfHours User number of hours
- * @apiSuccess {Array} monthlyNumberOfHours.month Month
+ * @apiSuccess {Array} monthlyNumberOfHours.month="01/2018" Month
  * @apiSuccess {Array} monthlyNumberOfHours.numberOfHours Number of hours
  */
 
@@ -157,7 +158,7 @@ router.post("/login", (req, res) => {
  * @apiSuccess {String} email User email
  * @apiSuccess {String} firstname User firstname
  * @apiSuccess {String} lastname User lastname
- * @apiSuccess {String} vacationDays User vacationDays 
+ * @apiSuccess {Number} vacationDays User vacationDays 
  * @apiSuccess {String} _role Role id 
  * 
  * @apiError {String} message="User to update not found"
@@ -242,6 +243,18 @@ router.get("/hours", (req, res) => {
 	return res.json({ message: "Work hours calculated!" })
 });
 
+/**
+ * @api {get} users/vacation Calculate vacation days for all users
+ * @apiName GetVacation
+ * @apiGroup User
+ *
+ * @apiSuccess {String} message="Vacation days calculated!"
+ */
+router.get("/hours", (req, res) => {
+	setVacationDays()
+	return res.json({ message: "Vacation days calculated!" })
+});
+
 
 /**
  * @api {delete} users/:id Delete user
@@ -305,25 +318,25 @@ router.get("/", (req, res) => {
 
 
 /**
- * @api {get} users/:id Get current user
+ * @api {get} users/login/current Get current user
  * @apiName GetCurrentUser
  * @apiGroup User
  *
+ * @apiSuccess {Id} _id User id
  * @apiSuccess {Email} email User email
  * @apiSuccess {String} firstname User firstname
  */
-router.get("/current", passport.authenticate("jwt", { session: false }),
+router.get("/login/current", passport.authenticate("jwt", { session: false }),
 	(req, res) => {
 		res.json({
+			_id: req.user._id,
 			firstname: req.user.firstname,
 			email: req.user.email
 		});
 	}
 );
 
-// @route   Post api/users/logout
-// @desc    Logout
-// @access  Public
+
 /**
  * @api {post} users/logout Logout
  * @apiName LogoutUser

@@ -10,9 +10,25 @@ const Rule = require("../../models/RuleRoleShift")
 // Load utils
 const checkRules = require("../../util/ruleroleshift")
 
-// @route   POST api/ruleroleshift
-// @desc    Add a rule
-// @access  Public
+/**
+ * @apiDefine RuleRoleShiftSuccess
+ *
+ * @apiSuccess {Id} _role="5bdda1fe66c7e619987328a3" Role id
+ * @apiSuccess {Id} _shift="5bdda62c5af0de0b4c94a49c" Shift id
+ */
+
+/**
+ * @api {post} ruleroleshift/ Post rule
+ * @apiName PostRule
+ * @apiGroup RuleRoleShift
+ * 
+ * @apiParam {String} _role Role id
+ * @apiParam {String} _shift Shift id
+ *
+ * @apiUse RuleRoleShiftSuccess 
+ * 
+ * @apiError {String} message="Rule already exists"
+ */
 router.post("/", (req, res) => {
 	const { errors, isValid } = validateRuleInput(req.body)
 	if (!isValid) {
@@ -37,9 +53,18 @@ router.post("/", (req, res) => {
 		.catch(err => console.log(err));
 })
 
-// @route   DELETE api/ruleroleshift/:id
-// @desc    Remove a rule by id
-// @access  Public
+
+/**
+ * @api {delete} ruleroleshift/:id Delete rule
+ * @apiName DeleteRule
+ * @apiGroup RuleRoleShift
+ * 
+ * @apiParam {String} id Rule id
+ *
+ * @apiSuccess {String} message="Rule deleted" 
+ * 
+ * @apiError {String} message="Rule to delete not found"
+ */
 router.delete("/:id", (req, res) => {
 	Rule.findOneAndDelete({ _id: req.params.id })
 		.then(rule => {
@@ -53,9 +78,21 @@ router.delete("/:id", (req, res) => {
 		.catch(err => console.log(err));
 })
 
-// @route   PATCH api/ruleroleshift/:id
-// @desc    Update a rule
-// @access  Public
+
+/**
+ * @api {patch} ruleroleshift/:id Update rule
+ * @apiName UpdateRule
+ * @apiGroup RuleRoleShift
+ * 
+ * @apiParam {String} id Rule id
+ * @apiParam {Body} body Cijeli rule body, da ne ponavljam dva puta, 
+ * identicno je bodyu koji se vrati na success (osim sto ne saljete _id nego id, 
+ * kako sto je difinirano tu u parametrima)
+ *
+ * @apiUse RuleRoleShiftSuccess 
+ * 
+ * @apiError {String} message="Rule to update not found"
+ */
 router.patch("/:id", (req, res) => {
 	const { errors, isValid } = validateRuleInput(req.body)
 	if (!isValid) {
@@ -75,16 +112,17 @@ router.patch("/:id", (req, res) => {
 
 })
 
-// @route   GET api/ruleroleshift
-// @desc    Get all rules
-// @access  Public
+
+/**
+ * @api {get} ruleroleshift/:id Get rules
+ * @apiName GetRules
+ * @apiGroup RuleRoleShift
+ * 
+ * @apiUse RuleRoleShiftSuccess 
+ * 
+ * @apiError {String} message="No rules where found"
+ */
 router.get("/", (req, res) => {
-	/*const { errors, isValid } = checkRules()
-
-	if (!isValid) {
-		return res.status(400).json(errors);
-	}*/
-
 	Rule.find()
 		.then(role => res.json(role))
 		.catch(err => res.status(404).json({ message: "No rules where found" }))
