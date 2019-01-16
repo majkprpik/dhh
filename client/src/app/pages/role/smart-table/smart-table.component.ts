@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
+import { Observable } from 'rxjs/Observable';
 
-import { RolesService } from '../../../services/roles/roles.service';
+import { Role } from '../../../models/role.model';
+import { Store } from '@ngrx/store';
+import * as RolesActions from '../store/roles.actions';
 
 @Component({
   selector: 'ngx-smart-table',
@@ -13,6 +16,8 @@ import { RolesService } from '../../../services/roles/roles.service';
   `],
 })
 export class SmartTableComponent {
+  roleState: Observable<{ roles: Role[] }>;
+
   permissions = [
     { value: '5be5af5c4478b1243c054827', title: 'admin_v3' },
   ];
@@ -60,12 +65,31 @@ export class SmartTableComponent {
     }
 
 */
-  constructor(private service: RolesService) {
-    this.service.getRoles().subscribe(value => {
-      const data = value;
+  constructor(private store: Store<{ ROLES: { roles: Role[] } }>) {
+    this.store.dispatch(new RolesActions.FetchRole());
+    this.roleState = this.store.select('ROLES');
+    this.store.select('ROLES').subscribe(value => {
+      const data = value.roles;
       this.source.load(data);
     });
   }
+  onDeleteConfirm(event): void {
+    alert(event);
+    if (window.confirm('Are you sure you want to delete?')) {
+      this.store.dispatch(new RolesActions.DeleteRole(event.data));
+      event.confirm.resolve();
+    } else {
+      event.confirm.reject();
+    }
+  }
 
+  onEditConfirm(event): void {
+    this.store.dispatch(new RolesActions.UpdateRole(event.newData));
+    event.confirm.resolve();
+  }
+  onCreateConfirm(event): void {
+    this.store.dispatch(new RolesActions.AddRole(event.newData));
+    event.confirm.resolve();
+  }
 
 }

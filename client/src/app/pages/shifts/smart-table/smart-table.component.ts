@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 
-import { ShiftService } from '../../../services/shifts/shift.service';
+import { Store } from '@ngrx/store';
+import { NewShift } from '../../../models/NewShift.model';
+import * as ShiftsActions from '../store/shifts.actions';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'ngx-smart-table',
@@ -13,6 +16,7 @@ import { ShiftService } from '../../../services/shifts/shift.service';
   `],
 })
 export class SmartTableComponent {
+  shiftState: Observable<{ shifts: NewShift[] }>;
 
   settings = {
     add: {
@@ -62,9 +66,11 @@ export class SmartTableComponent {
     }
 
 */
-  constructor(private shiftService: ShiftService) {
-    this.shiftService.getShifts().subscribe(value => {
-      const data = value;
+  constructor(private store: Store<{ SHIFTS: { shifts: NewShift[] } }>) {
+      this.store.dispatch(new ShiftsActions.FetchShift());
+      this.shiftState = this.store.select('SHIFTS');
+      this.store.select('SHIFTS').subscribe(value => {
+      const data = value.shifts;
       this.source.load(data);
     });
   }
@@ -72,25 +78,19 @@ export class SmartTableComponent {
   onDeleteConfirm(event): void {
     alert(event);
     if (window.confirm('Are you sure you want to delete?')) {
-      this.shiftService.deleteShift(event.data).subscribe(value => {
-        event.confirm.resolve();
-      });
+      this.store.dispatch(new ShiftsActions.DeleteShift(event.data));
+      event.confirm.resolve();
     } else {
       event.confirm.reject();
     }
   }
 
   onEditConfirm(event): void {
-    this.shiftService.updateShift(event.newData).subscribe(value => {
-      this.source.update(event.data, value);
-      event.confirm.resolve();
-
-    });
+    this.store.dispatch(new ShiftsActions.UpdateShift(event.newData));
+    event.confirm.resolve();
   }
   onCreateConfirm(event): void {
-    this.shiftService.createShift(event.newData).subscribe(value => {
-      event.confirm.resolve();
-
-    });
+    this.store.dispatch(new ShiftsActions.AddShift(event.newData));
+    event.confirm.resolve();
   }
 }

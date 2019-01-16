@@ -8,3 +8,15 @@
     </ng2-smart-table>
   </nb-card-body>
 </nb-card>
+<br>
+<ul class="list-group">
+  <a
+      class="list-group-item"
+      style="cursor: pointer"
+      *ngFor="let role of (roleState | async).roles; let i = index"
+      (click)="onEditItem(i)"
+    >
+    
+    {{ role.name }}
+  </a>
+</ul>

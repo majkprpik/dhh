@@ -8,3 +8,15 @@
     </ng2-smart-table>
   </nb-card-body>
 </nb-card>
+<br>
+<ul class="list-group">
+  <a
+      class="list-group-item"
+      style="cursor: pointer"
+      *ngFor="let shift of (shiftState | async).shifts; let i = index"
+      (click)="onEditItem(i)"
+    >
+    
+    {{ shift.name }} {{shift.start}}
+  </a>
+</ul>

@@ -3,7 +3,6 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { UserService } from '../../../services/user/users.service';
 import { User } from '../../../models/user.model';
 
 import * as UsersActions from '../store/users.actions';
@@ -29,13 +28,12 @@ export class SmartTableComponent implements OnInit {
     { value: '5bdf4f46151b933458c1c964', title: 'L2 senior' },
   ];
 
-  constructor(private userService: UserService,
-    private store: Store<{ USERS: { users: User[] } }>) {
-    this.usersState = this.store.select('USERS');
-
-    this.userService.getUsers().subscribe(value => {
-      this.source.load(value);
-    });
+  constructor(private store: Store<{ USERS: { users: User[] } }>) {
+      this.store.dispatch(new UsersActions.FetchUsers());
+      this.usersState = this.store.select('USERS');
+      this.store.select('USERS').subscribe(value => {
+        this.source.load(value.users);
+      });
   }
   ngOnInit() {
     this.settings = {
@@ -107,29 +105,40 @@ export class SmartTableComponent implements OnInit {
   onDeleteConfirm(event): void {
     alert(event);
     if (window.confirm('Are you sure you want to delete?')) {
-      this.userService.deleteUser(event.data).subscribe(value => {
-        event.confirm.resolve();
-      });
+      this.store.dispatch(new UsersActions.TryDeleteUser({
+        index: 3,
+        deletedUser: event.data,
+      }));
+      event.confirm.resolve();
+      // this.userService.deleteUser(event.data).subscribe(value => {
+      //   event.confirm.resolve();
+      // });
     } else {
       event.confirm.reject();
     }
   }
 
   onEditConfirm(event): void {
-    this.userService.updateUser(event.newData).subscribe(value => {
+    this.store.dispatch(new UsersActions.TryUpdateUser({
+      index: 3,
+      updatedUser: event.newData,
+    }));
+    event.confirm.resolve();
+    // this.userService.updateUser(event.newData).subscribe(value => {
       // this.source.load(value);
-      this.source.update(event.data, value);
-      event.confirm.resolve();
+      // this.source.update(event.data, value);
+      // event.confirm.resolve();
       /* alert(event);
       if (window.confirm('Are you sure you want to delete?')) {
         });
       } else {
         event.confirm.reject();
       }*/
-    });
+    // });
   }
   onCreateConfirm(event): void {
     this.store.dispatch(new UsersActions.TryAddUser(event.newData));
+    event.confirm.resolve();
     // this.userService.createUser(event.newData).subscribe(value => {
     //   // this.source.load(value);
     //   this.source.update(event.data, value);

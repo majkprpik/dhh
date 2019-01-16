@@ -10,15 +10,3 @@
     
   </nb-card-body>
 </nb-card>
-<br>
-    <ul class="list-group">
-      <a
-          class="list-group-item"
-          style="cursor: pointer"
-          *ngFor="let user of (usersState | async).users; let i = index"
-          (click)="onEditItem(i)"
-        >
-        
-        {{ user.firstname }} {{user.lastname}}
-      </a>
-    </ul>

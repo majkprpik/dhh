@@ -7,9 +7,10 @@ import { getMonth, getYear } from 'date-fns';
 import { Schedule } from '../../../models/schedule.model';
 import * as dhhdashboardActions from '../store/dhhdashboard.actions';
 import * as fromDhhdashboard from '../store/dhhdashboard.reducers';
+import * as ShiftsActions from '../../shifts/store/shifts.actions';
 import { Day } from '../../../models/days.model';
 import { Shift } from '../../../models/shift.model';
-import { ShiftService } from '../../../services/shifts/shift.service';
+import { NewShift } from '../../../models/NewShift.model';
 
 
 @Component({
@@ -30,6 +31,7 @@ export class HandsontableComponent implements OnInit {
   CalendarView = CalendarView;
   viewDate: Date = new Date();
   dhhdashboardState: Observable<fromDhhdashboard.State>;
+  shiftState: Observable<{ shifts: NewShift[] }>;
   settings;
   columns;
   shifts;
@@ -41,8 +43,10 @@ export class HandsontableComponent implements OnInit {
   year= getYear(this.viewDate);
 
   constructor(private store: Store<fromDhhdashboard.FutureState>,
-    private  shiftService: ShiftService) {
+    private store1: Store<{ SHIFTS: { shifts: NewShift[] } }>) {
     this.dhhdashboardState = this.store.select('dhhdashboard');
+    this.store1.dispatch(new ShiftsActions.FetchShift());
+    this.shiftState = this.store1.select('SHIFTS');
     // console.log(this.settings);
 
   }
@@ -116,9 +120,8 @@ export class HandsontableComponent implements OnInit {
         .subscribe(heroes => this.dashboard = heroes.schedules.map(v => v.month));
   }
   fetchShifts(): void {
-    this.shiftService.getShifts()
-    .subscribe(
-      data => this.shifts = data.map(v => v.start + '-' + v.end));
+    this.shiftState
+    .subscribe(data => this.shifts = data.shifts.map(v => v.start + '-' + v.end));
   }
   onAdd() {
     this.store.dispatch(new dhhdashboardActions.AddSchedule(new Schedule('fffsfdfsfs5544sd54f4f', 2 ,
