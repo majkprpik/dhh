@@ -4,10 +4,11 @@ import { NgModule } from '@angular/core';
 import { PagesComponent } from './pages.component';
 import { DhhDashboardComponent } from './dhhdashboard/dhhdashboard.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
-
+// import { UsersGuard } from './guards/userRouteGuard'
 const routes: Routes = [
   {
     path: '',
+    // canActivate: [UsersGuard],
     component: PagesComponent,
     children: [
       /*{

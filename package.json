@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@ngrx/store-devtools": "^7.0.0",
     "angularx-flatpickr": "^6.1.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",

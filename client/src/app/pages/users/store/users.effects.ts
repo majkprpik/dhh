@@ -11,11 +11,12 @@ export class UsersEffects {
     @Effect()
     addUser = this.actions$
         .ofType(UsersActions.TRY_ADD_USER)
-        .map((action: UsersActions.AddUser) => {
-            return action.payload;
+        .map((action: UsersActions.TryAddUser) => {
+            return { payload: action.payload, resolver: action.resolver };
         })
-        .switchMap((user: User) => {
-            return this.userService.createUser(user);
+        .switchMap((value) => {
+            value.resolver();
+            return this.userService.createUser(value.payload);
         })
         .map((user: User) => {
             return {

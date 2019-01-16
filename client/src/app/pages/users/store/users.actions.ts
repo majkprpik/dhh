@@ -13,7 +13,7 @@ export class AddUser implements Action {
 
 export class TryAddUser implements Action {
     readonly type = TRY_ADD_USER;
-    constructor(public payload: User) {
+    constructor(public payload: User, public resolver: () => void) {
     }
 }
 
