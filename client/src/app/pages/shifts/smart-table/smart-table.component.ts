@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 
 import { Store } from '@ngrx/store';
 import { NewShift } from '../../../models/NewShift.model';
 import * as ShiftsActions from '../store/shifts.actions';
 import { Observable } from 'rxjs/Observable';
+import { ShiftService } from '../../../services/shifts/shift.service';
 
 @Component({
   selector: 'ngx-smart-table',
@@ -15,10 +16,13 @@ import { Observable } from 'rxjs/Observable';
     }
   `],
 })
-export class SmartTableComponent {
-  shiftState: Observable<{ shifts: NewShift[] }>;
 
-  settings = {
+export class SmartTableComponent implements OnInit {
+  shiftState: Observable<{ shifts: NewShift[] }>;
+  settings;
+
+  ngOnInit() {
+  this.settings = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
@@ -57,6 +61,7 @@ export class SmartTableComponent {
       },
     },
   };
+}
 
   source: LocalDataSource = new LocalDataSource();
 /*
@@ -66,7 +71,8 @@ export class SmartTableComponent {
     }
 
 */
-  constructor(private store: Store<{ SHIFTS: { shifts: NewShift[] } }>) {
+  constructor(private shiftService: ShiftService,
+     private store: Store<{ SHIFTS: { shifts: NewShift[] } }>) {
       this.store.dispatch(new ShiftsActions.FetchShift());
       this.shiftState = this.store.select('SHIFTS');
       this.store.select('SHIFTS').subscribe(value => {
@@ -78,7 +84,10 @@ export class SmartTableComponent {
   onDeleteConfirm(event): void {
     alert(event);
     if (window.confirm('Are you sure you want to delete?')) {
-      this.store.dispatch(new ShiftsActions.DeleteShift(event.data));
+      this.store.dispatch(new ShiftsActions.TryDeleteShift({
+        id: 3,
+        deletedShift: event.data,
+      }));
       event.confirm.resolve();
     } else {
       event.confirm.reject();
@@ -86,11 +95,16 @@ export class SmartTableComponent {
   }
 
   onEditConfirm(event): void {
-    this.store.dispatch(new ShiftsActions.UpdateShift(event.newData));
+    this.store.dispatch(new ShiftsActions.TryUpdateShift({
+      id: 3,
+      updatedShift: event.newData,
+    }));
     event.confirm.resolve();
   }
   onCreateConfirm(event): void {
-    this.store.dispatch(new ShiftsActions.AddShift(event.newData));
-    event.confirm.resolve();
+      this.shiftService.createShift(event.newData).subscribe(value => {
+        event.confirm.resolve();
+      });
+    // this.store.dispatch(new ShiftsActions.TryAddShift(event.newData, event.confirm.resolve));
   }
 }

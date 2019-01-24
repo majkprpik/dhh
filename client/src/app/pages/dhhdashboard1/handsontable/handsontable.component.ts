@@ -2,15 +2,16 @@ import { Component, OnInit, ViewChild, TemplateRef, ChangeDetectionStrategy } fr
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { CalendarView } from 'angular-calendar';
-import { getMonth, getYear } from 'date-fns';
+import { getMonth, getYear} from 'date-fns';
 
 import { Schedule } from '../../../models/schedule.model';
 import * as dhhdashboardActions from '../store/dhhdashboard.actions';
-import * as fromDhhdashboard from '../store/dhhdashboard.reducers';
 import * as ShiftsActions from '../../shifts/store/shifts.actions';
+import * as UsersActions from '../../users/store/users.actions';
 import { Day } from '../../../models/days.model';
 import { Shift } from '../../../models/shift.model';
 import { NewShift } from '../../../models/NewShift.model';
+import { User } from '../../../models/user.model';
 
 
 @Component({
@@ -30,23 +31,32 @@ export class HandsontableComponent implements OnInit {
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
   viewDate: Date = new Date();
-  dhhdashboardState: Observable<fromDhhdashboard.State>;
+  dhhdashboardState: Observable<{ schedules: Schedule[] }>;
   shiftState: Observable<{ shifts: NewShift[] }>;
+  usersState: Observable<{ users: User[] }>;
   settings;
   columns;
   shifts;
+  Shifts: NewShift[];
+  dayShifts: Shift[];
+  users;
   dashboard;
-  Height= 200;
+  Height= 250;
   Month;
   dateMatch;
   month= getMonth(this.viewDate) + 1;
   year= getYear(this.viewDate);
+  date;
 
-  constructor(private store: Store<fromDhhdashboard.FutureState>,
-    private store1: Store<{ SHIFTS: { shifts: NewShift[] } }>) {
-    this.dhhdashboardState = this.store.select('dhhdashboard');
+  constructor(private store: Store<{ DHHDASHBOARD: { schedules: Schedule[] } }>,
+    private store1: Store<{ SHIFTS: { shifts: NewShift[] } }>,
+    private store2: Store<{ USERS: { users: User[] } }>) {
+    this.store.dispatch(new dhhdashboardActions.FetchSchedule());
+    this.dhhdashboardState = this.store.select('DHHDASHBOARD');
     this.store1.dispatch(new ShiftsActions.FetchShift());
     this.shiftState = this.store1.select('SHIFTS');
+    this.store2.dispatch(new UsersActions.FetchUsers());
+      this.usersState = this.store2.select('USERS');
     // console.log(this.settings);
 
   }
@@ -55,18 +65,20 @@ export class HandsontableComponent implements OnInit {
     this.dateMatch = false;
     this.getmonth();
     this.month = getMonth(this.viewDate) + 1;
+    this.year = getYear(this.viewDate);
+    this.date = this.month + '/' + this.year;
     this.Month.forEach(element => {
-      if (this.month === element) {
+      if (this.date === element) {
         this.dateMatch = true;
-        this.Height += 20;
       }
     });
     this.fetchShifts();
     this.getSchedule(); // by month and year
+    this.getUsers();
     this.columns = [
-      { data: this.dashboard[0] , title: this.dashboard[0], type: 'dropdown', source: this.shifts },
+      { data: 'start', title: this.dashboard[0], type: 'dropdown', source: this.shifts },
       // data by user/role, day, month, year,
-      { data: this.dashboard[1], title: this.dashboard[1], type: 'dropdown', source: this.shifts},
+      { data: 'end', title: this.dashboard[1], type: 'dropdown', source: this.shifts},
       { data: this.dashboard[2], title: this.dashboard[2], type: 'dropdown', source: this.shifts },
       { data: this.dashboard[3], title: this.dashboard[3], type: 'dropdown', source: this.shifts},
       { data: this.dashboard[4], title: this.dashboard[4], type: 'dropdown', source: this.shifts },
@@ -99,33 +111,38 @@ export class HandsontableComponent implements OnInit {
     ];
       this.settings = {
         colHeaders: this.dashboard ,
-        rowHeaders: [ 'L2 Senior (Pero Perić)', 'Senior L1', 'Senior L1', 'Agent L2', 'Agent L2', 'Agent L2',
-            'Agent L2', 'Agent L2', 'Agent L2', 'Agent L2'],
-
+        rowHeaders: this.users,
         manualRowMove: true, manualRowResize: true,
         maxRows: 50, maxColumns: 32, rowHeaderWidth: 150, width: 1600,
-        height: this.Height, /* stretchH: 'all',*/
+        height: this.Height,  /* stretchH: 'all',*/
         };
   }
   getSchedule(): void {
     this.dhhdashboardState
-        .subscribe(data => this.dashboard = data.schedules.map(v => v.month + ' ' + v.days[0].dayOfWeek));
+        .subscribe(data => this.dashboard = data.schedules[0].days.map(v => v.day + ' ' + v.dayOfWeek));
+    this.dhhdashboardState
+        .subscribe(data => this.dayShifts = data.schedules.map(v => v.days[0].shifts[0]));
   }
   getmonth(): void {
     this.dhhdashboardState
         .subscribe(data => this.Month = data.schedules.map(v => v.month));
   }
-  getRoles(): void {
-    this.dhhdashboardState
-        .subscribe(heroes => this.dashboard = heroes.schedules.map(v => v.month));
+  getUsers(): void {
+    this.usersState
+        .subscribe(data => this.users = data.users.map(v => v.firstname + ' ' + v.lastname));
   }
   fetchShifts(): void {
     this.shiftState
     .subscribe(data => this.shifts = data.shifts.map(v => v.start + '-' + v.end));
+    this.shiftState
+    .subscribe(data => this.Shifts = data.shifts);
   }
   onAdd() {
     this.store.dispatch(new dhhdashboardActions.AddSchedule(new Schedule('fffsfdfsfs5544sd54f4f', 2 ,
       [new Day('56df5g6g', 15, 'Blagdan', 'UT', [new Shift('f6gdf5g', 'dfg6d5g6', '5g6df5g')])] )));
+  }
+  onAddSchedule() {
+    this.dateMatch = true;
   }
   monthClicked(): void {
     this.month = getMonth(this.viewDate) + 1;

@@ -40,12 +40,12 @@ export class TryUpdateUser implements Action {
 }
 export class DeleteUser implements Action {
     readonly type = DELETE_USER;
-    constructor(public payload: {index: number, deletedUser: User} ) {
+    constructor(public payload: User ) {
     }
 }
 export class TryDeleteUser implements Action {
     readonly type = TRY_DELETE_USER;
-    constructor(public payload: {index: number, deletedUser: User} ) {
+    constructor(public payload: User) {
     }
 }
 export type UsersActions = SetUsers | FetchUsers | AddUser | TryAddUser | UpdateUser |

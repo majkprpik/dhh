@@ -3,7 +3,7 @@ import { NewShift } from '../../../models/NewShift.model';
 
 const initialState = {
     shifts: [
-        new NewShift('Dummy smjena', 1, 24, true),
+        new NewShift('sdf534df3sdf', 'Dummy smjena', 1, 24, true),
     ],
 };
 export function shiftsReducer(state = initialState, action: ShiftActions.ShiftsActions) {
@@ -32,7 +32,7 @@ export function shiftsReducer(state = initialState, action: ShiftActions.ShiftsA
             };
         case ShiftActions.DELETE_SHIFT:
             const oldShifts = [...state.shifts];
-            oldShifts.splice(action.payload, 1);
+            oldShifts.splice(action.payload.id, 1);
             return {
             ...state,
             shifts: oldShifts,

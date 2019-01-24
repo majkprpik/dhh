@@ -16,11 +16,14 @@
               </div>
           </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4" >
           <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4" *ngIf="dateMatch">
         <button class="btn btn-primary" (click)="onAdd()" style="float: right;">Save</button><br>
+      </div>
+      <div class="col-md-4" *ngIf="!dateMatch">
+        <button class="btn btn-primary" (click)="onAddSchedule()" style="float: right;">Add Schedule</button><br>
       </div>
   </div>
   <br>
@@ -33,10 +36,8 @@
       [data]="data"
     >
     </hot-table>
-  </div>
- 
   <br>
-    <ul class="list-group">
+    <!-- <ul class="list-group">
     <a
         class="list-group-item"
         style="cursor: pointer"
@@ -44,7 +45,7 @@
         (click)="onEditItem(i)"
       >
       
-      {{ schedule.month }} {{schedule.days[0].dayOfWeek}}
+      {{ schedule.days[0].day }} {{schedule.days[0].dayOfWeek}} {{schedule.month}}
     </a>
-  </ul>
+  </ul> -->
 

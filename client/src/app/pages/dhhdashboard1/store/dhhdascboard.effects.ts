@@ -1,26 +1,31 @@
+import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
+import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
-import { HttpClient } from '@angular/common/http';
+import 'rxjs/add/operator/withLatestFrom';
 
 import * as DhhdashboardActions from '../store/dhhdashboard.actions';
+import { HandsontableService } from '../../../services/schedule/schedule.service';
+import { Schedule } from '../../../models/schedule.model';
 
-
+@Injectable()
 export class DhhdashboardEffects {
-    private httpOptions;
     @Effect()
     scheduleFetch = this.actions$
         .ofType(DhhdashboardActions.FETCH_SCHEDULE)
         .switchMap((action: DhhdashboardActions.FetchSchedule) => {
-            return this.http.get('api/schedules', this.httpOptions);
+            return this.handsontableService.getSchedule();
         })
-        .subscribe(value => {
-            return{
-                type: DhhdashboardActions.FETCH_SCHEDULE,
-                payload: value,
+        .map((schedule) => {
+            return {
+                type: DhhdashboardActions.SET_SCHEDULE,
+                payload: schedule,
             };
         });
 
-    constructor(private actions$: Actions, private http: HttpClient) {
+    constructor(private handsontableService: HandsontableService, private actions$: Actions,
+        store: Store<{ DHHDASHBOARD: { schedules: Schedule[] } }>) {
     }
 
 }

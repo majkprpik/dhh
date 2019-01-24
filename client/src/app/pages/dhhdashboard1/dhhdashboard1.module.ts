@@ -15,7 +15,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { StoreModule } from '@ngrx/store';
 import { dhhdashboardReducer } from './store/dhhdashboard.reducers';
 import { HandsontableService } from '../../services/schedule/schedule.service';
-import { ShiftService } from '../../services/shifts/shift.service';
+import { EffectsModule } from '@ngrx/effects';
+import { DhhdashboardEffects } from './store/dhhdascboard.effects';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { ShiftService } from '../../services/shifts/shift.service';
     HotTableModule.forRoot(),
     FormsModule,
     FlatpickrModule.forRoot(),
-    StoreModule.forFeature('dhhdashboard', dhhdashboardReducer),
+    StoreModule.forFeature('DHHDASHBOARD', dhhdashboardReducer),
+    EffectsModule.forRoot([DhhdashboardEffects]),
 
     CalendarModule.forRoot({
       provide: DateAdapter,
@@ -34,7 +36,7 @@ import { ShiftService } from '../../services/shifts/shift.service';
     }),
   ],
   declarations: [...routedComponents, DhhDashboard1Component], providers: [
-    HandsontableService, ShiftService,
+    HandsontableService,
     ],
 })
 export class DhhDashboard1Module { }

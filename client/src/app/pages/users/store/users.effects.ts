@@ -40,7 +40,7 @@ export class UsersEffects {
     @Effect()
     updateUser = this.actions$
         .ofType(UsersActions.TRY_UPDATE_USER)
-        .map((action: UsersActions.UpdateUser) => {
+        .map((action: UsersActions.TryUpdateUser) => {
             return action.payload;
         })
         .switchMap((user: {index: number, updatedUser: User}) => {
@@ -55,16 +55,16 @@ export class UsersEffects {
     @Effect()
     deleteUser = this.actions$
         .ofType(UsersActions.TRY_DELETE_USER)
-        .map((action: UsersActions.DeleteUser) => {
+        .map((action: UsersActions.TryDeleteUser) => {
             return action.payload;
         })
-        .switchMap((user: {index: number, deletedUser: User}) => {
-            return this.userService.deleteUser(user.deletedUser);
+        .switchMap((user) => {
+            return this.userService.deleteUser(user);
         })
-        .map((user: {index: number, deletedUser: User}) => {
+        .map((user) => {
             return {
                 type: UsersActions.DELETE_USER,
-                payload: user.index,
+                payload: user,
             };
         });
     constructor(private userService: UserService, private actions$: Actions) {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Observable } from 'rxjs/Observable';
 
@@ -15,23 +15,26 @@ import * as RolesActions from '../store/roles.actions';
     }
   `],
 })
-export class SmartTableComponent {
+export class SmartTableComponent implements OnInit {
   roleState: Observable<{ roles: Role[] }>;
 
   permissions = [
     { value: '5be5af5c4478b1243c054827', title: 'admin_v3' },
   ];
-  settings = {
+  settings;
+  ngOnInit() {
+  this.settings = {
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
+      confirmCreate: true,
     },
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
-      confirmEdit: true,
+      confirmSave: true,
     },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
@@ -56,6 +59,7 @@ export class SmartTableComponent {
       },
     },
   };
+}
 
   source: LocalDataSource = new LocalDataSource();
 /*

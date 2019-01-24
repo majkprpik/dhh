@@ -87,10 +87,7 @@ export class SmartTableComponent implements OnInit {
   onDeleteConfirm(event): void {
     alert(event);
     if (window.confirm('Are you sure you want to delete?')) {
-      this.store.dispatch(new UsersActions.TryDeleteUser({
-        index: 3,
-        deletedUser: event.data,
-      }));
+      this.store.dispatch(new UsersActions.TryDeleteUser(event.data));
       event.confirm.resolve();
       // this.userService.deleteUser(event.data).subscribe(value => {
       //   event.confirm.resolve();
@@ -114,6 +111,9 @@ export class SmartTableComponent implements OnInit {
          this.subsc.unsubscribe();
        }
      });*/
+    //  this.userService.createUser(event.newData).subscribe(value => {
+    //   event.confirm.resolve();
+    // });
     this.store.dispatch(new UsersActions.TryAddUser(event.newData, event.confirm.resolve));
   }
 }
