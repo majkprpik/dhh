@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const cors = require("cors");
+const path = require("path")
 
 const users = require("./routes/api/users");
 const roles = require("./routes/api/roles");
@@ -54,6 +55,15 @@ app.use("/permissions", permissions);
 app.use("/vacations", vacations);
 app.use("/ruleroleshift", ruleroleshift);
 app.use("/rulehourslimit", rulehourslimit);
+
+// Prod stuff
+if(process.env.NODE_ENV === "production"){
+  app.use(express.static("client/dist"))
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"))
+  })
+}
 
 const port = process.env.PORT || 5000;
 

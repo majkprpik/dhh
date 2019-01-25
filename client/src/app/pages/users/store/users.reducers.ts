@@ -31,13 +31,13 @@ export function usersReducer(state = initialState, action: UserActions.UsersActi
             ...state,
             users: users,
             };
-        case UserActions.DELETE_USER:
+        /*case UserActions.DELETE_USER:
             const oldUsers = [...state.users];
-            oldUsers.splice(action.payload.index, 1);
+            oldUsers.splice(action.payload._id, 1);
             return {
             ...state,
             users: oldUsers,
-            };
+            };*/
         default:
             return state;
     }
